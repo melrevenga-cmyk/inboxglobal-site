@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PulseCheck™ — Outbound Deliverability Health Check | InboxGlobal™</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0B0F2B;
+    --surface: #0E1333;
+    --surface-2: #121839;
+    --border: rgba(34,211,238,0.12);
+    --border-strong: rgba(34,211,238,0.25);
+    --accent: #22D3EE;
+    --accent-dim: rgba(34,211,238,0.08);
+    --accent-mid: rgba(34,211,238,0.18);
+    --text: #E2EBF3;
+    --text-muted: #94A3B8;
+    --text-dim: #5A7189;
+    --red: #F87171;
+    --amber: #FBBF24;
+    --green: #22C55E;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 18px;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(34,211,238,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(34,211,238,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 900px;
+    height: 500px;
+    background: radial-gradient(ellipse, rgba(34,211,238,0.07) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 32px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--border);
+    background: rgba(11,15,43,0.85);
+    backdrop-filter: blur(12px);
+  }
+
+  .nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 32px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--text-muted); font-weight: 300; }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+
+  .nav-cta {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--bg) !important;
+    background: var(--accent);
+    padding: 8px 18px;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 4px;
+    transition: opacity 0.2s;
+  }
+
+  .nav-cta:hover { opacity: 0.85; }
+
+  .nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .nav-toggle span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--text-muted);
+    transition: all 0.25s;
+  }
+
+  /* ─── LABEL ─── */
+  .label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 40px;
+  }
+
+  /* ─── HERO ─── */
+  .page-hero {
+    padding: 140px 0 80px;
+    position: relative;
+    z-index: 1;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero-tag {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: #94A3B8;
+    margin-bottom: 32px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 8px 18px;
+    border-radius: 100px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero-tag-dot {
+    width: 8px; height: 8px;
+    background: var(--green);
+    border-radius: 50%;
+    flex-shrink: 0;
+    animation: pulse 2s infinite;
+  }
+
+  .page-hero h1 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(40px, 7vw, 72px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 24px;
+    max-width: 800px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  .page-hero h1 em {
+    font-style: normal;
+    background: linear-gradient(90deg, #22D3EE 0%, #67E8F9 50%, #A5F3FC 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    padding-bottom: 0.05em;
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--text-muted);
+    max-width: 600px;
+    line-height: 1.75;
+    margin-bottom: 40px;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-sub strong { color: var(--text); font-weight: 500; }
+
+  .hero-price {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+    animation: fadeUp 0.6s 0.25s ease both;
+  }
+
+  .hero-price-note {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-bottom: 36px;
+    animation: fadeUp 0.6s 0.28s ease both;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .btn-primary {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--bg);
+    background: var(--accent);
+    padding: 14px 28px;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 4px;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  .btn-ghost {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--text-muted);
+    border: 1px solid var(--border-strong);
+    padding: 14px 28px;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 4px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .btn-ghost:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* ─── SECTION DIVIDER ─── */
+  .section-divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+  /* ─── VALUE PROPS ─── */
+  .value-section {
+    padding: 80px 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .value-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--border);
+    margin-top: 8px;
+  }
+
+  .value-item {
+    background: var(--bg);
+    padding: 28px 32px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .value-icon {
+    color: var(--accent);
+    font-size: 14px;
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+
+  .value-item p {
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--text-muted);
+    line-height: 1.65;
+  }
+
+  .value-item p strong { color: var(--text); font-weight: 500; }
+
+  /* ─── SCOPE / DELIVERABLES ─── */
+  .content-section {
+    padding: 80px 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .content-section.alt-bg {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-heading {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(32px, 4.5vw, 52px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin-bottom: 48px;
+  }
+
+  .section-heading em {
+    font-style: normal;
+    background: linear-gradient(90deg, #22D3EE 0%, #67E8F9 50%, #A5F3FC 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .scope-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .scope-item {
+    padding: 28px 0;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+
+  .scope-item:first-child { border-top: 1px solid var(--border); }
+
+  .scope-num {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent);
+    padding-top: 2px;
+  }
+
+  .scope-item h3 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+
+  .scope-item p {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* ─── DELIVERABLES ─── */
+  .deliverable-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .deliverable-card {
+    background: var(--surface);
+    padding: 32px;
+    transition: background 0.25s;
+  }
+
+  .deliverable-card:hover { background: var(--surface-2); }
+
+  .deliverable-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .deliverable-card h3 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+    margin-bottom: 10px;
+  }
+
+  .deliverable-card p {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.65;
+  }
+
+  /* ─── REQUIREMENTS ─── */
+  .req-list {
+    list-style: none;
+  }
+
+  .req-list li {
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--text-muted);
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    line-height: 1.55;
+  }
+
+  .req-list li:first-child { border-top: 1px solid var(--border); }
+
+  .req-icon {
+    color: var(--accent);
+    flex-shrink: 0;
+    font-size: 13px;
+    margin-top: 3px;
+  }
+
+  /* ─── TERMS ─── */
+  .terms-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .term-card {
+    background: var(--bg);
+    padding: 28px 32px;
+  }
+
+  .term-card h4 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+
+  .term-card p {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.65;
+  }
+
+  /* ─── CTA SECTION ─── */
+  .cta-section {
+    padding: 100px 0;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+  }
+
+  .cta-section h2 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(40px, 6vw, 72px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin-bottom: 24px;
+  }
+
+  .cta-section h2 em {
+    font-style: normal;
+    background: linear-gradient(90deg, #22D3EE 0%, #67E8F9 50%, #A5F3FC 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .cta-section p {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--text-muted);
+    max-width: 500px;
+    margin: 0 auto 40px;
+    line-height: 1.7;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .footer-logo {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .footer-copy {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-dim);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--accent); }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .nav-toggle { display: flex; }
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 60px;
+      left: 0; right: 0;
+      background: rgba(11,15,43,0.97);
+      backdrop-filter: blur(16px);
+      flex-direction: column;
+      padding: 24px 32px;
+      gap: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-links.open { display: flex; }
+    .nav-cta { text-align: center; }
+    .value-grid { grid-template-columns: 1fr; }
+    .deliverable-grid { grid-template-columns: 1fr; }
+    .terms-grid { grid-template-columns: 1fr; }
+    .scope-item { grid-template-columns: 36px 1fr; gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">InboxGlobal<span>™</span></a>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="/#offers">Services</a></li>
+      <li><a href="/#principles">Principles</a></li>
+      <li><a href="/#founder">About</a></li>
+      <li><a href="/resources">Resources</a></li>
+      <li><a href="https://es.inboxglobal.io">ES 🇪🇸</a></li>
+      <li><a href="/#cta" class="nav-cta">Book a Call</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="hero-tag"><span class="hero-tag-dot"></span> Entry Point · Fast Signal <span style="color:rgba(255,255,255,0.2)">·</span> 2–3 Business Days</div>
+    <h1>Outbound Deliverability<br><em>PulseCheck™</em></h1>
+    <p class="hero-sub">
+      A fast, standards-based health check of your outbound email system. Learn what's safe, what's risky, and what to fix first — <strong>without committing to a full audit.</strong>
+    </p>
+    <div class="hero-price">$950</div>
+    <div class="hero-price-note">USD flat fee · Typical delivery in 2–3 business days</div>
+    <div class="hero-ctas">
+      <a href="https://buy.stripe.com/14A3cv9bW5m7bRH8CM3Je00" class="btn-primary">Get PulseCheck Now — $950</a>
+      <a href="mailto:hello@inboxglobal.io?subject=PulseCheck%20Intake" class="btn-ghost">Request Intake Call</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- VALUE PROPS -->
+<section class="value-section">
+  <div class="container">
+    <div class="label">// What you get</div>
+    <div class="value-grid">
+      <div class="value-item">
+        <span class="value-icon">→</span>
+        <p><strong>System Integrity Score (0–100)</strong> — calibrated against real failure patterns from active audits</p>
+      </div>
+      <div class="value-item">
+        <span class="value-icon">→</span>
+        <p><strong>Top deliverability risks identified in under 72 hours</strong> — ranked by urgency and blast radius</p>
+      </div>
+      <div class="value-item">
+        <span class="value-icon">→</span>
+        <p><strong>Authentication + alignment issues confirmed</strong> before they cost you reputation or inbox placement</p>
+      </div>
+      <div class="value-item">
+        <span class="value-icon">→</span>
+        <p><strong>Silent failures flagged</strong> — warmup drift, list decay, throttling, identity overlap, suppression gaps</p>
+      </div>
+      <div class="value-item">
+        <span class="value-icon">→</span>
+        <p><strong>Clear, enforceable action list</strong> to stabilize your system and keep sending safely</p>
+      </div>
+      <div class="value-item">
+        <span class="value-icon">→</span>
+        <p><strong>Operator review call (20–30 min)</strong> — walkthrough of findings, priorities, and what not to do next</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SCOPE -->
+<section class="content-section alt-bg">
+  <div class="container">
+    <div class="label">// Scope</div>
+    <h2 class="section-heading">What we <em>review.</em></h2>
+    <div class="scope-list">
+      <div class="scope-item">
+        <div class="scope-num">01</div>
+        <div>
+          <h3>Identity and Authentication</h3>
+          <p>SPF, DKIM, DMARC presence + alignment checks. Policy posture (none/quarantine/reject) and enforcement readiness. Quick flags for misalignment, weak identity, and governance gaps.</p>
+        </div>
+      </div>
+      <div class="scope-item">
+        <div class="scope-num">02</div>
+        <div>
+          <h3>Domain + Mailbox Hygiene</h3>
+          <p>Domain purpose separation (outbound vs brand vs transactional). Provider distribution and basic mailbox configuration risks. Overlap exposure points — reused identity, shared assets, unsafe routing.</p>
+        </div>
+      </div>
+      <div class="scope-item">
+        <div class="scope-num">03</div>
+        <div>
+          <h3>Sending Behavior and Volume Risk</h3>
+          <p>Daily volume posture, ramp logic, and pacing risk. Reply/complaint dilution patterns. Bounce and unknown-user risk indicators. Basic suppression expectations.</p>
+        </div>
+      </div>
+      <div class="scope-item">
+        <div class="scope-num">04</div>
+        <div>
+          <h3>List and Targeting Risk Signals</h3>
+          <p>High-level list source risk assessment (cold vs warm vs internal). Basic hygiene expectations and obvious leak points — stale lists, role accounts, weak suppression, poor segmentation.</p>
+        </div>
+      </div>
+      <div class="scope-item">
+        <div class="scope-num">05</div>
+        <div>
+          <h3>Monitoring Coverage</h3>
+          <p>What you're not tracking today and should be. Where performance will degrade before you notice. Minimum viable monitoring and enforcement checkpoints.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DELIVERABLES -->
+<section class="content-section">
+  <div class="container">
+    <div class="label">// Deliverables</div>
+    <h2 class="section-heading">What you <em>receive.</em></h2>
+    <div class="deliverable-grid">
+      <div class="deliverable-card">
+        <div class="deliverable-label">A</div>
+        <h3>PulseCheck Scorecard (PDF)</h3>
+        <p>A clear green / yellow / red view of identity, infrastructure, sending posture, and monitoring coverage.</p>
+      </div>
+      <div class="deliverable-card">
+        <div class="deliverable-label">B</div>
+        <h3>Top Risks (Ranked)</h3>
+        <p>The 5–10 highest-impact issues, ordered by severity and blast radius.</p>
+      </div>
+      <div class="deliverable-card">
+        <div class="deliverable-label">C</div>
+        <h3>Stabilization Actions</h3>
+        <p>Quick fixes you can execute now — authentication corrections, separation moves, pacing adjustments, suppression basics.</p>
+      </div>
+      <div class="deliverable-card">
+        <div class="deliverable-label">D</div>
+        <h3>Enforceable Guardrails</h3>
+        <p>Simple rules your team can adopt immediately — caps, gates, minimum checks, and "do not scale until X" thresholds.</p>
+      </div>
+      <div class="deliverable-card">
+        <div class="deliverable-label">E</div>
+        <h3>14-Day Reliability Checklist</h3>
+        <p>A short plan to stabilize signals and stop drift, with daily and weekly checkpoints.</p>
+      </div>
+      <div class="deliverable-card">
+        <div class="deliverable-label">F</div>
+        <h3>Review Call (20–30 min)</h3>
+        <p>Walkthrough of findings, priority sequence, and what not to do next.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- WHAT WE NEED -->
+<section class="content-section alt-bg">
+  <div class="container">
+    <div class="label">// What we need from you</div>
+    <h2 class="section-heading">Intake <em>requirements.</em></h2>
+    <ul class="req-list">
+      <li><span class="req-icon">→</span> Outbound sending domains (and any related domains you suspect are connected)</li>
+      <li><span class="req-icon">→</span> Outbound tool stack (platform + inbox provider + CRM if applicable)</li>
+      <li><span class="req-icon">→</span> Current average daily volume per inbox (rough is fine)</li>
+      <li><span class="req-icon">→</span> Example message headers (or screenshots) from a real send</li>
+      <li><span class="req-icon">→</span> Any known symptoms (spam, throttling, low replies, bounces, account warnings)</li>
+    </ul>
+  </div>
+</section>
+
+<!-- TERMS -->
+<section class="content-section">
+  <div class="container">
+    <div class="label">// Terms</div>
+    <h2 class="section-heading">How it <em>works.</em></h2>
+    <div class="terms-grid">
+      <div class="term-card">
+        <h4>Timeline</h4>
+        <p>Typical completion: 2–3 business days from intake, depending on access readiness.</p>
+      </div>
+      <div class="term-card">
+        <h4>Payment</h4>
+        <p>Fixed-fee PulseCheck, paid upfront. Work begins once payment and intake are received.</p>
+      </div>
+      <div class="term-card">
+        <h4>Access & Confidentiality</h4>
+        <p>You control access scope. We only request what's required. All provided data is treated as confidential. NDA available on request.</p>
+      </div>
+      <div class="term-card">
+        <h4>Limitations</h4>
+        <p>PulseCheck is a high-signal health check — not a full audit. Recommendations reflect the system state during the review window. Deliverability outcomes depend on execution, list quality, and offer/targeting variables.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <div class="label" style="justify-content:center; display:flex; margin-bottom:32px;">// Start here</div>
+    <h2>Know what breaks<br><em>first.</em></h2>
+    <p>$950 flat fee. Operator-delivered. No AI summaries. No tool reports. A direct read on your system.</p>
+    <div class="cta-buttons">
+      <a href="https://buy.stripe.com/14A3cv9bW5m7bRH8CM3Je00" class="btn-primary">Get PulseCheck Now — $950</a>
+      <a href="mailto:hello@inboxglobal.io?subject=PulseCheck%20Intake" class="btn-ghost">Request Intake Call</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <a href="/" class="footer-logo">InboxGlobal™</a>
+    <ul class="footer-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/resources">Resources</a></li>
+      <li><a href="/audit">Audit</a></li>
+      <li><a href="https://es.inboxglobal.io">ES 🇪🇸</a></li>
+    </ul>
+    <div class="footer-copy">© 2026 InboxGlobal™ LLC. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', () => {
+    document.querySelector('.nav-links').classList.remove('open');
+  });
+});
+</script>
+
+</body>
+</html>

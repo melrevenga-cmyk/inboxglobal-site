@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>System Integrity Audit™ — Full Outbound System Review | InboxGlobal™</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0B0F2B;
+    --surface: #0E1333;
+    --surface-2: #121839;
+    --border: rgba(34,211,238,0.12);
+    --border-strong: rgba(34,211,238,0.25);
+    --accent: #22D3EE;
+    --accent-dim: rgba(34,211,238,0.08);
+    --accent-mid: rgba(34,211,238,0.18);
+    --text: #E2EBF3;
+    --text-muted: #94A3B8;
+    --text-dim: #5A7189;
+    --red: #F87171;
+    --amber: #FBBF24;
+    --green: #22C55E;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 18px;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(34,211,238,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(34,211,238,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 900px;
+    height: 500px;
+    background: radial-gradient(ellipse, rgba(34,211,238,0.07) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 32px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--border);
+    background: rgba(11,15,43,0.85);
+    backdrop-filter: blur(12px);
+  }
+
+  .nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 32px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--text-muted); font-weight: 300; }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+
+  .nav-cta {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--bg) !important;
+    background: var(--accent);
+    padding: 8px 18px;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 4px;
+    transition: opacity 0.2s;
+  }
+
+  .nav-cta:hover { opacity: 0.85; }
+
+  .nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .nav-toggle span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--text-muted);
+    transition: all 0.25s;
+  }
+
+  /* ─── LABEL ─── */
+  .label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 40px;
+  }
+
+  /* ─── HERO ─── */
+  .page-hero {
+    padding: 140px 0 80px;
+    position: relative;
+    z-index: 1;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero-tag {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: #94A3B8;
+    margin-bottom: 32px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 8px 18px;
+    border-radius: 100px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero-tag-dot {
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    flex-shrink: 0;
+    animation: pulse 2s infinite;
+  }
+
+  .page-hero h1 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(40px, 7vw, 72px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 24px;
+    max-width: 800px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  .page-hero h1 em {
+    font-style: normal;
+    background: linear-gradient(90deg, #22D3EE 0%, #67E8F9 50%, #A5F3FC 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    padding-bottom: 0.05em;
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--text-muted);
+    max-width: 620px;
+    line-height: 1.75;
+    margin-bottom: 40px;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-sub strong { color: var(--text); font-weight: 500; }
+
+  .hero-price {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+    animation: fadeUp 0.6s 0.25s ease both;
+  }
+
+  .hero-price-note {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-bottom: 36px;
+    animation: fadeUp 0.6s 0.28s ease both;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .btn-primary {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--bg);
+    background: var(--accent);
+    padding: 14px 28px;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 4px;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  .btn-ghost {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--text-muted);
+    border: 1px solid var(--border-strong);
+    padding: 14px 28px;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 4px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .btn-ghost:hover { color: var(--accent); border-color: var(--accent); }
+
+  .section-divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+  /* ─── VALUE PROPS ─── */
+  .value-section {
+    padding: 80px 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .value-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--border);
+    margin-top: 8px;
+  }
+
+  .value-item {
+    background: var(--bg);
+    padding: 28px 32px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .value-icon {
+    color: var(--accent);
+    font-size: 14px;
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+
+  .value-item p {
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--text-muted);
+    line-height: 1.65;
+  }
+
+  .value-item p strong { color: var(--text); font-weight: 500; }
+
+  /* ─── CONTENT SECTIONS ─── */
+  .content-section {
+    padding: 80px 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .content-section.alt-bg {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-heading {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(32px, 4.5vw, 52px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin-bottom: 48px;
+  }
+
+  .section-heading em {
+    font-style: normal;
+    background: linear-gradient(90deg, #22D3EE 0%, #67E8F9 50%, #A5F3FC 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ─── SCOPE ─── */
+  .scope-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .scope-item {
+    padding: 28px 0;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+
+  .scope-item:first-child { border-top: 1px solid var(--border); }
+
+  .scope-num {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent);
+    padding-top: 2px;
+  }
+
+  .scope-item h3 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+
+  .scope-item p {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* ─── DELIVERABLES ─── */
+  .deliverable-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .deliverable-card {
+    background: var(--surface);
+    padding: 32px;
+    transition: background 0.25s;
+  }
+
+  .deliverable-card:hover { background: var(--surface-2); }
+
+  .deliverable-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .deliverable-card h3 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+    margin-bottom: 10px;
+  }
+
+  .deliverable-card p {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.65;
+  }
+
+  /* ─── REQUIREMENTS ─── */
+  .req-list {
+    list-style: none;
+  }
+
+  .req-list li {
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--text-muted);
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    line-height: 1.55;
+  }
+
+  .req-list li:first-child { border-top: 1px solid var(--border); }
+
+  .req-icon {
+    color: var(--accent);
+    flex-shrink: 0;
+    font-size: 13px;
+    margin-top: 3px;
+  }
+
+  /* ─── TERMS ─── */
+  .terms-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .term-card {
+    background: var(--bg);
+    padding: 28px 32px;
+  }
+
+  .term-card h4 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+
+  .term-card p {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.65;
+  }
+
+  /* ─── CTA ─── */
+  .cta-section {
+    padding: 100px 0;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+  }
+
+  .cta-section h2 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(40px, 6vw, 72px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin-bottom: 24px;
+  }
+
+  .cta-section h2 em {
+    font-style: normal;
+    background: linear-gradient(90deg, #22D3EE 0%, #67E8F9 50%, #A5F3FC 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .cta-section p {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--text-muted);
+    max-width: 520px;
+    margin: 0 auto 40px;
+    line-height: 1.7;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .footer-logo {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .footer-copy {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-dim);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--accent); }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .nav-toggle { display: flex; }
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 60px;
+      left: 0; right: 0;
+      background: rgba(11,15,43,0.97);
+      backdrop-filter: blur(16px);
+      flex-direction: column;
+      padding: 24px 32px;
+      gap: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-links.open { display: flex; }
+    .nav-cta { text-align: center; }
+    .value-grid { grid-template-columns: 1fr; }
+    .deliverable-grid { grid-template-columns: 1fr; }
+    .terms-grid { grid-template-columns: 1fr; }
+    .scope-item { grid-template-columns: 36px 1fr; gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">InboxGlobal<span>™</span></a>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="/#offers">Services</a></li>
+      <li><a href="/#principles">Principles</a></li>
+      <li><a href="/#founder">About</a></li>
+      <li><a href="/resources">Resources</a></li>
+      <li><a href="https://es.inboxglobal.io">ES 🇪🇸</a></li>
+      <li><a href="/#cta" class="nav-cta">Book a Call</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="hero-tag"><span class="hero-tag-dot"></span> Full System Review · Scale-Ready <span style="color:rgba(255,255,255,0.2)">·</span> 7–10 Business Days</div>
+    <h1>System Integrity<br><em>Audit™</em></h1>
+    <p class="hero-sub">
+      A standards-based review of your outbound email system. Find where your system is breaking <strong>before performance makes it obvious</strong>, then get an enforceable plan to fix it.
+    </p>
+    <div class="hero-price">$3,500</div>
+    <div class="hero-price-note">USD flat fee · Typical delivery in 7–10 business days</div>
+    <div class="hero-ctas">
+      <a href="https://buy.stripe.com/00wcN51JubKvbRH4mw3Je01" class="btn-primary">Buy Audit — $3,500</a>
+      <a href="mailto:hello@inboxglobal.io?subject=System%20Integrity%20Audit%20Intake" class="btn-ghost">Request Intake Call</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- VALUE PROPS -->
+<section class="value-section">
+  <div class="container">
+    <div class="label">// What you get</div>
+    <div class="value-grid">
+      <div class="value-item">
+        <span class="value-icon">→</span>
+        <p><strong>Identify what's structurally unsafe today</strong> — the issues hiding behind "it's still working"</p>
+      </div>
+      <div class="value-item">
+        <span class="value-icon">→</span>
+        <p><strong>Find what's leaking reputation, identity, or compliance</strong> — before providers enforce it for you</p>
+      </div>
+      <div class="value-item">
+        <span class="value-icon">→</span>
+        <p><strong>Define what to separate, standardize, and stop</strong> — clear architectural decisions, not opinions</p>
+      </div>
+      <div class="value-item">
+        <span class="value-icon">→</span>
+        <p><strong>Get the exact sequence to stabilize and scale</strong> — a 30/60/90 roadmap with staged dependencies</p>
+      </div>
+      <div class="value-item">
+        <span class="value-icon">→</span>
+        <p><strong>Enforcement rules built into your workflow</strong> — not suggestions, not best practices, rules</p>
+      </div>
+      <div class="value-item">
+        <span class="value-icon">→</span>
+        <p><strong>System Integrity Brief (PDF)</strong> — executive summary + technical appendix your team can execute</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SCOPE -->
+<section class="content-section alt-bg">
+  <div class="container">
+    <div class="label">// Scope</div>
+    <h2 class="section-heading">Full system <em>teardown.</em></h2>
+    <div class="scope-list">
+      <div class="scope-item">
+        <div class="scope-num">01</div>
+        <div>
+          <h3>Identity and Authentication</h3>
+          <p>SPF, DKIM, DMARC alignment and enforcement readiness. Root vs subdomain strategy and delegation. Risk flags: shared identity, misalignment, weak policy, missing governance.</p>
+        </div>
+      </div>
+      <div class="scope-item">
+        <div class="scope-num">02</div>
+        <div>
+          <h3>Domain and Mailbox Infrastructure</h3>
+          <p>Domain portfolio and separation logic (purpose, volume, risk). Inbox provider distribution and mailbox configuration. Reputation exposure points — reuse, overlap, weak isolation.</p>
+        </div>
+      </div>
+      <div class="scope-item">
+        <div class="scope-num">03</div>
+        <div>
+          <h3>Sending Architecture</h3>
+          <p>Volume design (step pacing, ramp logic, concurrency). Cadence structure and failure modes — reply dilution, complaint risk, bounce risk. List hygiene standards and suppression logic.</p>
+        </div>
+      </div>
+      <div class="scope-item">
+        <div class="scope-num">04</div>
+        <div>
+          <h3>Tooling and Stack Integrity</h3>
+          <p>ESP and outbound platform configuration review (high-level). CRM handoff points and lifecycle consistency. Monitoring coverage vs blind spots.</p>
+        </div>
+      </div>
+      <div class="scope-item">
+        <div class="scope-num">05</div>
+        <div>
+          <h3>Enforcement</h3>
+          <p>What is manual, inconsistent, or unenforced. Where standards exist only in people's heads. What needs a rule, a checklist, or a gate.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DELIVERABLES -->
+<section class="content-section">
+  <div class="container">
+    <div class="label">// Deliverables</div>
+    <h2 class="section-heading">Operator-grade <em>package.</em></h2>
+    <div class="deliverable-grid">
+      <div class="deliverable-card">
+        <div class="deliverable-label">A</div>
+        <h3>System Integrity Brief (PDF)</h3>
+        <p>A tight executive brief covering current state, primary risks, what's safe to scale, and non-negotiable standards.</p>
+      </div>
+      <div class="deliverable-card">
+        <div class="deliverable-label">B</div>
+        <h3>Risk Register + Failure Map</h3>
+        <p>Ranked issues by severity and blast radius. Identification of silent failures. What breaks first under higher volume.</p>
+      </div>
+      <div class="deliverable-card">
+        <div class="deliverable-label">C</div>
+        <h3>Standards + Corrections Plan</h3>
+        <p>Separation plan, authentication plan, sending policy recommendations, and enforcement design — checks, gates, ownership.</p>
+      </div>
+      <div class="deliverable-card">
+        <div class="deliverable-label">D</div>
+        <h3>30/60/90 Roadmap</h3>
+        <p>Quick wins, stabilization sequence, and scaling sequence. Only after separation and enforcement are in place.</p>
+      </div>
+      <div class="deliverable-card">
+        <div class="deliverable-label">E</div>
+        <h3>Implementation Notes</h3>
+        <p>Actionable notes your team can execute, with recommended settings and guardrails. Optional weekly operator checklist.</p>
+      </div>
+      <div class="deliverable-card">
+        <div class="deliverable-label">F</div>
+        <h3>Review Call</h3>
+        <p>A live walkthrough to align on priority sequence, ownership, and what not to do next.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- WHAT WE NEED -->
+<section class="content-section alt-bg">
+  <div class="container">
+    <div class="label">// What we need from you</div>
+    <h2 class="section-heading">Intake <em>requirements.</em></h2>
+    <ul class="req-list">
+      <li><span class="req-icon">→</span> Domains used for outbound and related sending</li>
+      <li><span class="req-icon">→</span> Tool stack (outbound platform, inbox provider, CRM)</li>
+      <li><span class="req-icon">→</span> Current and target volumes (high level)</li>
+      <li><span class="req-icon">→</span> Access or screenshots for auth + sending configuration</li>
+      <li><span class="req-icon">→</span> Known symptoms and recent changes</li>
+    </ul>
+  </div>
+</section>
+
+<!-- TERMS -->
+<section class="content-section">
+  <div class="container">
+    <div class="label">// Terms</div>
+    <h2 class="section-heading">How it <em>works.</em></h2>
+    <div class="terms-grid">
+      <div class="term-card">
+        <h4>Timeline</h4>
+        <p>Typical completion: 7–10 business days from intake, depending on access readiness. Delays caused by missing inputs shift the timeline accordingly.</p>
+      </div>
+      <div class="term-card">
+        <h4>Payment</h4>
+        <p>Fixed-fee audit, paid upfront (or split if agreed in writing). Work begins once payment and intake are received.</p>
+      </div>
+      <div class="term-card">
+        <h4>Access & Confidentiality</h4>
+        <p>You control access scope. We only request what is required. All provided data is treated as confidential. NDA available on request.</p>
+      </div>
+      <div class="term-card">
+        <h4>Rescheduling</h4>
+        <p>Review call reschedules are allowed with reasonable notice. Repeated no-shows may require a new booking.</p>
+      </div>
+      <div class="term-card">
+        <h4>Limitations</h4>
+        <p>Recommendations are based on the system state during the audit window. Deliverability performance depends on execution, list quality, and other factors.</p>
+      </div>
+      <div class="term-card">
+        <h4>Next Steps</h4>
+        <p>Submit intake below. If you're a fit, we'll confirm scope, send payment details, and start. Or checkout and get started right away.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <div class="label" style="justify-content:center; display:flex; margin-bottom:32px;">// Start here</div>
+    <h2>Find what breaks<br><em>before it breaks.</em></h2>
+    <p>$3,500 flat fee. Full system teardown. Staged remediation plan. Enforcement rules. Operator-delivered.</p>
+    <div class="cta-buttons">
+      <a href="https://buy.stripe.com/00wcN51JubKvbRH4mw3Je01" class="btn-primary">Buy Audit — $3,500</a>
+      <a href="mailto:hello@inboxglobal.io?subject=System%20Integrity%20Audit%20Intake" class="btn-ghost">Request Intake Call</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <a href="/" class="footer-logo">InboxGlobal™</a>
+    <ul class="footer-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/resources">Resources</a></li>
+      <li><a href="/pulsecheck">PulseCheck</a></li>
+      <li><a href="https://es.inboxglobal.io">ES 🇪🇸</a></li>
+    </ul>
+    <div class="footer-copy">© 2026 InboxGlobal™ LLC. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', () => {
+    document.querySelector('.nav-links').classList.remove('open');
+  });
+});
+</script>
+
+</body>
+</html>
