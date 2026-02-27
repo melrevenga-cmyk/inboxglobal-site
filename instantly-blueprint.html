@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instantly.ai Operator Blueprint — InboxGlobal™</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#050C17;--bg2:#080F1C;--bg3:#0C1628;--border:rgba(34,211,238,0.12);--border-strong:rgba(34,211,238,0.25);--accent:#22D3EE;--accent2:#818CF8;--accent3:#22C55E;--warn:#f59e0b;--danger:#ef4444;--text:#E2EBF3;--muted:#6B859E;--dim:#3A5068;--mono:'DM Sans',sans-serif}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6;overflow-x:hidden}
+  ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:var(--accent2);border-radius:3px}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(5,12,23,0.88);border-bottom:1px solid rgba(34,211,238,0.12);backdrop-filter:blur(12px)}
+  .nav-inner{max-width:1200px;margin:0 auto;padding:0 32px;display:flex;align-items:center;gap:24px;height:60px}
+  .logo{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:800;letter-spacing:-0.01em;color:#22D3EE;white-space:nowrap;flex-shrink:0;text-decoration:none}
+  .logo span{color:var(--muted)}
+  .nav-links{display:flex;gap:2px;overflow-x:auto}
+  .nav-btn{background:none;border:none;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;padding:6px 12px;border-radius:4px;cursor:pointer;white-space:nowrap;transition:all .2s;letter-spacing:0.04em;text-transform:uppercase}
+  .nav-btn:hover,.nav-btn.active{background:var(--bg3);color:var(--accent)}
+  /* ── HERO OVERRIDE ── */
+  .hero{min-height:unset;display:block;align-items:unset;justify-content:unset;text-align:left;position:relative;overflow:hidden;padding:100px 0 0;background:var(--bg)}
+  .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(34,211,238,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(34,211,238,0.025) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+  .hero-glow{position:absolute;top:-100px;left:40%;width:700px;height:480px;background:radial-gradient(ellipse,rgba(129,140,248,0.09) 0%,transparent 70%);pointer-events:none}
+  .hero-content{position:relative;max-width:1100px;margin:0 auto;padding:0 32px 56px}
+  .hero-eyebrow{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:#94A3B8;margin-bottom:28px;display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);padding:7px 18px;border-radius:100px}
+  .hero-eyebrow-dot{width:7px;height:7px;background:#22C55E;border-radius:50%;flex-shrink:0;animation:pulse 2s infinite}
+  .hero-tag{display:none} /* hide old tag */
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+  h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(48px,7.5vw,96px);font-weight:800;line-height:0.95;letter-spacing:-0.03em;margin-bottom:24px;max-width:880px}
+  h1 .line1{display:block;color:var(--text)}
+  h1 .line2{display:block;background:linear-gradient(90deg,#22D3EE 0%,#818CF8 55%,#A855F7 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .hero-sub{font-family:'DM Sans',sans-serif;font-size:17px;font-weight:400;color:var(--muted);max-width:560px;margin:0 0 48px;line-height:1.7}
+  /* Stats strip */
+  .hero-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--border);border-top:1px solid var(--border);margin-top:0}
+  .stat{background:var(--bg2);padding:20px 24px;text-align:left;position:relative}
+  .stat::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:transparent;transition:background 0.2s}
+  .stat:hover::before{background:var(--accent)}
+  .stat-num{font-family:'Plus Jakarta Sans',sans-serif;font-size:28px;font-weight:800;color:var(--accent);letter-spacing:-0.02em;display:block;margin-bottom:4px}
+  .stat-lbl{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;color:var(--dim);text-transform:uppercase;letter-spacing:0.1em;display:block}
+  /* source line */
+  .hero-source{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--dim);padding:10px 0 0;border-top:1px solid var(--border);margin-top:1px;max-width:1100px;margin-left:auto;margin-right:auto;padding-left:32px;padding-right:32px}
+  .scroll-hint{display:none}
+  section{max-width:1200px;margin:0 auto;padding:72px 24px}
+  .section-header{margin-bottom:44px}
+  .section-tag{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;color:var(--accent);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:12px}
+  h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(22px,3.5vw,38px);font-weight:800;letter-spacing:-0.02em;margin-bottom:12px}
+  .section-sub{color:var(--muted);font-size:15px;max-width:620px}
+  .card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:22px;transition:border-color .2s}
+  .card:hover{border-color:var(--accent2)}
+  .card-title{font-size:14px;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+  .card-body{font-size:13px;color:var(--muted);line-height:1.7}
+  /* BENCHMARK TICKER */
+  .bm-bar{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:12px 0;overflow:hidden;position:relative}
+  .bm-inner{display:flex;gap:48px;animation:ticker 28s linear infinite;width:max-content}
+  @keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+  .bm-item{display:flex;align-items:center;gap:10px;white-space:nowrap;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500}
+  .bm-val{color:var(--accent);font-weight:700}
+  .bm-lbl{color:var(--muted)}
+  .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+  .grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+  .terminal{background:#050508;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:20px 0}
+  .term-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 16px;display:flex;align-items:center;gap:8px}
+  .term-dot{width:10px;height:10px;border-radius:50%}
+  .term-title{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--muted);margin-left:8px}
+  .term-body{padding:20px;font-family:'DM Sans',sans-serif;font-size:12px;line-height:2;overflow-x:auto}
+  .c-green{color:#10b981}.c-blue{color:var(--accent)}.c-yellow{color:var(--warn)}.c-purple{color:#a78bfa}.c-red{color:var(--danger)}.c-muted{color:var(--muted)}.c-white{color:#fff}
+  .tabs{display:flex;gap:4px;border-bottom:1px solid var(--border);margin-bottom:28px;overflow-x:auto}
+  .tab{background:none;border:none;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:10px 18px;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap}
+  .tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+  .tab-panel{display:none}.tab-panel.active{display:block}
+  .workflow-step{display:flex;gap:14px;margin-bottom:20px}
+  .step-num{width:30px;height:30px;border-radius:7px;background:var(--bg3);border:1px solid var(--accent2);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;color:var(--accent2);flex-shrink:0;font-weight:800}
+  .step-content h4{font-size:14px;font-weight:600;margin-bottom:3px}
+  .step-content p{font-size:13px;color:var(--muted)}
+  .flow-connector{width:1px;height:20px;background:linear-gradient(var(--accent2),transparent);margin-left:15px;position:relative}
+  .flow-connector::after{content:'▼';position:absolute;bottom:-8px;left:-5px;font-size:10px;color:var(--muted)}
+  .alert{border-radius:8px;padding:13px 17px;font-size:13px;margin:14px 0;display:flex;gap:10px;align-items:flex-start}
+  .alert-warn{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);color:var(--warn)}
+  .alert-info{background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.2);color:var(--accent)}
+  .alert-success{background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.2);color:var(--accent3)}
+  .alert-danger{background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.2);color:var(--danger)}
+  .alert-icon{font-size:15px;flex-shrink:0;margin-top:1px}
+  .calc-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:26px}
+  .calc-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px}
+  label{font-size:11px;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;display:block;margin-bottom:5px}
+  input[type=number],select{background:var(--bg3);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:14px;padding:9px 13px;width:100%;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s}
+  input:focus,select:focus{border-color:var(--accent)}
+  .calc-result{background:var(--bg3);border:1px solid var(--accent2);border-radius:10px;padding:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:14px;margin-top:14px}
+  .result-item{text-align:center}
+  .result-val{font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800;letter-spacing:-0.02em;color:var(--accent)}
+  .result-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:3px}
+  .warmup-timeline{position:relative;padding:16px 0}
+  .wt-bar{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+  .wt-label{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;color:var(--muted);width:56px;text-align:right;flex-shrink:0}
+  .wt-track{flex:1;height:26px;background:var(--bg3);border-radius:6px;overflow:hidden}
+  .wt-fill{height:100%;border-radius:6px;display:flex;align-items:center;padding-left:8px;font-family:'DM Sans',sans-serif;font-size:10px;font-weight:600;transition:width 1s ease}
+  .wt-fill.warmup{background:linear-gradient(90deg,rgba(124,58,237,.5),rgba(124,58,237,.8));color:#c4b5fd}
+  .wt-fill.mixed{background:linear-gradient(90deg,rgba(0,212,255,.4),rgba(0,212,255,.7));color:var(--accent)}
+  .wt-fill.full{background:linear-gradient(90deg,rgba(16,185,129,.4),rgba(16,185,129,.8));color:var(--accent3)}
+  .wt-val{font-family:'DM Sans',sans-serif;font-size:10px;color:var(--text);width:72px;flex-shrink:0}
+  .flow-node{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px 16px;font-size:13px;position:relative;min-width:190px}
+  .flow-node.trigger{border-color:var(--accent);background:rgba(0,212,255,.05)}
+  .flow-node.action{border-color:var(--accent2);background:rgba(124,58,237,.05)}
+  .flow-node.condition{border-color:var(--warn);background:rgba(245,158,11,.05)}
+  .flow-node.outcome{border-color:var(--accent3);background:rgba(16,185,129,.05)}
+  .flow-node.handover{border-color:#f472b6;background:rgba(244,114,182,.05)}
+  .node-type{font-family:'DM Sans',sans-serif;font-size:9px;letter-spacing:1px;text-transform:uppercase;opacity:.6;margin-bottom:3px}
+  .flow-branch{display:flex;gap:16px}
+  .branch-line{display:flex;flex-direction:column;align-items:center}
+  .branch-label{font-family:'DM Sans',sans-serif;font-size:10px;color:var(--muted);background:var(--bg3);padding:2px 7px;border-radius:4px;margin-bottom:4px}
+  .chip{display:inline-flex;align-items:center;gap:4px;background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:2px 8px;font-family:'DM Sans',sans-serif;font-size:11px;margin:2px}
+  .chip.green{border-color:rgba(16,185,129,.4);color:var(--accent3)}
+  .chip.blue{border-color:rgba(0,212,255,.4);color:var(--accent)}
+  .chip.yellow{border-color:rgba(245,158,11,.4);color:var(--warn)}
+  .chip.red{border-color:rgba(239,68,68,.4);color:var(--danger)}
+  .chip.purple{border-color:rgba(124,58,237,.4);color:#a78bfa}
+  .chip.pink{border-color:rgba(244,114,182,.4);color:#f472b6}
+  .ratio-vis{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:14px 0}
+  .domain-icon{background:var(--bg3);border:1px solid var(--accent2);border-radius:6px;padding:8px 11px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;color:#a78bfa}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{background:var(--bg3);padding:10px 14px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:600}
+  td{padding:10px 14px;border-bottom:1px solid var(--border)}
+  tr:hover td{background:var(--bg3)}
+  .table-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+  .prog-wrap{margin:7px 0}
+  .prog-label{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:3px}
+  .prog-track{height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}
+  .prog-fill{height:100%;border-radius:3px}
+  .btn{background:var(--accent2);border:none;color:#fff;padding:10px 22px;border-radius:6px;font-size:13px;cursor:pointer;transition:opacity .2s;font-weight:600}
+  .btn:hover{opacity:.85}
+  .divider{border:none;border-top:1px solid var(--border);margin:0}
+  .callout{background:var(--bg3);border-left:3px solid var(--accent);padding:13px 17px;border-radius:0 8px 8px 0;margin:14px 0;font-size:13px;color:var(--muted)}
+  .callout strong{color:var(--text)}
+  /* BENCHMARK TICKER */
+  .bm-bar{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:10px 0;overflow:hidden;position:relative}
+  .bm-inner{display:flex;gap:48px;animation:ticker 28s linear infinite;width:max-content}
+  @keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+  .bm-item{display:flex;align-items:center;gap:10px;white-space:nowrap;font-family:'DM Sans',sans-serif;font-size:11px}
+  .bm-val{color:var(--accent);font-weight:700}
+  .bm-lbl{color:var(--muted)}
+  /* BENCHMARK SECTION */
+  .bm-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center;display:flex;flex-direction:column;justify-content:flex-start}
+  .bm-big{font-family:'Plus Jakarta Sans',sans-serif;font-size:32px;font-weight:800;letter-spacing:-0.02em;margin-bottom:4px}
+  .bm-sub{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+  .bm-desc{font-size:12px;color:var(--muted);line-height:1.6}
+  /* HANDOVER */
+  .handover-flow{display:flex;flex-direction:column;gap:0;max-width:680px}
+  .ho-stage{display:flex;gap:14px;align-items:flex-start;padding:16px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;margin-bottom:4px}
+  .ho-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+  .ho-content h4{font-size:14px;font-weight:600;margin-bottom:3px}
+  .ho-content p{font-size:12px;color:var(--muted)}
+  .ho-arrow{text-align:center;color:var(--muted);font-size:12px;margin:2px 0 2px 23px}
+  /* SLA badge */
+  .sla{display:inline-block;background:var(--bg3);border:1px solid var(--border);border-radius:4px;font-family:'DM Sans',sans-serif;font-size:10px;padding:2px 7px;margin-left:6px}
+  /* compliance */
+  .rule-row{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);align-items:flex-start}
+  .rule-row:last-child{border-bottom:none}
+  .rule-icon{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;margin-top:2px}
+  .rule-title{font-size:13px;font-weight:600;margin-bottom:2px}
+  .rule-body{font-size:12px;color:var(--muted)}
+  footer{border-top:1px solid var(--border);text-align:center;padding:32px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--muted)}
+  @media(max-width:640px){.calc-row{grid-template-columns:1fr}.hero-stats{gap:20px}.nav-inner{gap:12px}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="https://inboxglobal.io" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:800;letter-spacing:-0.01em;color:#22D3EE;text-decoration:none;">InboxGlobal™</a>
+    <div class="nav-links">
+      <button class="nav-btn active" onclick="navTo('infra',this)">Infrastructure</button>
+      <button class="nav-btn" onclick="navTo('warmup',this)">Warmup</button>
+      <button class="nav-btn" onclick="navTo('campaigns',this)">Campaigns</button>
+      <button class="nav-btn" onclick="navTo('handover',this)">Handover</button>
+      <button class="nav-btn" onclick="navTo('benchmarks',this)">2026 Data</button>
+      <button class="nav-btn" onclick="navTo('compliance',this)">Compliance</button>
+      <button class="nav-btn" onclick="navTo('tools',this)">Tools</button>
+    </div>
+    <a href="https://inboxglobal.io/resources" style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#22D3EE;background:rgba(34,211,238,0.08);border:1px solid rgba(34,211,238,0.2);padding:6px 14px;border-radius:4px;text-decoration:none;flex-shrink:0;white-space:nowrap;">← All Resources</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero" id="top">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow"><span class="hero-eyebrow-dot"></span> Operator Blueprint · InboxGlobal™</div>
+    <h1>
+      <span class="line1">Instantly.ai</span>
+      <span class="line2">Operator Blueprint</span>
+    </h1>
+    <p class="hero-sub">Infrastructure setup, warmup sequencing, deliverability architecture, and enforcement rules for operators running Instantly at scale.</p>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><span class="stat-num">3.43%</span><span class="stat-lbl">Avg Reply Rate</span></div>
+    <div class="stat"><span class="stat-num">10%+</span><span class="stat-lbl">Top Performer Rate</span></div>
+    <div class="stat"><span class="stat-num">58%</span><span class="stat-lbl">Replies from Step 1</span></div>
+    <div class="stat"><span class="stat-num">&lt;80</span><span class="stat-lbl">Words per Email</span></div>
+    <div class="stat"><span class="stat-num">Wed</span><span class="stat-lbl">Highest Reply Day</span></div>
+  </div>
+  <div class="hero-source" style="display:none;"></div>
+</div>
+
+<!-- BENCHMARK TICKER -->
+<div class="bm-bar">
+  <div class="bm-inner">
+    <div class="bm-item"><span class="bm-val">3.43%</span><span class="bm-lbl">Average reply rate</span></div>
+    <div class="bm-item"><span class="bm-val">10.7%+</span><span class="bm-lbl">Top performer reply rate</span></div>
+    <div class="bm-item"><span class="bm-val">58%</span><span class="bm-lbl">Replies come from email Step 1</span></div>
+    <div class="bm-item"><span class="bm-val">&lt;80 words</span><span class="bm-lbl">Best performing email length</span></div>
+    <div class="bm-item"><span class="bm-val">Wednesday</span><span class="bm-lbl">Highest reply day</span></div>
+    <div class="bm-item"><span class="bm-val">0.3%</span><span class="bm-lbl">Max spam complaint rate</span></div>
+    <div class="bm-item"><span class="bm-val">&lt;2%</span><span class="bm-lbl">Bounce rate target</span></div>
+    <div class="bm-item"><span class="bm-val">15–25%</span><span class="bm-lbl">Signal-based reply rate</span></div>
+    <!-- duplicate for seamless loop -->
+    <div class="bm-item"><span class="bm-val">3.43%</span><span class="bm-lbl">Average reply rate</span></div>
+    <div class="bm-item"><span class="bm-val">10.7%+</span><span class="bm-lbl">Top performer reply rate</span></div>
+    <div class="bm-item"><span class="bm-val">58%</span><span class="bm-lbl">Replies come from email Step 1</span></div>
+    <div class="bm-item"><span class="bm-val">&lt;80 words</span><span class="bm-lbl">Best performing email length</span></div>
+    <div class="bm-item"><span class="bm-val">Wednesday</span><span class="bm-lbl">Highest reply day</span></div>
+    <div class="bm-item"><span class="bm-val">0.3%</span><span class="bm-lbl">Max spam complaint rate</span></div>
+    <div class="bm-item"><span class="bm-val">&lt;2%</span><span class="bm-lbl">Bounce rate target</span></div>
+    <div class="bm-item"><span class="bm-val">15–25%</span><span class="bm-lbl">Signal-based reply rate</span></div>
+  </div>
+</div>
+<div style="background:var(--bg2);border-bottom:1px solid var(--border);padding:8px 32px;font-family:'DM Sans',sans-serif;font-size:11px;color:var(--dim);text-align:center;letter-spacing:0.04em;">Source: Instantly 2026 Cold Email Benchmark Report — billions of interactions analyzed across thousands of active workspaces</div>
+
+<!-- TOC STRIP -->
+<div style="background:var(--bg);border-bottom:1px solid var(--border);padding:20px 0;">
+  <div style="max-width:1200px;margin:0 auto;padding:0 32px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+      <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div style="width:6px;height:6px;background:var(--accent);border-radius:50%;"></div>
+          <span style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;">~25 min read</span>
+        </div>
+        <div style="width:1px;height:16px;background:var(--border);"></div>
+        <span style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;color:var(--dim);letter-spacing:0.06em;text-transform:uppercase;">6 modules</span>
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;">
+        <a onclick="navTo('infra',document.querySelector('[onclick*=infra]'))" href="#infra" style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;color:var(--muted);background:var(--bg2);border:1px solid var(--border);padding:5px 12px;border-radius:4px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#22D3EE';this.style.borderColor='rgba(34,211,238,0.3)'" onmouseout="this.style.color='';this.style.borderColor=''">01 Infrastructure</a>
+        <a href="#warmup" style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;color:var(--muted);background:var(--bg2);border:1px solid var(--border);padding:5px 12px;border-radius:4px;text-decoration:none;" onmouseover="this.style.color='#22D3EE';this.style.borderColor='rgba(34,211,238,0.3)'" onmouseout="this.style.color='';this.style.borderColor=''">02 Warmup</a>
+        <a href="#campaigns" style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;color:var(--muted);background:var(--bg2);border:1px solid var(--border);padding:5px 12px;border-radius:4px;text-decoration:none;" onmouseover="this.style.color='#22D3EE';this.style.borderColor='rgba(34,211,238,0.3)'" onmouseout="this.style.color='';this.style.borderColor=''">03 Campaigns</a>
+        <a href="#handover" style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;color:var(--muted);background:var(--bg2);border:1px solid var(--border);padding:5px 12px;border-radius:4px;text-decoration:none;" onmouseover="this.style.color='#22D3EE';this.style.borderColor='rgba(34,211,238,0.3)'" onmouseout="this.style.color='';this.style.borderColor=''">04 Handover</a>
+        <a href="#benchmarks" style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;color:var(--muted);background:var(--bg2);border:1px solid var(--border);padding:5px 12px;border-radius:4px;text-decoration:none;" onmouseover="this.style.color='#22D3EE';this.style.borderColor='rgba(34,211,238,0.3)'" onmouseout="this.style.color='';this.style.borderColor=''">05 Benchmarks</a>
+        <a href="#compliance" style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;color:var(--muted);background:var(--bg2);border:1px solid var(--border);padding:5px 12px;border-radius:4px;text-decoration:none;" onmouseover="this.style.color='#22D3EE';this.style.borderColor='rgba(34,211,238,0.3)'" onmouseout="this.style.color='';this.style.borderColor=''">06 Compliance</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="infra">
+  <div class="section-header">
+    <div class="section-tag">// MODULE 01</div>
+    <h2>Deliverability Infrastructure</h2>
+    <p class="section-sub">The foundation everything else sits on. Get this wrong and no warmup or campaign strategy will save you.</p>
+  </div>
+
+  <div class="tabs" id="infra-tabs">
+    <button class="tab active" onclick="switchTab('infra',0)">Domain Strategy</button>
+    <button class="tab" onclick="switchTab('infra',1)">DNS Records</button>
+    <button class="tab" onclick="switchTab('infra',2)">Advanced Delivery</button>
+    <button class="tab" onclick="switchTab('infra',3)">Provider Selection</button>
+    <button class="tab" onclick="switchTab('infra',4)">Tracking Domains</button>
+  </div>
+
+  <!-- DOMAINS -->
+  <div class="tab-panel active">
+    <div class="grid2">
+      <div>
+        <h3 style="margin-bottom:14px;font-size:16px;">The Generic Domain Architecture Framework</h3>
+        <p style="color:var(--muted);font-size:13px;margin-bottom:16px;">Your sending domains must be entirely generic — no mention of your brand name, product, or service. Generic domains protect your primary brand's reputation and avoid signalling to spam filters that a recognisable brand is cold emailing en masse.</p>
+
+        <div class="alert alert-danger"><span class="alert-icon">🚫</span><div><strong>Hard rule: Never send cold email from your primary brand domain.</strong> One spam complaint from a cold prospect can blacklist your entire business domain, killing deliverability across all channels — not just outreach.</div></div>
+
+        <div class="alert alert-warn"><span class="alert-icon">⚠</span><div><strong>Avoid branded variations too.</strong> Domains like <code style="font-family:'DM Sans',sans-serif;font-size:11px;background:var(--bg3);padding:1px 5px;border-radius:3px;">getAcme.com</code> or <code style="font-family:'DM Sans',sans-serif;font-size:11px;background:var(--bg3);padding:1px 5px;border-radius:3px;">tryAcme.io</code> still expose your brand to reputation risk. Use entirely unrelated, generic names.</div></div>
+
+        <h4 style="font-size:13px;margin:18px 0 10px;">Generic Domain Naming That Works</h4>
+        <div class="ratio-vis">
+          <div class="domain-icon">🌐 clarityhq.com<br><span style="color:var(--muted);font-size:9px;">GENERIC ✓</span></div>
+          <div class="domain-icon">🌐 revenueloop.com<br><span style="color:var(--muted);font-size:9px;">GENERIC ✓</span></div>
+          <div class="domain-icon">🌐 growthpilot.com<br><span style="color:var(--muted);font-size:9px;">GENERIC ✓</span></div>
+        </div>
+        <div class="ratio-vis" style="margin-top:8px;">
+          <div class="domain-icon" style="border-color:var(--danger);color:var(--danger);">🌐 getAcme.com<br><span style="font-size:9px;">BRANDED ✗</span></div>
+          <div class="domain-icon" style="border-color:var(--danger);color:var(--danger);">🌐 acme-mail.com<br><span style="font-size:9px;">BRANDED ✗</span></div>
+          <div class="domain-icon" style="border-color:var(--warn);color:var(--warn);">🌐 acme-team.io<br><span style="font-size:9px;">RISKY !</span></div>
+        </div>
+        <div class="callout" style="margin-top:16px;"><strong>Naming principles:</strong> Use generic business language — words like hub, hq, loop, pilot, team, sync, reach, pulse. Prefer .com over other TLDs. Avoid hyphens — they're a mild spam signal. Make the domain sound like a legitimate small business on its own.</div>
+      </div>
+
+      <div>
+        <div class="card" style="margin-bottom:14px;">
+          <div class="card-title">📐 The Golden Ratio Rule</div>
+          <div style="font-family:'DM Sans',sans-serif;font-size:22px;color:var(--accent);margin:8px 0;">1 Domain : 2–3 Mailboxes</div>
+          <div class="card-body">Never exceed 3 mailboxes per domain. Beyond this, domain reputation degrades under shared sending load. Spread across more domains instead.</div>
+        </div>
+
+        <div class="card" style="margin-bottom:14px;">
+          <div class="card-title">⏳ Domain Age Progression</div>
+          <div class="card-body">
+            <div class="prog-wrap"><div class="prog-label"><span>Fresh domain (0–30 days)</span><span style="color:var(--danger)">Warmup only</span></div><div class="prog-track"><div class="prog-fill" style="width:15%;background:var(--danger)"></div></div></div>
+            <div class="prog-wrap"><div class="prog-label"><span>30–60 days</span><span style="color:var(--warn)">Low volume sends</span></div><div class="prog-track"><div class="prog-fill" style="width:45%;background:var(--warn)"></div></div></div>
+            <div class="prog-wrap"><div class="prog-label"><span>60–90 days</span><span style="color:#60a5fa)">Scaling safely</span></div><div class="prog-track"><div class="prog-fill" style="width:70%;background:#3b82f6"></div></div></div>
+            <div class="prog-wrap"><div class="prog-label"><span>90+ days</span><span style="color:var(--accent3)">Full capacity</span></div><div class="prog-track"><div class="prog-fill" style="width:100%;background:var(--accent3)"></div></div></div>
+            <div style="margin-top:10px;font-size:12px;color:var(--muted);">Domain age is one of the strongest trust signals. Register domains in batches and let them age — this is not a step you can rush.</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">🔄 Domain Rotation & Retirement</div>
+          <div class="card-body">Register batches of 5–10 generic domains at once. Let them age 30 days before warmup. Rotate retiring domains out at the first sign of reputation drops — never try to "recover" a burned domain. Domain cost is cheap; reputation damage is expensive.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DNS -->
+  <div class="tab-panel">
+    <div class="alert alert-info"><span class="alert-icon">ℹ</span><div>All three records — SPF, DKIM, and DMARC — must be correctly configured <strong>before</strong> starting warmup. Instantly will flag issues in your mailbox health panel.</div></div>
+    <div class="terminal">
+      <div class="term-header"><div class="term-dot" style="background:#ef4444"></div><div class="term-dot" style="background:#f59e0b"></div><div class="term-dot" style="background:#10b981"></div><div class="term-title">DNS CONFIGURATION // SPF + DKIM + DMARC</div></div>
+      <div class="term-body">
+<span class="c-muted"># ── SPF Record (TXT @ your root domain) ─────────────────────────────</span><br>
+<span class="c-blue">Type:</span> <span class="c-green">TXT</span> &nbsp;<span class="c-blue">Host:</span> <span class="c-green">@</span> &nbsp;<span class="c-blue">TTL:</span> <span class="c-yellow">3600</span><br>
+<span class="c-blue">Value:</span> <span class="c-green">v=spf1 include:_spf.google.com ~all</span><br>
+<span class="c-muted"># For M365: include:spf.protection.outlook.com ~all</span><br>
+<span class="c-muted"># Use ~all (softfail) NOT -all — over-strict rejection hurts new domains</span><br><br>
+<span class="c-muted"># ── DKIM Record ──────────────────────────────────────────────────────</span><br>
+<span class="c-blue">Type:</span> <span class="c-green">TXT</span> &nbsp;<span class="c-blue">Host:</span> <span class="c-green">google._domainkey</span><br>
+<span class="c-blue">Value:</span> <span class="c-green">v=DKIM1; k=rsa; p=[YOUR_PUBLIC_KEY_FROM_GOOGLE_ADMIN]</span><br>
+<span class="c-muted"># Google Admin → Apps → Gmail → Authenticate Email → Generate new record</span><br>
+<span class="c-muted"># Allow 24–48h propagation before testing</span><br><br>
+<span class="c-muted"># ── DMARC Record ─────────────────────────────────────────────────────</span><br>
+<span class="c-blue">Type:</span> <span class="c-green">TXT</span> &nbsp;<span class="c-blue">Host:</span> <span class="c-green">_dmarc</span><br>
+<span class="c-blue">Value:</span> <span class="c-green">v=DMARC1; p=quarantine; rua=mailto:<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6e0a030f1c0d2e17011b1c0a01030f0700400d0103">[email&#160;protected]</a>; pct=100</span><br>
+<span class="c-muted"># Start with p=none (monitor mode), escalate to quarantine after 30 days</span><br>
+<span class="c-muted"># Never jump to p=reject — too aggressive for sending domains</span><br><br>
+<span class="c-muted"># ── Verification Tools ───────────────────────────────────────────────</span><br>
+<span class="c-yellow">→</span> <span class="c-purple">mxtoolbox.com/SuperTool</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-muted"># Full DNS lookup</span><br>
+<span class="c-yellow">→</span> <span class="c-purple">dmarcian.com/dmarc-inspector</span> <span class="c-muted"># DMARC deep analysis</span><br>
+<span class="c-yellow">→</span> <span class="c-purple">mail-tester.com</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-muted"># Full deliverability score (target 9+/10)</span>
+      </div>
+    </div>
+    <div class="grid3">
+      <div class="card"><div class="card-title"><span style="color:var(--accent3)">✓</span> SPF Best Practices</div><div class="card-body">One include per provider. Multiple nested includes cause DNS lookup failures. If you use multiple senders, use a dedicated SPF flattening service to consolidate.</div></div>
+      <div class="card"><div class="card-title"><span style="color:var(--accent3)">✓</span> DKIM Key Rotation</div><div class="card-body">Rotate DKIM keys every 6–12 months as hygiene. Old exposed keys are a security risk. Add this to your domain management calendar as a recurring task.</div></div>
+      <div class="card"><div class="card-title"><span style="color:var(--accent)">→</span> MX Records Required</div><div class="card-body">Set MX records correctly even on sending-only domains. Receiving capability signals legitimacy to ESPs. A domain that can't receive email looks disposable to spam filters.</div></div>
+    </div>
+  </div>
+
+  <!-- ADVANCED DELIVERY SETTINGS -->
+  <div class="tab-panel">
+    <h3 style="font-size:16px;margin-bottom:8px;">Advanced Delivery Settings in Instantly</h3>
+    <p style="color:var(--muted);font-size:13px;margin-bottom:22px;">These settings live inside each email account and campaign and are the difference between advanced operators and people who just followed a setup tutorial once.</p>
+
+    <div class="grid2" style="margin-bottom:24px;">
+      <div>
+        <div class="card" style="margin-bottom:14px;border-color:var(--accent);">
+          <div class="card-title" style="color:var(--accent);">📄 Send as Plain Text — Always</div>
+          <div class="card-body">
+            <p style="margin-bottom:12px;">HTML email contains embedded styling, image tags, and tracking pixels that spam filters actively scan. <strong style="color:var(--text);">Plain text emails bypass these checks entirely</strong> and feel like a real human sent them from their inbox — because that's exactly what they look like.</p>
+            <div class="alert alert-success" style="margin:0;"><span class="alert-icon">✓</span><div>In Instantly: Campaign Settings → Email Format → set to <strong>Plain Text</strong>. No bold, no bullet points, no HTML signature images. Just text.</div></div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom:14px;">
+          <div class="card-title">🖊️ Plain Text Signature Setup</div>
+          <div class="card-body">
+            <p style="margin-bottom:10px;">Your signature must also be plain text. No company logos, no banner images, no LinkedIn icons. A simple 2–3 line signature that reads like a human wrote it.</p>
+            <div class="terminal" style="margin:0;">
+              <div class="term-body" style="padding:12px;">
+<span class="c-green">John Carter</span><br>
+<span class="c-muted">Revenue Operations | ClarityHQ</span><br>
+<span class="c-blue">+1 (555) 000-1234</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">⏱ Send Time Randomization</div>
+          <div class="card-body">Enable send time randomization in campaign settings. This prevents machine-gun send patterns (e.g. every email at exactly :00 minutes) that spam filters flag as automated. Instantly adds a random delay — keep it between 3–8 minutes between sends per mailbox.</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="terminal" style="margin-bottom:14px;">
+          <div class="term-header"><div class="term-dot" style="background:#ef4444"></div><div class="term-dot" style="background:#f59e0b"></div><div class="term-dot" style="background:#10b981"></div><div class="term-title">INSTANTLY.AI // ADVANCED SENDING SETTINGS</div></div>
+          <div class="term-body">
+<span class="c-muted"># Account-level Settings</span><br>
+<span class="c-blue">email_format:</span> <span class="c-green">"plain_text"</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-muted"># Never HTML</span><br>
+<span class="c-blue">open_tracking:</span> <span class="c-red">false</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-muted"># Pixel = spam signal</span><br>
+<span class="c-blue">click_tracking:</span> <span class="c-yellow">conditional</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-muted"># Only if link exists</span><br>
+<span class="c-blue">unsubscribe_link:</span> <span class="c-green">true</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-muted"># Required for compliance</span><br>
+<span class="c-blue">send_delay_min:</span> <span class="c-yellow">3min</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-muted"># Between individual sends</span><br>
+<span class="c-blue">send_delay_max:</span> <span class="c-yellow">8min</span><br><br>
+<span class="c-muted"># Campaign-level Settings</span><br>
+<span class="c-blue">daily_limit_per_mailbox:</span> <span class="c-yellow">30</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-muted"># Max 40 for mature domains</span><br>
+<span class="c-blue">stop_on_reply:</span> <span class="c-green">true</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-muted"># Critical — never follow up a reply</span><
+<span class="c-blue">stop_on_out_of_office:</span> <span class="c-green">true</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-muted"># Reduces bounce signal</span><br>
+<span class="c-blue">link_count_per_email:</span> <span class="c-yellow">0-1</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-muted"># Never more than 1</span><br>
+<span class="c-blue">attachment:</span> <span class="c-red">false</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-muted"># Never attach files in cold email</span><br>
+<span class="c-blue">weekends:</span> <span class="c-red">false</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">🔇 Open Tracking — The Real Story</div>
+          <div class="card-body">
+            <p style="margin-bottom:10px;">Disable open tracking by default for three reasons:</p>
+            <div style="font-size:12px;line-height:2;">
+              <div><span class="chip red">Spam</span> The tracking pixel is a known spam filter trigger</div>
+              <div><span class="chip yellow">Inaccurate</span> Many email clients auto-fire pixels on load</div>
+              <div><span class="chip yellow">Inaccurate</span> Apple MPP inflates open rates to near 100%</div>
+            </div>
+            <p style="margin-top:10px;font-size:12px;color:var(--muted);">Replies and link clicks are your real signal. Open rates in cold email are a vanity metric that costs you deliverability.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert alert-info"><span class="alert-icon">ℹ</span><div><strong>The "No Links" cold email play:</strong> The highest-deliverability campaigns contain zero links and zero tracking. Drive entirely to a reply. Only after a positive reply do you share a Calendly URL. This pattern consistently outperforms link-heavy sequences in inbox placement tests — and is strongly supported by the 2026 benchmark data showing 58% of all replies come from Step 1 before links are typically introduced.</div></div>
+  </div>
+
+  <!-- PROVIDERS -->
+  <div class="tab-panel">
+    <div class="table-wrap" style="margin-bottom:22px;">
+      <table>
+        <thead><tr><th>Provider</th><th>Cost/Mailbox</th><th>Deliverability</th><th>Setup</th><th>Best For</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Google Workspace</strong></td><td>$6/mo</td><td><span class="chip green">Excellent</span></td><td><span class="chip blue">Low</span></td><td>Most campaigns, high-volume agencies</td></tr>
+          <tr><td><strong>Microsoft 365</strong></td><td>$6/mo</td><td><span class="chip green">Excellent</span></td><td><span class="chip yellow">Medium</span></td><td>B2B enterprise targets (Outlook recipients)</td></tr>
+          <tr><td><strong>Zoho Mail</strong></td><td>$1/mo</td><td><span class="chip yellow">Good</span></td><td><span class="chip blue">Low</span></td><td>Budget scaling with caution</td></tr>
+          <tr><td><strong>Namecheap Mail</strong></td><td>Free–$0.5</td><td><span class="chip red">Poor</span></td><td><span class="chip blue">Low</span></td><td>Avoid for cold outreach</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout"><strong>The blended approach:</strong> Mix Google Workspace and Microsoft 365. This provides redundancy and each provider tends to trust its own ecosystem — Gmail recipients get better placement from Google infrastructure, Outlook recipients from Microsoft infrastructure.</div>
+    <div class="grid2" style="margin-top:20px;">
+      <div class="card">
+        <div class="card-title">🔑 Google Workspace Setup Checklist</div>
+        <div class="card-body" style="line-height:2.1;font-size:12px;">
+          ☐ Create under a business profile (not personal Gmail)<br>
+          ☐ Use professional <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="89efe0fbfafda7e5e8fafdc9ede6e4e8e0e7a7eae6e4">[email&#160;protected]</a> format<br>
+          ☐ Enable IMAP in Gmail settings<br>
+          ☐ Generate and verify DKIM in Admin Console<br>
+          ☐ Set up 2FA (Instantly uses OAuth — no password stored)<br>
+          ☐ Let account sit 7 days before connecting to Instantly
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">💡 Provider-to-ICP Matching</div>
+        <div class="card-body">
+          <p style="margin-bottom:12px;">Match your sending infrastructure to where your prospects live.</p>
+          <div style="font-size:12px;line-height:2.2;">
+            <div><span class="chip blue">Gmail ICP</span> → Google Workspace sending</div>
+            <div><span class="chip purple">Enterprise Outlook ICP</span> → Microsoft 365</div>
+            <div><span class="chip yellow">Mixed ICP</span> → Blend both providers ~50/50</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRACKING -->
+  <div class="tab-panel">
+    <div class="alert alert-danger"><span class="alert-icon">🚫</span><div><strong>Disable open tracking by default.</strong> Open tracking relies on a 1x1 pixel image — a well-known spam signal. Many modern clients block or auto-fire it. The data is unreliable. The cost to deliverability is real.</div></div>
+    <div class="grid2" style="margin-top:22px;">
+      <div>
+        <h3 style="font-size:16px;margin-bottom:16px;">Custom Tracking Domain Setup</h3>
+        <div class="workflow-step"><div class="step-num">01</div><div class="step-content"><h4>Register a dedicated tracking domain</h4><p>Completely separate from your sending domains. Something like <code style="font-family:'DM Sans',sans-serif;background:var(--bg3);padding:2px 5px;border-radius:3px;font-size:11px;">lnk-pilot.com</code> — generic, not brand-related.</p></div></div>
+        <div class="flow-connector"></div>
+        <div class="workflow-step"><div class="step-num">02</div><div class="step-content"><h4>Add CNAME in your DNS provider</h4><p>Point to Instantly's tracking domain as specified in Settings → Sending Domains.</p></div></div>
+        <div class="flow-connector"></div>
+        <div class="workflow-step"><div class="step-num">03</div><div class="step-content"><h4>Verify in Instantly dashboard</h4><p>Settings → Sending Domains → green checkmark. Propagation takes 24–48h.</p></div></div>
+        <div class="flow-connector"></div>
+        <div class="workflow-step"><div class="step-num">04</div><div class="step-content"><h4>Assign per campaign cohort, not globally</h4><p>Use different tracking domains across tier segments to isolate reputation and avoid bulk blacklisting.</p></div></div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:14px;">
+          <div class="card-title">📊 What to Actually Track</div>
+          <div class="card-body" style="font-size:12px;line-height:2.2;">
+            <div><span class="chip green">Track</span> &nbsp;<strong>Link clicks</strong> — high-intent signal worth the overhead</div>
+            <div><span class="chip green">Track</span> &nbsp;<strong>Replies</strong> — native in Instantly, zero external tracking</div>
+            <div><span class="chip red">Skip</span> &nbsp;&nbsp;<strong>Open rates</strong> — unreliable + spam signal cost</div>
+            <div><span class="chip yellow">Careful</span> <strong>Multiple links</strong> — 1 max per email if used at all</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">⚡ The "No Links" Cold Email Play</div>
+          <div class="card-body">The highest-deliverability campaigns contain zero links. Drive to a reply first. Only after a positive reply do you share a Calendly or URL. This pattern consistently outperforms link-heavy sequences — and is aligned with 2026 benchmark data showing 58% of all replies come from Step 1, before any links are typically introduced.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<hr class="divider">
+
+<!-- ══════════ WARMUP ══════════ -->
+<section id="warmup">
+  <div class="section-header">
+    <div class="section-tag">// MODULE 02</div>
+    <h2>Warmup Mechanics</h2>
+    <p class="section-sub">Warmup isn't a checkbox. It's an ongoing, calibrated process. Here's how Instantly's warmup network actually works and how to configure it correctly.</p>
+  </div>
+  <div class="tabs" id="warmup-tabs">
+    <button class="tab active" onclick="switchTab('warmup',0)">How It Works</button>
+    <button class="tab" onclick="switchTab('warmup',1)">Ramp Schedule</button>
+    <button class="tab" onclick="switchTab('warmup',2)">Settings Config</button>
+    <button class="tab" onclick="switchTab('warmup',3)">Health Signals</button>
+  </div>
+
+  <div class="tab-panel active">
+    <div class="grid2">
+      <div>
+        <h3 style="font-size:15px;margin-bottom:14px;">What Actually Happens in Instantly's Warmup Network</h3>
+        <p style="color:var(--muted);font-size:13px;line-height:1.8;margin-bottom:16px;">When you enable warmup, Instantly automatically sends low-volume emails between accounts in its warmup pool — a network of 4.2M+ real mailboxes. These emails are automatically opened, moved out of spam if they land there, and replied to. This activity signals to Gmail/Outlook that your domain sends legitimate, engaged email.</p>
+        <div class="alert alert-info"><span class="alert-icon">ℹ</span><div>Warmup emails are sent from a dedicated internal address, not your campaign address. Your campaign identity stays entirely separate from pool activity.</div></div>
+        <div class="callout"><strong>The key insight:</strong> Warmup doesn't improve reputation in isolation — it demonstrates positive engagement patterns. What matters is signal quality: low bounces, high opens, and replies. Instantly's pool generates all three automatically.</div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:14px;">
+          <div class="card-title">🏊 Why Pool Quality Matters</div>
+          <div class="card-body">
+            <p style="margin-bottom:10px;">Not all warmup pools are equal. Instantly's pool consists of real business accounts — not disposable addresses. Gmail and Outlook can detect warmup from throwaway accounts. Positive engagement from real inboxes carries significantly more weight with ESPs.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">🔄 Warmup vs. Campaign Ratio</div>
+          <div class="card-body" style="font-family:'DM Sans',sans-serif;font-size:12px;line-height:2;">
+            <div>Day 1–30: &nbsp; 100% warmup / 0% campaign</div>
+            <div>Day 30–60: 70% warmup / 30% campaign</div>
+            <div>Day 60–90: 50% warmup / 50% campaign</div>
+            <div>Day 90+: &nbsp; 30% warmup / 70% campaign</div>
+            <div style="margin-top:10px;font-size:11px;color:var(--muted);">Never fully disable warmup — run it continuously as a permanent health signal, even at scale.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-panel">
+    <h3 style="font-size:15px;margin-bottom:6px;">90-Day Warmup Ramp Schedule</h3>
+    <p style="color:var(--muted);font-size:13px;margin-bottom:20px;">2026 benchmark guidance: start new domains at 5–10 emails per day and increase gradually over 4–6 weeks. Erratic volume kills deliverability — consistent daily patterns are what ESPs learn to trust.</p>
+    <div class="warmup-timeline" id="warmup-chart"></div>
+    <div class="grid3" style="margin-top:22px;">
+      <div class="card"><div class="card-title">📅 Phase 1: Days 1–30</div><div class="card-body">Warmup only. Zero campaign sends. Target warmup score: 70+. Monitor spam rescue rate — if warmup emails are consistently landing in spam, check DNS config before proceeding.</div></div>
+      <div class="card"><div class="card-title">📅 Phase 2: Days 30–60</div><div class="card-body">Begin campaign sends at 10–15 emails/day. Increase by 5/day each week if health score stays above 80. Use your most verified, cleanest lead lists in this phase only.</div></div>
+      <div class="card"><div class="card-title">📅 Phase 3: Days 60–90+</div><div class="card-body">Scale to 30–40 campaign sends/day. Never exceed 40. Continue warmup at 20–25/day. At 90 days, domain is mature — monitor weekly, not daily.</div></div>
+    </div>
+  </div>
+
+  <div class="tab-panel">
+    <div class="terminal">
+      <div class="term-header"><div class="term-dot" style="background:#ef4444"></div><div class="term-dot" style="background:#f59e0b"></div><div class="term-dot" style="background:#10b981"></div><div class="term-title">INSTANTLY.AI // WARMUP CONFIGURATION — RECOMMENDED SETTINGS</div></div>
+      <div class="term-body">
+<span class="c-muted"># Navigate: Instantly → Email Accounts → [Account] → Warmup Settings</span><br><br>
+<span class="c-blue">warmup_enabled:</span> <span class="c-green">true</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-muted"># Always on, even during active campaigns</span><br>
+<span class="c-blue">daily_warmup_limit:</span> <span class="c-yellow">30</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-muted"># Start 10, +5/week up to 40 max</span><br>
+<span class="c-blue">reply_rate_target:</span> <span class="c-yellow">40%</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-muted"># Higher = stronger engagement signal</span><br>
+<span class="c-blue">open_rate_target:</span> <span class="c-yellow">80%</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-muted"># Warmup pool auto-opens — set high</span><br>
+<span class="c-blue">spam_rescue_enabled:</span> <span class="c-green">true</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-muted"># Critical — moves warmup out of spam</span><br>
+<span class="c-blue">weekdays_only:</span> <span class="c-green">true</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-muted"># Mimics human behavior</span><br><br>
+<span class="c-muted"># Pause triggers — Instantly can auto-pause on threshold breach</span><br>
+<span class="c-blue">auto_pause_on_bounce_rate:</span> <span class="c-yellow">5%</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-muted"># Hard stop</span><br>
+<span class="c-blue">auto_pause_on_spam_rate:</span> <span class="c-yellow">0.3%</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-muted"># Google enforcement threshold</span>
+      </div>
+    </div>
+    <div class="alert alert-warn"><span class="alert-icon">⚠</span><div><strong>Never pause warmup abruptly.</strong> If you need to pause campaigns, keep warmup running. The moment you stop all activity on a domain, reputation decay begins within 2–3 weeks.</div></div>
+  </div>
+
+  <div class="tab-panel">
+    <div class="grid2">
+      <div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Metric</th><th>Healthy</th><th>Warning</th><th>Critical</th></tr></thead>
+            <tbody>
+              <tr><td>Warmup Score</td><td><span class="chip green">85–100</span></td><td><span class="chip yellow">65–84</span></td><td><span class="chip red">&lt;65</span></td></tr>
+              <tr><td>Bounce Rate</td><td><span class="chip green">&lt;2%</span></td><td><span class="chip yellow">2–5%</span></td><td><span class="chip red">&gt;5%</span></td></tr>
+              <tr><td>Spam Complaint Rate</td><td><span class="chip green">&lt;0.1%</span></td><td><span class="chip yellow">0.1–0.3%</span></td><td><span class="chip red">&gt;0.3%</span></td></tr>
+              <tr><td>Spam Rescue Rate</td><td><span class="chip green">&lt;10%</span></td><td><span class="chip yellow">10–25%</span></td><td><span class="chip red">&gt;25%</span></td></tr>
+              <tr><td>Campaign Reply Rate</td><td><span class="chip green">&gt;3.43%</span></td><td><span class="chip yellow">1–3%</span></td><td><span class="chip red">&lt;1%</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:14px;"><div class="card-title">🚨 When to Pause a Domain</div><div class="card-body" style="font-size:12px;line-height:2.1;">→ Bounce rate exceeds 5% in any single campaign<br>→ Spam complaint rate approaches 0.3%<br>→ Warmup score drops below 60 for 3 consecutive days<br>→ Blacklist detection (check MXToolbox weekly)<br>→ Any manual suspension notice from Google/Microsoft</div></div>
+        <div class="card"><div class="card-title">🔁 Recovery Protocol</div><div class="card-body">Pause all campaigns on the affected domain. Keep warmup at minimum volume (5–10/day). Re-verify your lead list and scrub bad data. Wait 21 days. Reintroduce campaigns at 5/day. If health doesn't recover in 14 days, retire the domain and migrate.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+<hr class="divider">
+
+<!-- ══════════ CAMPAIGNS ══════════ -->
+<section id="campaigns">
+  <div class="section-header">
+    <div class="section-tag">// MODULE 03</div>
+    <h2>Campaign Architecture</h2>
+    <p class="section-sub">Most teams send the same sequence to everyone. Operators build branching logic, engagement-based routing, and multi-inbox rotation that reacts to prospect behavior.</p>
+  </div>
+  <div class="tabs" id="campaigns-tabs">
+    <button class="tab active" onclick="switchTab('campaigns',0)">Step 1 First</button>
+    <button class="tab" onclick="switchTab('campaigns',1)">Sequence Structure</button>
+    <button class="tab" onclick="switchTab('campaigns',2)">Subsequences</button>
+    <button class="tab" onclick="switchTab('campaigns',3)">Inbox Rotation</button>
+    <button class="tab" onclick="switchTab('campaigns',4)">Lead Segmentation</button>
+  </div>
+
+  <!-- STEP 1 FIRST -->
+  <div class="tab-panel active">
+    <div class="alert alert-success"><span class="alert-icon">📊</span><div><strong>2026 Benchmark finding:</strong> 58% of all replies in cold email campaigns are generated from Step 1. Your first email is your highest-leverage asset. Treat it accordingly.</div></div>
+    <div class="grid2" style="margin-top:20px;">
+      <div>
+        <h3 style="font-size:16px;margin-bottom:14px;">New leads go to the front of the queue</h3>
+        <p style="color:var(--muted);font-size:13px;line-height:1.8;margin-bottom:16px;">When you add new leads to an active campaign in Instantly, set them to start from Step 1 immediately — don't let them queue behind stale contacts. The longer a lead sits uncontacted after you've identified them, the less relevant your context becomes.</p>
+
+        <div class="callout">When uploading new leads to an active campaign: set the start step to Step 1, not "continue from where left off." Fresh leads get the first email, not a middle follow-up out of context.</div>
+
+        <div class="card" style="margin-top:16px;">
+          <div class="card-title">📐 Step 1 priorities</div>
+          <div class="card-body">
+            <p style="margin-bottom:12px;font-size:13px;">58% of replies come from Step 1. This is where your testing budget goes — not on follow-ups.</p>
+            <div style="font-size:13px;line-height:2.0;color:var(--muted);">
+              → A/B test Step 1 openers weekly — change one variable at a time<br>
+              → Keep it under 80 words. Not a goal — a constraint<br>
+              → One observation, one soft question. No pitch.<br>
+              → No links. Links in Step 1 cost deliverability and signal "mass email"<br>
+              → Use Instantly's preview and send test before activating any new variant
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:14px;border-color:var(--accent);">
+          <div class="card-title" style="color:var(--accent);">✓ What actually works in Step 1</div>
+          <div class="card-body">
+            <p style="margin-bottom:12px;">The highest-performing Step 1 emails share one thing: they sound like a person thought about this specific recipient. Not a system. Not a playbook.</p>
+            <div style="font-size:13px;line-height:2.2;">
+              <div><span class="chip green">Do</span> &nbsp;Open with something specific to them — a recent hire, a launch, a role change</div>
+              <div><span class="chip green">Do</span> &nbsp;Write like you talk. Read it out loud. If it sounds like a press release, rewrite it</div>
+              <div><span class="chip green">Do</span> &nbsp;End with a soft question, not a pitch or a meeting ask</div>
+              <div><span class="chip green">Do</span> &nbsp;Stay under 80 words. Every word that doesn't earn its place comes out</div>
+              <div><span class="chip red">Don't</span> &nbsp;Open with your company name or what you do</div>
+              <div><span class="chip red">Don't</span> &nbsp;Include links — none. Even "helpful" ones hurt deliverability and shift the tone</div>
+              <div><span class="chip red">Don't</span> &nbsp;Use phrases like "just checking in", "hope this finds you well", or "quick question"</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom:14px;">
+          <div class="card-title">🔬 Test before you send — use Instantly's preview and deliverability score</div>
+          <div class="card-body">
+            <p style="margin-bottom:10px;">Before activating any Step 1 campaign, use Instantly's built-in send test and deliverability score tools:</p>
+            <div style="font-size:12px;line-height:2.2;">
+              <div><span class="chip blue">Preview</span> &nbsp;Check how the email renders across providers — especially Gmail and Outlook</div>
+              <div><span class="chip blue">Send test</span> &nbsp;Send to your own inbox first. Read it as a recipient, not as the sender</div>
+              <div><span class="chip blue">Deliverability score</span> &nbsp;Run the score check before launch — catch auth issues, spam signals, or formatting problems before they cost you sends</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">📈 Reply Rate by Personalization Tier (2026)</div>
+          <div class="card-body">
+            <div class="prog-wrap"><div class="prog-label"><span>No personalization</span><span style="color:var(--danger)">1–3%</span></div><div class="prog-track"><div class="prog-fill" style="width:12%;background:var(--danger)"></div></div></div>
+            <div class="prog-wrap"><div class="prog-label"><span>Basic (name + company)</span><span style="color:var(--warn)">5–9%</span></div><div class="prog-track"><div class="prog-fill" style="width:35%;background:var(--warn)"></div></div></div>
+            <div class="prog-wrap"><div class="prog-label"><span>Advanced (pain-point aware)</span><span style="color:#60a5fa">9–15%</span></div><div class="prog-track"><div class="prog-fill" style="width:60%;background:#3b82f6"></div></div></div>
+            <div class="prog-wrap"><div class="prog-label"><span>Signal-based (trigger event)</span><span style="color:var(--accent3)">15–25%</span></div><div class="prog-track"><div class="prog-fill" style="width:80%;background:var(--accent3)"></div></div></div>
+            <div class="prog-wrap"><div class="prog-label"><span>Multi-signal stacked</span><span style="color:var(--accent3)">25–40%</span></div><div class="prog-track"><div class="prog-fill" style="width:100%;background:var(--accent)"></div></div></div>
+            <div style="font-size:11px;color:var(--muted);margin-top:8px;">Source: Instantly 2026 Benchmark Report</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEQUENCE STRUCTURE -->
+  <div class="tab-panel">
+    <div class="grid2">
+      <div>
+        <h3 style="font-size:16px;margin-bottom:14px;">The 4-Touch Sequence Blueprint</h3>
+        <div class="workflow-step"><div class="step-num">01</div><div class="step-content"><h4>Email 1 — Pattern Interrupt</h4><p>Short, direct, hyper-personalized. Under 80 words. No pitch. Lead with a relevant observation or trigger event. No links. Day 1. This email generates 58% of all replies.</p></div></div>
+        <div class="flow-connector"></div>
+        <div class="workflow-step"><div class="step-num">02</div><div class="step-content"><h4>Email 2 — Proof Without Pitching</h4><p>One relevant result compressed to 2–3 sentences. Ends with a soft CTA. Day 3 (2-day gap). Different angle to Email 1.</p></div></div>
+        <div class="flow-connector"></div>
+        <div class="workflow-step"><div class="step-num">03</div><div class="step-content"><h4>Email 3 — Reframe the Value</h4><p>Completely different angle. Different pain point, different framing. Don't repeat yourself. Day 7 (4-day gap).</p></div></div>
+        <div class="flow-connector"></div>
+        <div class="workflow-step"><div class="step-num">04</div><div class="step-content"><h4>Email 4 — The Breakup</h4><p>Acknowledge this might not be the right fit. Creates psychological safety for a reply. Day 14 (7-day gap). Short. Human. No pressure.</p></div></div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:14px;"><div class="card-title">✍️ Copy Principles that Protect Deliverability</div><div class="card-body" style="font-size:12px;line-height:2.2;"><div><span class="chip red">Avoid</span> Spam trigger words: free, guarantee, no risk, limited time, act now</div><div><span class="chip red">Avoid</span> ALL CAPS, excessive punctuation!!!, heavy HTML formatting</div><div><span class="chip green">Use</span> Plain text formatting — no HTML tables or styling</div><div><span class="chip green">Use</span> {{personalization}} variables for unique content per send</div><div><span class="chip green">Use</span> {Spintax} to vary body across large sends</div></div></div>
+        <div class="card" style="margin-bottom:14px;"><div class="card-title">⏱ Optimal Send Windows</div><div class="card-body" style="font-family:'DM Sans',sans-serif;font-size:12px;"><div style="margin-bottom:5px;"><span style="color:var(--accent3);">BEST</span> &nbsp; Wed–Tue 8am–10am (prospect TZ)</div><div style="margin-bottom:5px;"><span style="color:var(--accent3);">BEST</span> &nbsp; Wednesday all day (peak per 2026 data)</div><div style="margin-bottom:5px;"><span style="color:var(--warn);">OK &nbsp;&nbsp;</span> Mon–Fri, business hours</div><div><span style="color:var(--danger);">AVOID</span> Weekends, evenings, early morning</div></div></div>
+        <div class="card"><div class="card-title">📊 Follow-Up Math</div><div class="card-body">The 2026 benchmark confirms follow-ups account for 42% of total replies — worth the effort. But the first follow-up captures the majority of those. Sequences of 4–7 steps spaced 3–7 days apart optimize total reply rate. 70% of senders stop after one email and leave this pipeline on the table.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUBSEQUENCES -->
+  <div class="tab-panel">
+    <h3 style="font-size:16px;margin-bottom:6px;">Subsequence Logic — Behavior-Triggered Branching</h3>
+    <p style="color:var(--muted);font-size:13px;margin-bottom:20px;">Route prospects to completely different sequences based on their actions. This is where Instantly power users separate from average operators.</p>
+    <div style="display:flex;flex-direction:column;align-items:flex-start;max-width:620px;">
+      <div class="flow-node trigger"><div class="node-type">🚀 TRIGGER</div>Campaign: Main Outreach Sequence</div>
+      <div class="flow-connector"></div>
+      <div class="flow-node condition"><div class="node-type">⚡ CONDITION</div>Did prospect reply?</div>
+      <div class="flow-connector"></div>
+      <div class="flow-branch">
+        <div class="branch-line">
+          <div class="branch-label">YES → Replied</div>
+          <div class="flow-node outcome"><div class="node-type">✅ OUTCOME</div>Unenroll → tag as reply<br><span style="font-size:11px;color:var(--muted)">Human takeover via Unibox</span></div>
+        </div>
+        <div style="width:20px;"></div>
+        <div class="branch-line">
+          <div class="branch-label">NO → Completed</div>
+          <div class="flow-node action"><div class="node-type">📤 SUBSEQUENCE B</div>30-day re-engagement<br><span style="font-size:11px;color:var(--muted)">New angle, new sender</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="grid3" style="margin-top:24px;">
+      <div class="card"><div class="card-title">🔄 Subsequence B: Re-Engagement</div><div class="card-body">30 days later, 2-step sequence with completely different messaging. Treat them as a fresh prospect. Send from a different mailbox in your rotation pool. Tie to a seasonal or news trigger if possible.</div></div>
+      <div class="card"><div class="card-title">💥 Subsequence C: Clicked No Reply</div><div class="card-body">Prospect clicked your link but didn't reply — they're warm. Fire a high-intent sequence within 24h: "Noticed you checked out [X] — happy to walk you through it." Direct. Short. Immediate.</div></div>
+      <div class="card"><div class="card-title">🏷 Subsequence D: Referral Play</div><div class="card-body">Final step for zero-engagement leads: "If this isn't relevant to you, who on your team would find it useful?" Surprisingly high response rate with zero prior engagement from the original prospect.</div></div>
+    </div>
+    <div class="callout" style="margin-top:14px;"><strong>Tag everything:</strong> <span class="chip blue">main-seq</span> <span class="chip purple">subseq-b</span> <span class="chip yellow">clicked-no-reply</span> <span class="chip green">interested</span> <span class="chip pink">handover</span> — a clean tag architecture becomes critical at agency scale and enables proper handover workflows.</div>
+  </div>
+
+  <!-- ROTATION -->
+  <div class="tab-panel">
+    <div class="grid2">
+      <div>
+        <h3 style="font-size:16px;margin-bottom:14px;">Multi-Inbox Rotation Architecture</h3>
+        <p style="color:var(--muted);font-size:13px;margin-bottom:16px;">Pool multiple mailboxes into a single campaign to scale send volume while keeping each mailbox under its daily limit. This is the primary scaling mechanism in Instantly.</p>
+        <div class="terminal">
+          <div class="term-header"><div class="term-dot" style="background:#ef4444"></div><div class="term-dot" style="background:#f59e0b"></div><div class="term-dot" style="background:#10b981"></div><div class="term-title">ROTATION POOL // SCALING MATH</div></div>
+          <div class="term-body">
+<span class="c-muted"># Target: 200 campaign emails/day</span><br>
+<span class="c-muted"># Max per mailbox: 30/day (conservative)</span><br><br>
+<span class="c-blue">mailboxes_needed</span> = <span class="c-yellow">200</span> ÷ <span class="c-yellow">30</span> = <span class="c-green">~7 mailboxes</span><br>
+<span class="c-blue">domains_needed</span> &nbsp;= <span class="c-yellow">7</span> ÷ <span class="c-yellow">2.5</span> = <span class="c-green">~3 domains</span><br><br>
+<span class="c-muted"># Monthly infrastructure cost</span><br>
+<span class="c-blue">Google Workspace</span>: 7 × $6 = <span class="c-green">$42/mo</span><br>
+<span class="c-blue">Domains</span>: 3 × $1/mo = <span class="c-green">$3/mo</span><br>
+<span class="c-blue">Total</span>: ~<span class="c-green">$45/mo</span> for 200 sends/day
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:14px;"><div class="card-title">⚙️ Rotation Config in Instantly</div><div class="card-body">Campaign Settings → Email Accounts → add all mailboxes. Instantly distributes sends automatically. Each mailbox maintains its own identity — prospects receive from the assigned sender, not a shared address.</div></div>
+        <div class="card" style="margin-bottom:14px;"><div class="card-title">🎯 Sender Persona Consistency</div><div class="card-body">Each sending mailbox needs: a profile photo in Google Workspace, a plain-text email signature, and a completed LinkedIn profile associated with the sending domain. Persona believability is a trust signal.</div></div>
+        <div class="card"><div class="card-title">🔴 When Rotation Goes Wrong</div><div class="card-body">If one mailbox in your pool gets flagged, pause that account only — not the entire campaign. Audit leads that mailbox sent to for bad data. Replace it with a pre-warmed spare. Always maintain a 20% bench of spare warmed mailboxes for continuity.</div:var(--accent);">
+        <div class="card-title" style="color:var(--accent);">🏆 Tier 1 — Dream Accounts</div>
+        <div class="card-body" style="font-size:12px;line-height:2.1;">
+          <p style="margin-bottom:10px;">Top 10% ICP fit. Your perfect customers.</p>
+          → 6–8 touch sequence<br>→ Manual research + signal-based personalization<br>→ Best-reputation mailboxes only<br>→ LinkedIn touchpoints manually<br>→ 10–15 sends/day max
+        </div>
+      </div>
+      <div class="card" style="border-color:var(--accent2);">
+        <div class="card-title" style="color:#a78bfa;">⭐ Tier 2 — Strong Fit</div>
+        <div class="card-body" style="font-size:12px;line-height:2.1;">
+          <p style="margin-bottom:10px;">Solid ICP match. Semi-personalization.</p>
+          → 4-touch standard blueprint<br>→ Spintax + variable personalization<br>→ Rotation pool sending<br>→ Subsequence B for non-openers<br>→ 30–40 sends/day per mailbox
+        </div>
+      </div>
+      <div class="card" style="border-color:var(--muted);">
+        <div class="card-title" style="color:var(--muted);">📊 Tier 3 — Broad Match</div>
+        <div class="card-body" style="font-size:12px;line-height:2.1;">
+          <p style="margin-bottom:10px;">Partial ICP fit. Test and triage fast.</p>
+          → 2–3 touch sequence only<br>→ Template-driven, no manual research<br>→ Newest (warming) mailboxes<br>→ Heavy list verification before upload<br>→ Separate tracking domain from Tier 1
+        </div>
+      </div>
+    </div>
+    <div class="alert alert-warn" style="margin-top:20px;"><span class="alert-icon">⚠</span><div><strong>Never mix tiers in the same campaign.</strong> If Tier 3 leads generate high bounces or complaints, they drag down the reputation of all mailboxes in that campaign — including those also touching your Tier 1 accounts. Always isolate by tier.</div></div>
+  </div>
+</section>
+<hr class="divider">
+
+<!-- ══════════ HANDOVER ══════════ -->
+<section id="handover">
+  <div class="section-header">
+    <div class="section-tag">// MODULE 04</div>
+    <h2>The Interested Reply Handover</h2>
+    <p class="section-sub">The gap between "interested reply" and "booked meeting" is where most cold email programs leak pipeline. Here's the exact handover workflow.</p>
+  </div>
+
+  <div class="alert alert-info"><span class="alert-icon">📊</span><div><strong>2026 data insight:</strong> Out of 100 cold emails sent, roughly 40 open, 3 reply, 2 express interest, and only 1 books a meeting. The delta between "interested" and "booked" is entirely determined by the quality and speed of your handover process.</div></div>
+
+  <div class="grid2" style="margin-top:24px;">
+    <div>
+      <h3 style="font-size:16px;margin-bottom:16px;">Handover Flow — From Interested Tag to Booked</h3>
+      <div class="handover-flow">
+        <div class="ho-stage">
+          <div class="ho-icon" style="background:rgba(0,212,255,.1);">📩</div>
+          <div class="ho-content"><h4>Step 1: Reply Detected in Unibox <span class="sla">SLA: instant</span></h4><p>Prospect replies positively. Instantly auto-tags based on AI classification (positive/interested). Stop-on-reply removes them from all active sequences immediately.</p></div>
+        </div>
+        <div class="ho-arrow">▼</div>
+        <div class="ho-stage">
+          <div class="ho-icon" style="background:rgba(245,158,11,.1);">🏷</div>
+          <div class="ho-content"><h4>Step 2: Tag + Categorize <span class="sla">SLA: &lt;5 min</span></h4><p>Apply tag: <span class="chip green">interested</span>. If using Unibox team mode, assign to the responsible SDR or AE. Note the reply context — what did they say? What's the intent signal?</p></div>
+        </div>
+        <div class="ho-arrow">▼</div>
+        <div class="ho-stage">
+          <div class="ho-icon" style="background:rgba(124,58,237,.1);">✍️</div>
+          <div class="ho-content"><h4>Step 3: Personalised Human Reply <span class="sla">SLA: &lt;1 hour</span></h4><p>The first reply from a human must happen within 1 hour. Speed-to-reply is the single biggest driver of conversion from interested to booked. Use the prospect's exact words — mirror their language.</p></div>
+        </div>
+        <div class="ho-arrow">▼</div>
+        <div class="ho-stage">
+          <div class="ho-icon" style="background:rgba(16,185,129,.1);">📅</div>
+          <div class="ho-content"><h4>Step 4: Meeting Sell — Not a Demo Sell <span class="sla">SLA: same reply</span></h4><p>Frame the meeting as an audit, not a product demo. "15-minute deliverability review of your current setup" outperforms "I'd love to show you our platform." Give the prospect a concrete outcome they take from the call regardless of whether they buy.</p></div>
+        </div>
+        <div class="ho-arrow">▼</div>
+        <div class="ho-stage">
+          <div class="ho-icon" style="background:rgba(244,114,182,.1);">🎯</div>
+          <div class="ho-content"><h4>Step 5: Specific Time Offer + Calendar Link <span class="sla">SLA: same reply</span></h4><p>Offer two specific time slots: "Are you available Tuesday at 2pm or Thursday at 10am?" This reduces cognitive load compared to an open calendar link. Only send the Calendly URL as a fallback if they don't pick one of your two options.</p></div>
+        </div>
+        <div class="ho-arrow">▼</div>
+        <div class="ho-stage">
+          <div class="ho-icon" style="background:rgba(0,212,255,.05);">✅</div>
+          <div class="ho-content"><h4>Step 6: CRM Push + Tag Update</h4><p>Move to CRM with full context: original email sequence, reply text, meeting booked date. Apply tag: <span class="chip pink">handover-complete</span>. The Instantly contact record should have all sequence history attached.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="card" style="margin-bottom:14px;border-color:#f472b6;">
+        <div class="card-title" style="color:#f472b6;">⚡ The "Interested But No Meeting" Recovery</div>
+        <div class="card-body">
+          <p style="margin-bottom:12px;">Prospect replied positively but went quiet after your meeting offer. This is a common drop-off point. Here's the recovery sequence:</p>
+          <div class="terminal" style="margin:0;">
+            <div class="term-body" style="padding:12px;">
+<span class="c-muted"># Day 2 after no response to meeting offer</span><br>
+<span class="c-green">"Hi {{firstName}}, just following up on my</span><br>
+<span class="c-green">earlier note — still happy to connect</span><br>
+<span class="c-green">whenever timing works. No rush."</span><br><br>
+<span class="c-muted"># Day 7 — one final attempt</span><br>
+<span class="c-green">"Should I try you again in a few weeks,</span><br>
+<span class="c-green">or is this just not the right time?"</span><br><br>
+<span class="c-muted"># If no reply → tag: "not-now" → add to</span><br>
+<span class="c-muted"># nurture sequence (30-day re-touch)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:14px;">
+        <div class="card-title">📋 Handover SLA Cheatsheet</div>
+        <div class="card-body">
+          <div class="table-wrap" style="margin:0;">
+            <table>
+              <thead><tr><th>Action</th><th>SLA Target</th></tr></thead>
+              <tbody>
+                <tr><td>Stop sequences on positive reply</td><td><span class="chip green">Automatic</span></td></tr>
+                <tr><td>Tag + assign in Unibox</td><td><span class="chip green">&lt;5 min</span></td></tr>
+                <tr><td>First human reply sent</td><td><span class="chip yellow">&lt;1 hour</span></td></tr>
+                <tr><td>Meeting slot offered</td><td><span class="chip yellow">Same reply</span></td></tr>
+                <tr><td>CRM record created</td><td><span class="chip yellow">&lt;24 hours</span></td></tr>
+                <tr><td>Recovery follow-up if no booking</td><td><span class="chip blue">Day 2</span></td></tr>
+                <tr><td>Final recovery attempt</td><td><span class="chip blue">Day 7</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🔢 Reply Classification Taxonomy</div>
+        <div class="card-body" style="font-size:12px;line-height:2.2;">
+          <div><span class="chip green">Interested</span> → Handover flow immediately</div>
+          <div><span class="chip blue">Referral</span> → Reach out to referred contact today</div>
+          <div><span class="chip yellow">Not now</span> → Nurture + re-touch in 30 days</div>
+          <div><span class="chip yellow">Need info</span> → Reply with 1-pager, follow up in 3 days</div>
+          <div><span class="chip red">Unsubscribe</span> → Remove immediately, no re-contact</div>
+          <div><span class="chip red">Not relevant</span> → Remove + re-qualify ICP criteria</div>
+          <div><span class="chip purple">OOO</span> → Snooze contact, resume on return date</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<hr class="divider">
+
+<!-- ══════════ BENCHMARKS ══════════ -->
+<section id="benchmarks">
+  <div class="section-header">
+    <div class="section-tag">// 2026 DATA</div>
+    <h2>Instantly 2026 Cold Email Benchmarks</h2>
+    <p class="section-sub">Sourced from Instantly's 2026 Cold Email Benchmark Report — billions of interactions analyzed across thousands of active workspaces. Use these to know where you stand.</p>
+  </div>
+
+  <div class="grid4" style="margin-bottom:28px;">
+    <div class="bm-card"><div class="bm-big" style="color:var(--accent);">3.43%</div><div class="bm-sub">Average Reply Rate</div><div class="bm-desc">Across all cold email senders. Below 3% signals a list quality, copy, or deliverability problem.</div></div>
+    <div class="bm-card"><div class="bm-big" style="color:var(--accent3);">10.7%+</div><div class="bm-sub">Top Performer Rate</div><div class="bm-desc">2–4x above average. Achieved through signal-based targeting and tight ICP fit.</div></div>
+    <div class="bm-card"><div class="bm-big" style="color:#f472b6;">58%<span style="display:block;font-size:18px;margin-top:-4px;">Step 1</span></div><div class="bm-sub">Replies from First Email</div><div class="bm-desc">Your first email generates the majority of all replies. Invest there first.</div></div>
+    <div class="bm-card"><div class="bm-big" style="color:var(--warn);">&lt;80</div><div class="bm-sub">Words — Best Length</div><div class="bm-desc">Shorter emails outperform consistently. Top performers stay under 80 words.</div></div>
+    <div class="bm-card"><div class="bm-big" style="color:var(--accent);">Wed</div><div class="bm-sub">Highest Reply Day</div><div class="bm-desc">Wednesday dominates reply rates. Tue–Thu is the prime window for sends.</div></div>
+    <div class="bm-card"><div class="bm-big" style="color:var(--accent3);">15–25%</div><div class="bm-sub">Signal-Based Rate</div><div class="bm-desc">Campaigns using trigger events (funding, hiring, launches) achieve 5x average reply rates.</div></div>
+    <div class="bm-card"><div class="bm-big" style="color:var(--danger);">0.3%</div><div class="bm-sub">Max Spam Rate</div><div class="bm-desc">Google and Microsoft enforcement threshold. Exceed this and deliverability mitigations activate.</div></div>
+    <div class="bm-card"><div class="bm-big" style="color:var(--danger);">&lt;2%</div><div class="bm-sub">Bounce Rate Target</div><div class="bm-desc">Hard bounces above 2% signal bad list quality. Verify all leads before uploading.</div></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">📊 What separates top performers</div>
+      <div class="card-body">
+        <p style="margin-bottom:14px;">The 2026 data shows a clear split. Top performers aren't sending more — they're sending more precisely. The shift is from volume-based to signal-based, and the infrastructure has to match.</p>
+        <div style="font-size:13px;line-height:2.0;color:var(--muted);">
+          → Volume targeting replaced by intent signals (hiring, funding, product changes)<br>
+          → ESPs are starting to weight engagement quality — reply depth, time-to-open<br>
+          → Generic sequences underperform by 5–10x vs. signal-triggered sends<br>
+          → AI-assisted research handles ~80% of the signal detection in elite teams
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">⚠️ Where most teams fall short</div>
+      <div class="card-body">
+        <p style="margin-bottom:14px;">The benchmarks expose patterns that recur across teams regardless of tool, list source, or sequence length.</p>
+        <div style="font-size:13px;line-height:2.0;color:var(--muted);">
+          → Bounce rate above 2% — list not verified before upload<br>
+          → Spam complaint rate creeping past 0.1% — ICP too broad or copy too aggressive<br>
+          → Reply rate below 1% — usually a deliverability problem, not a copy problem<br>
+          → Warmup disabled after 60 days — reputation decay starts within weeks<br>
+          → All eggs in one domain — one flag affects the entire program
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<hr class="divider">
+
+<!-- ══════════ COMPLIANCE ══════════ -->
+<section id="compliance">
+  <div class="section-header">
+    <div class="section-tag">// MODULE 05</div>
+    <h2>Compliance Framework</h2>
+    <p class="section-sub">As of 2026, Gmail, Yahoo, and Microsoft have all enforced bulk sender rules. Compliance is no longer optional — it's infrastructure.</p>
+  </div>
+
+  <div class="alert alert-danger"><span class="alert-icon">🚨</span><div><strong>2026 enforcement update:</strong> Microsoft joined Google and Yahoo in May 2025 with Outlook.com bulk sender requirements. Non-compliant senders are moved to Junk then rejected entirely. These rules are now enforced at the ESP level — there is no opt-out.</div></div>
+
+  <div class="tabs" id="compliance-tabs">
+    <button class="tab active" onclick="switchTab('compliance',0)">Gmail Rules</button>
+    <button class="tab" onclick="switchTab('compliance',1)">Bulk Sender Rules</button>
+    <button class="tab" onclick="switchTab('compliance',2)">CAN-SPAM / GDPR</button>
+    <button class="tab" onclick="switchTab('compliance',3)">Compliance Checklist</button>
+  </div>
+
+  <!-- GMAIL -->
+  <div class="tab-panel active">
+    <h3 style="font-size:16px;margin-bottom:16px;">Gmail Sender Requirements (Enforced 2024–2026)</h3>
+    <div class="card">
+      <div style="padding:4px 0;">
+        <div class="rule-row"><div class="rule-icon" style="background:rgba(16,185,129,.1);">✅</div><div><div class="rule-title">SPF Authentication Required</div><div class="rule-body">Publish a valid SPF record for your sending domain. Gmail verifies this on every inbound email. Failure results in delivery to spam or rejection.</div></div></div>
+        <div class="rule-row"><div class="rule-icon" style="background:rgba(16,185,129,.1);">✅</div><div><div class="rule-title">DKIM Authentication Required</div><div class="rule-body">Your sending domain must have a DKIM signature. The From: domain must align with either SPF or DKIM for DMARC compliance.</div></div></div>
+        <div class="rule-row"><div class="rule-icon" style="background:rgba(16,185,129,.1);">✅</div><div><div class="rule-title">DMARC Policy Required</div><div class="rule-body">Publish a DMARC record. p=none is the minimum accepted. Google recommends progressing to p=quarantine. Full rejection at p=reject is the gold standard but aggressive for new domains.</div></div></div>
+        <div class="rule-row"><div class="rule-icon" style="background:rgba(245,158,11,.1);">⚠️</div><div><div class="rule-title">Spam Rate: Stay Well Below 0.3%</div><div class="rule-body">Gmail's Postmaster Tools mitigation threshold is 0.3%. The best operators target ≤0.1%. Exceeding 0.3% triggers deliverability restrictions — no warning, immediate enforcement.</div></div></div>
+        <div class="rule-row"><div class="rule-icon" style="background:rgba(0,212,255,.1);">ℹ️</div><div><div class="rule-title">RFC 8058 One-Click Unsubscribe (Bulk Senders)</div><div class="rule-body">Required for senders sending 5,000+ emails/day to personal Gmail accounts. Add List-Unsubscribe and List-Unsubscribe-Post headers. Instantly can inject these automatically — enable in campaign settings.</div></div></div>
+        <div class="rule-row" style="border-bottom:none;"><div class="rule-icon" style="background:rgba(0,212,255,.1);">ℹ️</div><div><div class="rule-title">From: Domain Alignment</div><div class="rule-body">The domain in your From: address must align with the domain authenticated by SPF or DKIM. Misalignment is a common configuration error when using third-party sending tools.</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BULK SENDER -->
+  <div class="tab-panel">
+    <div class="grid2">
+      <div>
+        <h3 style="font-size:16px;margin-bottom:14px;">What "Bulk Sender" Means in 2026</h3>
+        <p style="color:var(--muted);font-size:13px;margin-bottom:16px;">Google defines a bulk sender as any sender who sends 5,000+ messages to personal Gmail accounts (@gmail.com) within a 24-hour period, counted at the primary domain level across all sending subdomains.</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Provider</th><th>Threshold</th><th>Status</th><th>Requirements</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Gmail / Google</strong></td><td>5,000/day</td><td><span class="chip green">Enforced</span></td><td>SPF, DKIM, DMARC, 1-click unsub, &lt;0.3% spam</td></tr>
+              <tr><td><strong>Yahoo / AOL</strong></td><td>5,000/day</td><td><span class="chip green">Enforced</span></td><td>SPF, DKIM, DMARC, 1-click unsub, easy opt-out</td></tr>
+              <tr><td><strong>Microsoft / Outlook</strong></td><td>High volume</td><td><span class="chip yellow">Since May 2025</span></td><td>SPF, DKIM, DMARC, spam complaint limits</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout" style="margin-top:14px;"><strong>For cold email operators:</strong> Even if you're under the 5,000/day threshold, meeting bulk sender requirements is best practice — it future-proofs your infrastructure and demonstrates sender legitimacy to all ESPs, not just those with enforced thresholds.</div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:14px;">
+          <div class="card-title">📬 One-Click Unsubscribe Setup in Instantly</div>
+          <div class="card-body">
+            <p style="margin-bottom:10px;">Navigate to Campaign Settings → Unsubscribe. Enable the unsubscribe link and configure it to add contacts to your global suppression list. This is required for marketing-classified emails and strongly recommended for all cold outreach.</p>
+            <div class="terminal" style="margin:0;">
+              <div class="term-body" style="padding:12px;">
+<span class="c-muted"># Headers automatically injected by Instantly</span><br>
+<span class="c-blue">List-Unsubscribe:</span> <span class="c-green">&lt;https://unsub.your-domain.com&gt;</span><br>
+<span class="c-blue">List-Unsubscribe-Post:</span> <span class="c-green">List-Unsubscribe=One-Click</span><br>
+<span class="c-muted"># Process unsub requests within 2 business days</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">🛡 Postmaster Tools Setup</div>
+          <div class="card-body">Set up Google Postmaster Tools for every sending domain. This gives you direct visibility into your domain reputation, spam rate, and delivery errors as seen by Gmail. Free to set up, critical for monitoring at scale. Access: postmaster.google.com → Add domain → Verify via DNS TXT record.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CAN-SPAM / GDPR -->
+  <div class="tab-panel">
+    <div class="grid2">
+      <div>
+        <h3 style="font-size:16px;margin-bottom:14px;">CAN-SPAM (US) — B2B Cold Email Rules</h3>
+        <div class="card">
+          <div style="padding:4px 0;">
+            <div class="rule-row"><div class="rule-icon" style="background:rgba(16,185,129,.1);">✅</div><div><div class="rule-title">Identify yourself accurately</div><div class="rule-body">Your From:, To:, and Reply-To: fields must accurately represent who you are. No deceptive headers.</div></div></div>
+            <div class="rule-row"><div class="rule-icon" style="background:rgba(16,185,129,.1);">✅</div><div><div class="rule-title">Honest subject lines</div><div class="rule-body">Subject lines must not be deceptive. "Re:" or "Fwd:" prefixes on cold emails you haven't actually received are deceptive under CAN-SPAM — and also stopped working in 2026 as noted in benchmark data.</div></div></div>
+            <div class="rule-row"><div class="rule-icon" style="background:rgba(16,185,129,.1);">✅</div><div><div class="rule-title">Include physical address</div><div class="rule-body">CAN-SPAM requires a valid postal address in commercial emails. Use your business address or a registered mail forwarding address in your email signature.</div></div></div>
+            <div class="rule-row" style="border-bottom:none;"><div class="rule-icon" style="background:rgba(16,185,129,.1);">✅</div><div><div class="rule-title">Honor opt-outs within 10 business days</div><div class="rule-body">Any unsubscribe request must be honored within 10 business days. Instantly's suppression list handles this automatically when opt-out links are enabled.</div></div></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-size:16px;margin-bottom:14px;">GDPR (EU/UK) — B2B Cold Email Considerations</h3>
+        <div class="card">
+          <div class="alert alert-warn" style="margin:0 0 14px;"><span class="alert-icon">⚠</span><div>This is not legal advice. Consult a qualified attorney for GDPR compliance guidance specific to your situation.</div></div>
+          <div style="padding:4px 0;">
+            <div class="rule-row"><div class="rule-icon" style="background:rgba(245,158,11,.1);">📋</div><div><div class="rule-title">Legitimate Interest — The B2B Basis</div><div class="rule-body">GDPR allows cold email to businesses under "legitimate interest" as a lawful basis — but only when the email is genuinely relevant to the recipient's professional role and you've conducted a Legitimate Interest Assessment (LIA).</div></div></div>
+            <div class="rule-row"><div class="rule-icon" style="background:rgba(245,158,11,.1);">📋</div><div><div class="rule-title">Only Relevant Business Data</div><div class="rule-body">Use business email addresses (not personal Gmail/Hotmail) for EU outreach. The processing must be directly relevant to the individual's professional capacity.</div></div></div>
+            <div class="rule-row" style="border-bottom:none;"><div class="rule-icon" style="background:rgba(245,158,11,.1);">📋</div><div><div class="rule-title">Opt-Out Must Be Easy and Immediate</div><div class="rule-body">Include a clear unsubscribe mechanism in every email. EU opt-out requests must be honored without delay. Store suppression lists securely and apply them across all campaigns.</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHECKLIST -->
+  <div class="tab-panel">
+    <h3 style="font-size:16px;margin-bottom:16px;">Pre-Launch Compliance Checklist</h3>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title">🔧 Technical Requirements</div>
+        <div class="card-body" style="line-height:2.2;font-size:13px;">
+          ☐ SPF record published and verified<br>
+          ☐ DKIM record active and verified<br>
+          ☐ DMARC record at minimum p=none<br>
+          ☐ MX records set on all sending domains<br>
+          ☐ Custom tracking domain configured<br>
+          ☐ One-click unsubscribe enabled in Instantly<br>
+          ☐ Google Postmaster Tools set up per domain<br>
+          ☐ Bounce rate monitoring active (&lt;2% threshold)<br>
+          ☐ Spam rate monitoring active (&lt;0.1% target)
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">📋 Operational Requirements</div>
+        <div class="card-body" style="line-height:2.2;font-size:13px;">
+          ☐ Physical business address in email signature<br>
+          ☐ Accurate From:/Reply-To: fields<br>
+          ☐ No deceptive subject line prefixes (Re:/Fwd:)<br>
+          ☐ Global suppression list maintained in Instantly<br>
+          ☐ Opt-outs honored within 10 days (CAN-SPAM)<br>
+          ☐ Lead list verified before upload (&lt;2% bounce target)<br>
+          ☐ EU contacts: legitimate interest basis documented<br>
+          ☐ Stop-on-reply enabled on all campaigns<br>
+          ☐ No sending on weekends
+        </div>
+      </div>
+    </div>
+    <div class="alert alert-success" style="margin-top:16px;"><span class="alert-icon">✓</span><div><strong>Compliance = deliverability.</strong> Every item on this checklist isn't just a legal protection — it's also a deliverability best practice. Compliant senders have better inbox placement because their technical setup signals legitimacy to every ESP on the planet.</div></div>
+  </div>
+</section>
+<hr class="divider">
+
+<!-- ══════════ INBOXGLOBAL RESOURCES ══════════ -->
+<section id="tools">
+  <div class="section-header">
+    <div class="section-tag">// InboxGlobal Resources</div>
+    <h2>Free tools to plan your infrastructure</h2>
+    <p class="section-sub">Built from real audit findings. Use these before you build — not after something breaks.</p>
+  </div>
+  <div class="grid2">
+    <a href="domain-planner.html" target="_blank" style="display:block;text-decoration:none;color:inherit;">
+      <div class="card" style="border-color:rgba(34,211,238,0.25);cursor:pointer;transition:background 0.2s;" onmouseover="this.style.background='var(--bg3)'" onmouseout="this.style.background=''">
+        <div class="card-title" style="color:var(--accent);font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;">Outbound Domain Portfolio Planner →</div>
+        <div class="card-body" style="margin-top:8px;">Input your sending volume, team size, and TLD preference — get a structured domain portfolio with separation logic, per-domain cost breakdown, and risk flags. The same separation model used in every InboxGlobal audit.</div>
+        <div style="margin-top:16px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);">Interactive tool · Free · No login</div>
+      </div>
+    </a>
+    <a href="https://inboxglobal.io/resources" target="_blank" style="display:block;text-decoration:none;color:inherit;">
+      <div class="card" style="cursor:pointer;transition:background 0.2s;" onmouseover="this.style.background='var(--bg3)'" onmouseout="this.style.background=''">
+        <div class="card-title" style="font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;">More operator resources →</div>
+        <div class="card-body" style="margin-top:8px;">The InboxGlobal resources page includes additional tools and guides covering warmup sequencing, authentication standards, list hygiene gates, incident response playbooks, and more. All built from real audit findings — not generic deliverability advice.</div>
+        <div style="margin-top:16px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);">inboxglobal.io/resources</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;color:var(--accent);margin-bottom:8px;">InboxGlobal™</div>
+  <div style="margin-bottom:4px;">Instantly.ai Operator Blueprint · Benchmark data: Instantly 2026 Cold Email Report · Not affiliated with Instantly.ai</div>
+  <div><a href="https://inboxglobal.io/resources" style="color:var(--accent);text-decoration:none;">← Back to all resources</a></div>
+</footer>
+
+<script>
+// ── TAB SYSTEM ──
+function switchTab(group, idx) {
+  const sec = document.getElementById(group);
+  const tabs = sec.querySelectorAll('.tab');
+  const panels = sec.querySelectorAll('.tab-panel');
+  tabs.forEach((t,i) => { t.classList.toggle('active', i===idx); });
+  panels.forEach((p,i) => { p.classList.toggle('active', i===idx); });
+}
+
+// ── NAV ──
+function navTo(id, el) {
+  document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  if(el) el.classList.add('active');
+}
+window.addEventListener('scroll', () => {
+  const ids=['infra','warmup','campaigns','handover','benchmarks','compliance','tools'];
+  const btns=document.querySelectorAll('.nav-btn');
+  ids.forEach((id,i)=>{
+    const el=document.getElementById(id);
+    if(el){const r=el.getBoundingClientRect();if(r.top<=80&&r.bottom>80){btns.forEach(b=>b.classList.remove('active'));if(btns[i])btns[i].classList.add('active');}}
+  });
+});
+
+// ── WARMUP CHART ──
+const warmupData=[
+  {label:'Wk 1',warmup:8,real:0,phase:'warmup'},{label:'Wk 2',warmup:12,real:0,phase:'warmup'},
+  {label:'Wk 3',warmup:18,real:0,phase:'warmup'},{label:'Wk 4',warmup:22,real:0,phase:'warmup'},
+  {label:'Wk 5',warmup:22,real:10,phase:'mixed'},{label:'Wk 6',warmup:22,real:15,phase:'mixed'},
+  {label:'Wk 7',warmup:22,real:20,phase:'mixed'},{label:'Wk 8',warmup:22,real:25,phase:'mixed'},
+  {label:'Wk 9',warmup:20,real:30,phase:'full'},{label:'Wk 10',warmup:20,real:35,phase:'full'},
+  {label:'Wk 11',warmup:20,real:38,phase:'full'},{label:'Wk 12',warmup:18,real:40,phase:'full'},
+];
+const chart=document.getElementById('warmup-chart');
+if(chart){
+  warmupData.forEach(d=>{
+    const max=60;
+    const row=document.createElement('div');row.className='wt-bar';
+    const wW=Math.round((d.warmup/max)*100);const rW=Math.round((d.real/max)*100);
+    row.innerHTML=`<div class="wt-label">${d.label}</div><div class="wt-track"><div style="display:flex;height:100%;gap:2px;"><div class="wt-fill warmup" style="width:${wW}%;min-width:${d.warmup>0?28:0}px;">${d.warmup>0?'🔥 '+d.warmup:''}</div>${d.real>0?`<div class="wt-fill mixed" style="width:${rW}%;">📧 ${d.real}</div>`:''}</div></div><div class="wt-val"><span style="color:${d.phase==='warmup'?'#a78bfa':d.phase==='mixed'?'var(--accent)':'var(--accent3)'};">${d.phase.toUpperCase()}</span></div>`;
+    chart.appendChild(row);
+  });
+  const leg=document.createElement('div');leg.style.cssText='display:flex;gap:16px;margin-top:10px;font-size:11px;font-family:'DM Sans',sans-serif;';
+  leg.innerHTML='<span style="color:#c4b5fd;">🔥 WARMUP/DAY</span><span style="color:var(--accent)">📧 CAMPAIGN/DAY</span>';
+  chart.appendChild(leg);
+}
+
+// ── DOMAIN CALCULATOR ──
+function calcInfra(){
+  const sends=parseInt(document.getElementById('daily-sends').value)||150;
+  const perMb=parseInt(document.getElementById('per-mailbox').value)||30;
+  const mbPD=parseInt(document.getElementById('mb-per-domain').value)||3;
+  const cost=parseInt(document.getElementById('provider').value)||6;
+  const mb=Math.ceil(sends/perMb);
+  const dom=Math.ceil(mb/mbPD);
+  const monthly=(mb*cost)+(dom*1);
+  document.getElementById('r-mailboxes').textContent=mb;
+  document.getElementById('r-domains').textContent=dom;
+  document.getElementById('r-cost').textContent='$'+Math.round(monthly);
+  document.getElementById('r-actual').textContent=mb*perMb;
+}
+calcInfra();
+
+// ── READINESS ──
+function calcReadiness(){
+  const days=parseInt(document.getElementById('warmup-days').value)||30;
+  const score=parseInt(document.getElementById('warmup-score').value)||75;
+  const spam=parseInt(document.getElementById('spam-rate').value)||12;
+  const dns=parseInt(document.getElementById('dns-ok').value)||1;
+  let pts=0;
+  if(days>=30)pts+=20;else if(days>=14)pts+=10;
+  if(score>=85)pts+=30;else if(score>=70)pts+=20;else if(score>=60)pts+=10;
+  if(spam<10)pts+=25;else if(spam<20)pts+=15;else if(spam<30)pts+=5;
+  if(dns==1)pts+=25;
+  const el=document.getElementById('readiness-score');
+  const lbl=document.getElementById('readiness-label');
+  const adv=document.getElementById('readiness-advice');
+  const res=document.getElementById('readiness-result');
+  el.textContent=pts+'%';
+  if(pts>=80){el.style.color='var(--accent3)';lbl.textContent='✅ Ready to send campaigns';lbl.style.color='var(--accent3)';adv.textContent='Infrastructure is solid. Start at 10/day and ramp +5/day each week.';res.style.borderLeftColor='var(--accent3)';}
+  else if(pts>=50){el.style.color='var(--warn)';lbl.textContent='⚠️ Proceed with caution';lbl.style.color='var(--warn)';adv.textContent='Some factors need improvement. Review warmup score and spam rescue rates before launching.';res.style.borderLeftColor='var(--warn)';}
+  else{el.style.color='var(--danger)';lbl.textContent='🚫 Not ready — fix issues first';lbl.style.color='var(--danger)';adv.textContent='Critical issues detected. Fix DNS records and continue warmup for at least 30 days before sending.';res.style.borderLeftColor='var(--danger)';}
+}
+calcReadiness();
+</script>
+</body>
+</html>
