@@ -20,7 +20,7 @@
   .nav-btn{background:none;border:none;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;padding:6px 12px;border-radius:4px;cursor:pointer;white-space:nowrap;transition:all .2s;letter-spacing:0.04em;text-transform:uppercase}
   .nav-btn:hover,.nav-btn.active{background:var(--bg3);color:var(--accent)}
   /* ── HERO OVERRIDE ── */
-  .hero{min-height:unset;display:block;align-items:unset;justify-content:unset;text-align:left;position:relative;overflow:hidden;padding:100px 0 0;background:var(--bg)}
+  .hero{min-height:unset;display:block;align-items:unset;justify-content:unset;text-align:left;position:relative;overflow:hidden;padding:48px 0 0;background:var(--bg);border-bottom:1px solid var(--border)}
   .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(34,211,238,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(34,211,238,0.025) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
   .hero-glow{position:absolute;top:-100px;left:40%;width:700px;height:480px;background:radial-gradient(ellipse,rgba(129,140,248,0.09) 0%,transparent 70%);pointer-events:none}
   .hero-content{position:relative;max-width:1100px;margin:0 auto;padding:0 32px 56px}
@@ -28,9 +28,9 @@
   .hero-eyebrow-dot{width:7px;height:7px;background:#22C55E;border-radius:50%;flex-shrink:0;animation:pulse 2s infinite}
   .hero-tag{display:none} /* hide old tag */
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-  h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(48px,7.5vw,96px);font-weight:800;line-height:0.95;letter-spacing:-0.03em;margin-bottom:24px;max-width:880px}
+  h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(48px,7.5vw,96px);font-weight:800;line-height:1.1;letter-spacing:-0.03em;margin-bottom:24px;max-width:880px}
   h1 .line1{display:block;color:var(--text)}
-  h1 .line2{display:block;background:linear-gradient(90deg,#22D3EE 0%,#818CF8 55%,#A855F7 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  h1 .line2{display:block;background:linear-gradient(90deg,#22D3EE 0%,#818CF8 55%,#A855F7 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;padding-bottom:0.1em}
   .hero-sub{font-family:'DM Sans',sans-serif;font-size:17px;font-weight:400;color:var(--muted);max-width:560px;margin:0 0 48px;line-height:1.7}
   /* Stats strip */
   .hero-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--border);border-top:1px solid var(--border);margin-top:0}
@@ -44,7 +44,7 @@
   .scroll-hint{display:none}
   section{max-width:1200px;margin:0 auto;padding:72px 24px}
   .section-header{margin-bottom:44px}
-  .section-tag{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;color:var(--accent);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:12px}
+  .section-tag{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;color:#94A3B8;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:12px}
   h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(22px,3.5vw,38px);font-weight:800;letter-spacing:-0.02em;margin-bottom:12px}
   .section-sub{color:var(--muted);font-size:15px;max-width:620px}
   .card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:22px;transition:border-color .2s}
@@ -162,26 +162,10 @@
   .rule-title{font-size:13px;font-weight:600;margin-bottom:2px}
   .rule-body{font-size:12px;color:var(--muted)}
   footer{border-top:1px solid var(--border);text-align:center;padding:32px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--muted)}
-  @media(max-width:640px){.calc-row{grid-template-columns:1fr}.hero-stats{gap:20px}.nav-inner{gap:12px}}
+  @media(max-width:640px){.calc-row{grid-template-columns:1fr}.hero-stats{grid-template-columns:1fr!important;gap:1px}#module-nav{overflow-x:auto;-webkit-overflow-scrolling:touch}}
 </style>
 </head>
 <body>
-
-<nav>
-  <div class="nav-inner">
-    <a href="https://inboxglobal.io" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:800;letter-spacing:-0.01em;color:#22D3EE;text-decoration:none;">InboxGlobal™</a>
-    <div class="nav-links">
-      <button class="nav-btn active" onclick="navTo('infra',this)">Infrastructure</button>
-      <button class="nav-btn" onclick="navTo('warmup',this)">Warmup</button>
-      <button class="nav-btn" onclick="navTo('campaigns',this)">Campaigns</button>
-      <button class="nav-btn" onclick="navTo('handover',this)">Handover</button>
-      <button class="nav-btn" onclick="navTo('benchmarks',this)">2026 Data</button>
-      <button class="nav-btn" onclick="navTo('compliance',this)">Compliance</button>
-      <button class="nav-btn" onclick="navTo('tools',this)">Tools</button>
-    </div>
-    <a href="https://inboxglobal.io/resources" style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#22D3EE;background:rgba(34,211,238,0.08);border:1px solid rgba(34,211,238,0.2);padding:6px 14px;border-radius:4px;text-decoration:none;flex-shrink:0;white-space:nowrap;">← All Resources</a>
-  </div>
-</nav>
 
 <!-- HERO -->
 <div class="hero" id="top">
@@ -195,60 +179,25 @@
     </h1>
     <p class="hero-sub">Infrastructure setup, warmup sequencing, deliverability architecture, and enforcement rules for operators running Instantly at scale.</p>
   </div>
-  <div class="hero-stats">
-    <div class="stat"><span class="stat-num">3.43%</span><span class="stat-lbl">Avg Reply Rate</span></div>
-    <div class="stat"><span class="stat-num">10%+</span><span class="stat-lbl">Top Performer Rate</span></div>
-    <div class="stat"><span class="stat-num">58%</span><span class="stat-lbl">Replies from Step 1</span></div>
-    <div class="stat"><span class="stat-num">&lt;80</span><span class="stat-lbl">Words per Email</span></div>
-    <div class="stat"><span class="stat-num">Wed</span><span class="stat-lbl">Highest Reply Day</span></div>
-  </div>
-  <div class="hero-source" style="display:none;"></div>
 </div>
 
-<!-- BENCHMARK TICKER -->
-<div class="bm-bar">
-  <div class="bm-inner">
-    <div class="bm-item"><span class="bm-val">3.43%</span><span class="bm-lbl">Average reply rate</span></div>
-    <div class="bm-item"><span class="bm-val">10.7%+</span><span class="bm-lbl">Top performer reply rate</span></div>
-    <div class="bm-item"><span class="bm-val">58%</span><span class="bm-lbl">Replies come from email Step 1</span></div>
-    <div class="bm-item"><span class="bm-val">&lt;80 words</span><span class="bm-lbl">Best performing email length</span></div>
-    <div class="bm-item"><span class="bm-val">Wednesday</span><span class="bm-lbl">Highest reply day</span></div>
-    <div class="bm-item"><span class="bm-val">0.3%</span><span class="bm-lbl">Max spam complaint rate</span></div>
-    <div class="bm-item"><span class="bm-val">&lt;2%</span><span class="bm-lbl">Bounce rate target</span></div>
-    <div class="bm-item"><span class="bm-val">15–25%</span><span class="bm-lbl">Signal-based reply rate</span></div>
-    <!-- duplicate for seamless loop -->
-    <div class="bm-item"><span class="bm-val">3.43%</span><span class="bm-lbl">Average reply rate</span></div>
-    <div class="bm-item"><span class="bm-val">10.7%+</span><span class="bm-lbl">Top performer reply rate</span></div>
-    <div class="bm-item"><span class="bm-val">58%</span><span class="bm-lbl">Replies come from email Step 1</span></div>
-    <div class="bm-item"><span class="bm-val">&lt;80 words</span><span class="bm-lbl">Best performing email length</span></div>
-    <div class="bm-item"><span class="bm-val">Wednesday</span><span class="bm-lbl">Highest reply day</span></div>
-    <div class="bm-item"><span class="bm-val">0.3%</span><span class="bm-lbl">Max spam complaint rate</span></div>
-    <div class="bm-item"><span class="bm-val">&lt;2%</span><span class="bm-lbl">Bounce rate target</span></div>
-    <div class="bm-item"><span class="bm-val">15–25%</span><span class="bm-lbl">Signal-based reply rate</span></div>
-  </div>
-</div>
-<div style="background:var(--bg2);border-bottom:1px solid var(--border);padding:8px 32px;font-family:'DM Sans',sans-serif;font-size:11px;color:var(--dim);text-align:center;letter-spacing:0.04em;">Source: Instantly 2026 Cold Email Benchmark Report — billions of interactions analyzed across thousands of active workspaces</div>
 
-<!-- TOC STRIP -->
-<div style="background:var(--bg);border-bottom:1px solid var(--border);padding:20px 0;">
-  <div style="max-width:1200px;margin:0 auto;padding:0 32px;">
-    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
-      <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
-        <div style="display:flex;align-items:center;gap:8px;">
-          <div style="width:6px;height:6px;background:var(--accent);border-radius:50%;"></div>
-          <span style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;">~25 min read</span>
-        </div>
-        <div style="width:1px;height:16px;background:var(--border);"></div>
-        <span style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;color:var(--dim);letter-spacing:0.06em;text-transform:uppercase;">6 modules</span>
-      </div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap;">
-        <a onclick="navTo('infra',document.querySelector('[onclick*=infra]'))" href="#infra" style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;color:var(--muted);background:var(--bg2);border:1px solid var(--border);padding:5px 12px;border-radius:4px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#22D3EE';this.style.borderColor='rgba(34,211,238,0.3)'" onmouseout="this.style.color='';this.style.borderColor=''">01 Infrastructure</a>
-        <a href="#warmup" style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;color:var(--muted);background:var(--bg2);border:1px solid var(--border);padding:5px 12px;border-radius:4px;text-decoration:none;" onmouseover="this.style.color='#22D3EE';this.style.borderColor='rgba(34,211,238,0.3)'" onmouseout="this.style.color='';this.style.borderColor=''">02 Warmup</a>
-        <a href="#campaigns" style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;color:var(--muted);background:var(--bg2);border:1px solid var(--border);padding:5px 12px;border-radius:4px;text-decoration:none;" onmouseover="this.style.color='#22D3EE';this.style.borderColor='rgba(34,211,238,0.3)'" onmouseout="this.style.color='';this.style.borderColor=''">03 Campaigns</a>
-        <a href="#handover" style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;color:var(--muted);background:var(--bg2);border:1px solid var(--border);padding:5px 12px;border-radius:4px;text-decoration:none;" onmouseover="this.style.color='#22D3EE';this.style.borderColor='rgba(34,211,238,0.3)'" onmouseout="this.style.color='';this.style.borderColor=''">04 Handover</a>
-        <a href="#benchmarks" style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;color:var(--muted);background:var(--bg2);border:1px solid var(--border);padding:5px 12px;border-radius:4px;text-decoration:none;" onmouseover="this.style.color='#22D3EE';this.style.borderColor='rgba(34,211,238,0.3)'" onmouseout="this.style.color='';this.style.borderColor=''">05 Benchmarks</a>
-        <a href="#compliance" style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;color:var(--muted);background:var(--bg2);border:1px solid var(--border);padding:5px 12px;border-radius:4px;text-decoration:none;" onmouseover="this.style.color='#22D3EE';this.style.borderColor='rgba(34,211,238,0.3)'" onmouseout="this.style.color='';this.style.borderColor=''">06 Compliance</a>
-      </div>
+
+<!-- MODULE NAV -->
+<div style="background:var(--bg);border-bottom:1px solid var(--border);padding:14px 0;position:sticky;top:0;z-index:90;backdrop-filter:blur(12px);background:rgba(5,12,23,0.92);">
+  <div style="max-width:1200px;margin:0 auto;padding:0 32px;display:flex;align-items:center;gap:16px;overflow-x:auto;">
+    <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
+      <div style="width:6px;height:6px;background:var(--accent3);border-radius:50%;"></div>
+      <span style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;">~25 min read</span>
+    </div>
+    <div style="width:1px;height:20px;background:var(--border);flex-shrink:0;"></div>
+    <div style="display:flex;gap:5px;flex-wrap:nowrap;overflow-x:auto;" id="module-nav">
+      <a href="#infra" class="mod-pill" style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;color:var(--text);background:var(--bg3);border:1px solid var(--border);padding:6px 14px;border-radius:4px;text-decoration:none;white-space:nowrap;transition:all 0.2s;letter-spacing:0.04em;" onmouseover="this.style.borderColor='rgba(34,211,238,0.4)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='';this.style.color='var(--text)'">01 Infrastructure</a>
+      <a href="#warmup" class="mod-pill" style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;color:var(--text);background:var(--bg3);border:1px solid var(--border);padding:6px 14px;border-radius:4px;text-decoration:none;white-space:nowrap;transition:all 0.2s;letter-spacing:0.04em;" onmouseover="this.style.borderColor='rgba(34,211,238,0.4)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='';this.style.color='var(--text)'">02 Warmup</a>
+      <a href="#campaigns" class="mod-pill" style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;color:var(--text);background:var(--bg3);border:1px solid var(--border);padding:6px 14px;border-radius:4px;text-decoration:none;white-space:nowrap;transition:all 0.2s;letter-spacing:0.04em;" onmouseover="this.style.borderColor='rgba(34,211,238,0.4)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='';this.style.color='var(--text)'">03 Campaigns</a>
+      <a href="#handover" class="mod-pill" style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;color:var(--text);background:var(--bg3);border:1px solid var(--border);padding:6px 14px;border-radius:4px;text-decoration:none;white-space:nowrap;transition:all 0.2s;letter-spacing:0.04em;" onmouseover="this.style.borderColor='rgba(34,211,238,0.4)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='';this.style.color='var(--text)'">04 Handover</a>
+      <a href="#benchmarks" class="mod-pill" style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;color:var(--text);background:var(--bg3);border:1px solid var(--border);padding:6px 14px;border-radius:4px;text-decoration:none;white-space:nowrap;transition:all 0.2s;letter-spacing:0.04em;" onmouseover="this.style.borderColor='rgba(34,211,238,0.4)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='';this.style.color='var(--text)'">05 Benchmarks</a>
+      <a href="#compliance" class="mod-pill" style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;color:var(--text);background:var(--bg3);border:1px solid var(--border);padding:6px 14px;border-radius:4px;text-decoration:none;white-space:nowrap;transition:all 0.2s;letter-spacing:0.04em;" onmouseover="this.style.borderColor='rgba(34,211,238,0.4)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='';this.style.color='var(--text)'">06 Compliance</a>
     </div>
   </div>
 </div>
@@ -305,7 +254,7 @@
           <div class="card-body">
             <div class="prog-wrap"><div class="prog-label"><span>Fresh domain (0–30 days)</span><span style="color:var(--danger)">Warmup only</span></div><div class="prog-track"><div class="prog-fill" style="width:15%;background:var(--danger)"></div></div></div>
             <div class="prog-wrap"><div class="prog-label"><span>30–60 days</span><span style="color:var(--warn)">Low volume sends</span></div><div class="prog-track"><div class="prog-fill" style="width:45%;background:var(--warn)"></div></div></div>
-            <div class="prog-wrap"><div class="prog-label"><span>60–90 days</span><span style="color:#60a5fa)">Scaling safely</span></div><div class="prog-track"><div class="prog-fill" style="width:70%;background:#3b82f6"></div></div></div>
+            <div class="prog-wrap"><div class="prog-label"><span>60–90 days</span><span style="color:#60a5fa;">Scaling safely</span></div><div class="prog-track"><div class="prog-fill" style="width:70%;background:#3b82f6"></div></div></div>
             <div class="prog-wrap"><div class="prog-label"><span>90+ days</span><span style="color:var(--accent3)">Full capacity</span></div><div class="prog-track"><div class="prog-fill" style="width:100%;background:var(--accent3)"></div></div></div>
             <div style="margin-top:10px;font-size:12px;color:var(--muted);">Domain age is one of the strongest trust signals. Register domains in batches and let them age — this is not a step you can rush.</div>
           </div>
@@ -347,8 +296,8 @@
       </div>
     </div>
     <div class="grid3">
-      <div class="card"><div class="card-title"><span style="color:var(--accent3)">✓</span> SPF Best Practices</div><div class="card-body">One include per provider. Multiple nested includes cause DNS lookup failures. If you use multiple senders, use a dedicated SPF flattening service to consolidate.</div></div>
-      <div class="card"><div class="card-title"><span style="color:var(--accent3)">✓</span> DKIM Key Rotation</div><div class="card-body">Rotate DKIM keys every 6–12 months as hygiene. Old exposed keys are a security risk. Add this to your domain management calendar as a recurring task.</div></div>
+      <div class="card"><div class="card-title"><span style="color:var(--accent3);">✓</span> SPF Best Practices</div><div class="card-body">One include per provider. Multiple nested includes cause DNS lookup failures. If you use multiple senders, use a dedicated SPF flattening service to consolidate.</div></div>
+      <div class="card"><div class="card-title"><span style="color:var(--accent3);">✓</span> DKIM Key Rotation</div><div class="card-body">Rotate DKIM keys every 6–12 months as hygiene. Old exposed keys are a security risk. Add this to your domain management calendar as a recurring task.</div></div>
       <div class="card"><div class="card-title"><span style="color:var(--accent)">→</span> MX Records Required</div><div class="card-body">Set MX records correctly even on sending-only domains. Receiving capability signals legitimacy to ESPs. A domain that can't receive email looks disposable to spam filters.</div></div>
     </div>
   </div>
@@ -729,7 +678,39 @@
       <div class="card"><div class="card-title">💥 Subsequence C: Clicked No Reply</div><div class="card-body">Prospect clicked your link but didn't reply — they're warm. Fire a high-intent sequence within 24h: "Noticed you checked out [X] — happy to walk you through it." Direct. Short. Immediate.</div></div>
       <div class="card"><div class="card-title">🏷 Subsequence D: Referral Play</div><div class="card-body">Final step for zero-engagement leads: "If this isn't relevant to you, who on your team would find it useful?" Surprisingly high response rate with zero prior engagement from the original prospect.</div></div>
     </div>
-    <div class="callout" style="margin-top:14px;"><strong>Tag everything:</strong> <span class="chip blue">main-seq</span> <span class="chip purple">subseq-b</span> <span class="chip yellow">clicked-no-reply</span> <span class="chip green">interested</span> <span class="chip pink">handover</span> — a clean tag architecture becomes critical at agency scale and enables proper handover workflows.</div>
+    <div class="callout" style="margin-top:14px;"><strong>Tag everything:</strong> <span class="chip blue">main-seq</span> <span class="chip purple">subseq-b</span> <span class="chip yellow">clicked-no-reply</span> <span class="chip green">interested</span> <span class="chip pink">handover</span> — a clean tag architecture becomes critical at scale and enables proper handover workflows.</div>
+
+    <div class="card" style="margin-top:20px;border-color:var(--accent);">
+      <div class="card-title" style="color:var(--accent);font-size:15px;">🏷 Instantly Tag Management — The Operator Playbook</div>
+      <div class="card-body">
+        <p style="margin-bottom:14px;">Tags in Instantly are the backbone of mailbox assignment, campaign isolation, and reporting. Most teams use them loosely. Operators use them as infrastructure.</p>
+
+        <div style="margin-bottom:16px;">
+          <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:8px;">Tag naming convention (use this exact format):</div>
+          <div style="font-size:12px;line-height:2.2;color:var(--muted);">
+            <div><span class="chip blue">campaign:[name]</span> &nbsp;Which campaign the lead belongs to</div>
+            <div><span class="chip purple">tier:[1/2/3]</span> &nbsp;Lead quality tier for mailbox assignment</div>
+            <div><span class="chip green">status:[interested/not-now/ooo]</span> &nbsp;Current disposition</div>
+            <div><span class="chip yellow">source:[list-name]</span> &nbsp;Where the lead came from</div>
+            <div><span class="chip pink">owner:[sdr-name]</span> &nbsp;Who owns the relationship</div>
+          </div>
+        </div>
+
+        <div style="margin-bottom:16px;">
+          <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:8px;">How tags make mailbox-per-campaign assignment faster:</div>
+          <div style="font-size:12px;line-height:1.8;color:var(--muted);">
+            When you tag mailboxes by purpose — e.g. <span class="chip blue">pool:tier1-gws</span> <span class="chip purple">pool:tier2-mixed</span> <span class="chip yellow">pool:warmup-bench</span> — you can instantly filter and assign the right accounts when building new campaigns. Instead of scrolling through 30+ mailboxes trying to remember which ones are warmed, which are resting, and which are reserved for high-value sends, your tags tell you. This cuts campaign setup from 15 minutes to 2 minutes and eliminates assignment mistakes that lead to tier bleed.
+          </div>
+        </div>
+
+        <div>
+          <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:8px;">Tag-driven reporting in Instantly:</div>
+          <div style="font-size:12px;line-height:1.8;color:var(--muted);">
+            Filter your Instantly analytics by tag to see reply rates by tier, by source list, and by SDR. This replaces spreadsheet tracking and gives you real-time signal on what's working. If Tier 2 leads from a specific list source are bouncing at 4%, you'll see it immediately — not after the domain is already damaged.
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- ROTATION -->
@@ -755,7 +736,17 @@
       <div>
         <div class="card" style="margin-bottom:14px;"><div class="card-title">⚙️ Rotation Config in Instantly</div><div class="card-body">Campaign Settings → Email Accounts → add all mailboxes. Instantly distributes sends automatically. Each mailbox maintains its own identity — prospects receive from the assigned sender, not a shared address.</div></div>
         <div class="card" style="margin-bottom:14px;"><div class="card-title">🎯 Sender Persona Consistency</div><div class="card-body">Each sending mailbox needs: a profile photo in Google Workspace, a plain-text email signature, and a completed LinkedIn profile associated with the sending domain. Persona believability is a trust signal.</div></div>
-        <div class="card"><div class="card-title">🔴 When Rotation Goes Wrong</div><div class="card-body">If one mailbox in your pool gets flagged, pause that account only — not the entire campaign. Audit leads that mailbox sent to for bad data. Replace it with a pre-warmed spare. Always maintain a 20% bench of spare warmed mailboxes for continuity.</div:var(--accent);">
+        <div class="card"><div class="card-title">🔴 When Rotation Goes Wrong</div><div class="card-body">If one mailbox in your pool gets flagged, pause that account only — not the entire campaign. Audit leads that mailbox sent to for bad data. Replace it with a pre-warmed spare. Always maintain a 20% bench of spare warmed mailboxes for continuity.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEAD SEGMENTATION -->
+  <div class="tab-panel">
+    <h3 style="font-size:16px;margin-bottom:6px;">Tiered Lead Segmentation in Instantly</h3>
+    <p style="color:var(--muted);font-size:13px;margin-bottom:20px;">Not all leads deserve the same resources. Segment by ICP fit and allocate infrastructure accordingly — mailboxes, sequences, and tracking domains should match the tier.</p>
+    <div class="grid3">
+      <div class="card" style="border-color:var(--accent);">
         <div class="card-title" style="color:var(--accent);">🏆 Tier 1 — Dream Accounts</div>
         <div class="card-body" style="font-size:12px;line-height:2.1;">
           <p style="margin-bottom:10px;">Top 10% ICP fit. Your perfect customers.</p>
@@ -777,7 +768,10 @@
         </div>
       </div>
     </div>
-    <div class="alert alert-warn" style="margin-top:20px;"><span class="alert-icon">⚠</span><div><strong>Never mix tiers in the same campaign.</strong> If Tier 3 leads generate high bounces or complaints, they drag down the reputation of all mailboxes in that campaign — including those also touching your Tier 1 accounts. Always isolate by tier.</div></div>
+
+    <div class="alert alert-info" style="margin-top:20px;"><span class="alert-icon">🏷</span><div><strong>Instantly tag architecture for tiers:</strong> Tag every lead on upload — <span class="chip green">tier-1</span> <span class="chip purple">tier-2</span> <span class="chip yellow">tier-3</span>. Use Instantly's tag filters when assigning leads to campaigns. This prevents tier bleed and makes it easy to pull reporting by segment. Combine with campaign-level tags like <span class="chip blue">q1-saas-ceo</span> for full traceability.</div></div>
+
+    <div class="alert alert-warn" style="margin-top:14px;"><span class="alert-icon">⚠</span><div><strong>Never mix tiers in the same campaign.</strong> If Tier 3 leads generate high bounces or complaints, they drag down the reputation of all mailboxes in that campaign — including those also touching your Tier 1 accounts. Always isolate by tier.</div></div>
   </div>
 </section>
 <hr class="divider">
@@ -1117,18 +1111,21 @@ function switchTab(group, idx) {
   panels.forEach((p,i) => { p.classList.toggle('active', i===idx); });
 }
 
-// ── NAV ──
-function navTo(id, el) {
-  document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-  if(el) el.classList.add('active');
-}
+// ── MODULE NAV HIGHLIGHT ──
 window.addEventListener('scroll', () => {
-  const ids=['infra','warmup','campaigns','handover','benchmarks','compliance','tools'];
-  const btns=document.querySelectorAll('.nav-btn');
+  const ids=['infra','warmup','campaigns','handover','benchmarks','compliance'];
+  const pills=document.querySelectorAll('#module-nav .mod-pill');
   ids.forEach((id,i)=>{
     const el=document.getElementById(id);
-    if(el){const r=el.getBoundingClientRect();if(r.top<=80&&r.bottom>80){btns.forEach(b=>b.classList.remove('active'));if(btns[i])btns[i].classList.add('active');}}
+    if(el&&pills[i]){
+      const r=el.getBoundingClientRect();
+      if(r.top<=100&&r.bottom>100){
+        pills.forEach(p=>{p.style.borderColor='';p.style.color='var(--text)';p.style.background='var(--bg3)';});
+        pills[i].style.borderColor='rgba(34,211,238,0.4)';
+        pills[i].style.color='var(--accent)';
+        pills[i].style.background='rgba(34,211,238,0.06)';
+      }
+    }
   });
 });
 
@@ -1150,8 +1147,8 @@ if(chart){
     row.innerHTML=`<div class="wt-label">${d.label}</div><div class="wt-track"><div style="display:flex;height:100%;gap:2px;"><div class="wt-fill warmup" style="width:${wW}%;min-width:${d.warmup>0?28:0}px;">${d.warmup>0?'🔥 '+d.warmup:''}</div>${d.real>0?`<div class="wt-fill mixed" style="width:${rW}%;">📧 ${d.real}</div>`:''}</div></div><div class="wt-val"><span style="color:${d.phase==='warmup'?'#a78bfa':d.phase==='mixed'?'var(--accent)':'var(--accent3)'};">${d.phase.toUpperCase()}</span></div>`;
     chart.appendChild(row);
   });
-  const leg=document.createElement('div');leg.style.cssText='display:flex;gap:16px;margin-top:10px;font-size:11px;font-family:'DM Sans',sans-serif;';
-  leg.innerHTML='<span style="color:#c4b5fd;">🔥 WARMUP/DAY</span><span style="color:var(--accent)">📧 CAMPAIGN/DAY</span>';
+  const leg=document.createElement('div');leg.style.cssText="display:flex;gap:16px;margin-top:10px;font-size:11px;font-family:DM Sans,sans-serif;";
+  leg.innerHTML='<span style="color:#c4b5fd;">🔥 WARMUP/DAY</span><span style="color:var(--accent);">📧 CAMPAIGN/DAY</span>';
   chart.appendChild(leg);
 }
 
