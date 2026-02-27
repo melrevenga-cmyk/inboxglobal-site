@@ -179,13 +179,13 @@
 
   .hero h1 {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: clamp(52px, 8.5vw, 104px);
+    font-size: clamp(48px, 7.5vw, 96px);
     font-weight: 800;
-    line-height: 1.05;
+    line-height: 1.08;
     letter-spacing: -0.03em;
     margin-bottom: 36px;
     max-width: 960px;
-    padding-bottom: 4px;
+    padding-bottom: 8px;
   }
 
   .hero h1 em {
@@ -195,7 +195,7 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
     display: block;
-    padding-bottom: 0.05em;
+    padding-bottom: 0.12em;
   }
 
   .hero-sub {
@@ -288,6 +288,12 @@
     background: var(--bg);
     padding: 32px;
     position: relative;
+    border-left: 2px solid transparent;
+    transition: border-color 0.3s;
+  }
+
+  .problem-item:hover {
+    border-left-color: var(--red);
   }
 
   .problem-item::before {
@@ -295,7 +301,7 @@
     font-family: 'DM Sans', sans-serif;
     font-size: 11px;
     font-weight: 600;
-    color: var(--text-dim);
+    color: var(--red);
     display: block;
     margin-bottom: 12px;
     letter-spacing: 0.08em;
@@ -309,7 +315,7 @@
   }
 
   .problem-item strong {
-    color: var(--text);
+    color: var(--red);
     font-weight: 500;
   }
 
@@ -882,18 +888,22 @@
 
   .cta-contact {
     font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
+    font-size: 16px;
     font-weight: 400;
-    color: var(--text-dim);
+    color: var(--text-muted);
+    margin-top: 8px;
   }
 
   .cta-contact a {
-    color: var(--text-muted);
+    color: var(--accent);
     text-decoration: none;
-    transition: color 0.2s;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(34,211,238,0.3);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
   }
 
-  .cta-contact a:hover { color: var(--accent); }
+  .cta-contact a:hover { color: #67E8F9; border-color: #67E8F9; }
 
   /* ─── FOOTER ─── */
   footer {
@@ -1056,7 +1066,7 @@
       <li><a href="/#founder">About</a></li>
       <li><a href="/resources">Resources</a></li>
       <li><a href="https://es.inboxglobal.io">ES 🇪🇸</a></li>
-      <li><a href="#cta" class="nav-cta">Book a Call</a></li>
+      <li><a href="https://calendly.com/hello-inboxglobal/30min" class="nav-cta">Book a Call</a></li>
     </ul>
   </div>
 </nav>
@@ -1067,7 +1077,7 @@
     <div class="hero-tag"><span class="hero-tag-dot"></span> Deliverability-First Expert Resource <span class="hero-tag-divider">·</span> Operator-Led Diagnostics</div>
     <h1>Outbound didn't get harder.<br><em>It got less forgiving.</em></h1>
     <p class="hero-sub">
-     Provider rules tightened. Reputation signals got more volatile. And the tooling sprawl most teams duct-taped together? It's creating failure modes no one sees until a domain gets blocked. InboxGlobal treats outbound email as infrastructure, so your pipeline doesn't depend on things you're not monitoring.
+     Provider rules tightened. Reputation signals got more volatile. And the tooling sprawl most teams duct-taped together? It's creating failure modes no one sees until a domain gets blocked. <strong>InboxGlobal treats outbound email as infrastructure, so your pipeline doesn't depend on things you're not monitoring.</strong>
     </p>
     <div class="hero-ctas">
       <a href="https://buy.stripe.com/14A3cv9bW5m7bRH8CM3Je00" class="btn-primary">Get PulseCheck — $950</a>
@@ -1081,7 +1091,7 @@
 <!-- PROBLEM STRIP -->
 <section class="problem-strip">
   <div class="container">
-    <div class="label">// What breaks first when you scale</div>
+    <div class="label" style="color: var(--red);">// What breaks first when you scale</div>
     <div class="problem-grid">
       <div class="problem-item" data-num="01">
         <p><strong>Deliverability treated as one-time setup.</strong> Not as an operating system that requires governance, enforcement, and ongoing monitoring.</p>
@@ -1215,7 +1225,10 @@
           I spent 15 years building and scaling revenue infrastructure in EdTech and SaaS, <strong>where email wasn't a channel, it was the product.</strong> If the sending system broke, revenue stopped.
         </p>
         <p class="founder-quote">
-          I didn't learn deliverability from a course. I learned it by keeping systems stable under real load: scaling outbound from 200K to 2M+ emails/month, building enforcement that survived team turnover, and stabilizing systems after acquisitions when domains and tools collided.
+          I didn't learn deliverability from a course. I learned it by keeping systems stable under real load: scaling outbound from 200K to 2M+ emails/month and building enforcement that survived team turnover.
+        </p>
+        <p class="founder-quote">
+          <strong>When companies acquired new brands, I was the one stabilizing systems after domains and tools collided.</strong> That's where the operating model came from — not theory, but pressure.
         </p>
         <p class="founder-quote">
           InboxGlobal exists because I kept seeing the same pattern: teams hire for growth, then scramble to build governance after something breaks. <strong>Prevention is cheaper. Enforcement is what scales.</strong>
@@ -1351,7 +1364,7 @@
         <span class="cta-entry-action">Buy Now</span>
       </a>
     </div>
-    <div class="cta-contact">Not sure which one? <a href="mailto:hello@inboxglobal.io">Email us</a> or book a 15-min qualifier.</div>
+    <div class="cta-contact">Not sure which one? <a href="/cdn-cgi/l/email-protection#59313c3535361930373b36213e35363b3835773036">Email us</a> or book a 15-min qualifier.</div>
   </div>
 </section>
 
@@ -1369,7 +1382,7 @@
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // Close mobile nav on link click
 document.querySelectorAll('.nav-links a').forEach(a => {
   a.addEventListener('click', () => {
@@ -1378,5 +1391,4 @@ document.querySelectorAll('.nav-links a').forEach(a => {
 });
 </script>
 
-</body>
-</html>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v67327c56f0bb4ef8b305cae61679db8f1769101564043" integrity="sha512-rdcWY47ByXd76cbCFzznIcEaCN71jqkWBBqlwhF1SY7KubdLKZiEGeP7AyieKZlGP9hbY/MhGrwXzJC/HulNyg==" data-cf-beacon='{"version":"2024.11.0","token":"15b516814e3e45c1bcc8fadc4dff0621","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge
