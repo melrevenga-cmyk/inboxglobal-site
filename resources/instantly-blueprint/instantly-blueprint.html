@@ -277,11 +277,11 @@
   </div>
 
   <div class="tabs" id="infra-tabs">
-    <button class="tab active" onclick="switchTab('infra',0)">Domain Strategy</button>
-    <button class="tab" onclick="switchTab('infra',1)">DNS Records</button>
-    <button class="tab" onclick="switchTab('infra',2)">Advanced Deliverability</button>
-    <button class="tab" onclick="switchTab('infra',3)">Provider Selection</button>
-    <button class="tab" onclick="switchTab('infra',4)">Tracking Domains</button>
+    <button class="tab active" data-group="infra" data-idx="0">Domain Strategy</button>
+    <button class="tab" data-group="infra" data-idx="1">DNS Records</button>
+    <button class="tab" data-group="infra" data-idx="2">Advanced Deliverability</button>
+    <button class="tab" data-group="infra" data-idx="3">Provider Selection</button>
+    <button class="tab" data-group="infra" data-idx="4">Tracking Domains</button>
   </div>
 
   <!-- DOMAINS -->
@@ -600,10 +600,10 @@
     <p class="section-sub">Warmup isn't a checkbox. It's an ongoing, calibrated process. Here's how Instantly's warmup network actually works and how to configure it correctly.</p>
   </div>
   <div class="tabs" id="warmup-tabs">
-    <button class="tab active" onclick="switchTab('warmup',0)">How It Works</button>
-    <button class="tab" onclick="switchTab('warmup',1)">Ramp Schedule</button>
-    <button class="tab" onclick="switchTab('warmup',2)">Settings Config</button>
-    <button class="tab" onclick="switchTab('warmup',3)">Health Signals</button>
+    <button class="tab active" data-group="warmup" data-idx="0">How It Works</button>
+    <button class="tab" data-group="warmup" data-idx="1">Ramp Schedule</button>
+    <button class="tab" data-group="warmup" data-idx="2">Settings Config</button>
+    <button class="tab" data-group="warmup" data-idx="3">Health Signals</button>
   </div>
 
   <div class="tab-panel active">
@@ -700,11 +700,11 @@
     <p class="section-sub">Campaign architecture is where execution separates from infrastructure. This module covers branching logic, engagement-based routing, and multi-inbox rotation that reacts to how prospects actually behave.</p>
   </div>
   <div class="tabs" id="campaigns-tabs">
-    <button class="tab active" onclick="switchTab('campaigns',0)">Step 1 First</button>
-    <button class="tab" onclick="switchTab('campaigns',1)">Sequence Structure</button>
-    <button class="tab" onclick="switchTab('campaigns',2)">Subsequences</button>
-    <button class="tab" onclick="switchTab('campaigns',3)">Inbox Rotation</button>
-    <button class="tab" onclick="switchTab('campaigns',4)">Lead Segmentation</button>
+    <button class="tab active" data-group="campaigns" data-idx="0">Step 1 First</button>
+    <button class="tab" data-group="campaigns" data-idx="1">Sequence Structure</button>
+    <button class="tab" data-group="campaigns" data-idx="2">Subsequences</button>
+    <button class="tab" data-group="campaigns" data-idx="3">Inbox Rotation</button>
+    <button class="tab" data-group="campaigns" data-idx="4">Lead Segmentation</button>
   </div>
 
   <!-- STEP 1 FIRST -->
@@ -1084,10 +1084,10 @@
   <div class="alert alert-danger"><span class="alert-icon">🚨</span><div><strong>2026 enforcement update:</strong> Microsoft joined Google and Yahoo in May 2025 with Outlook.com bulk sender requirements. Non-compliant senders are moved to Junk then rejected entirely. These rules are now enforced at the ESP level — there is no opt-out.</div></div>
 
   <div class="tabs" id="compliance-tabs">
-    <button class="tab active" onclick="switchTab('compliance',0)">Gmail Rules</button>
-    <button class="tab" onclick="switchTab('compliance',1)">Bulk Sender Rules</button>
-    <button class="tab" onclick="switchTab('compliance',2)">CAN-SPAM / GDPR</button>
-    <button class="tab" onclick="switchTab('compliance',3)">Compliance Checklist</button>
+    <button class="tab active" data-group="compliance" data-idx="0">Gmail Rules</button>
+    <button class="tab" data-group="compliance" data-idx="1">Bulk Sender Rules</button>
+    <button class="tab" data-group="compliance" data-idx="2">CAN-SPAM / GDPR</button>
+    <button class="tab" data-group="compliance" data-idx="3">Compliance Checklist</button>
   </div>
 
   <!-- GMAIL -->
@@ -1325,11 +1325,21 @@
 // ── TAB SYSTEM ──
 function switchTab(group, idx) {
   const sec = document.getElementById(group);
+  if (!sec) return;
   const tabs = sec.querySelectorAll('.tab');
   const panels = sec.querySelectorAll('.tab-panel');
   tabs.forEach((t,i) => { t.classList.toggle('active', i===idx); });
   panels.forEach((p,i) => { p.classList.toggle('active', i===idx); });
 }
+
+// Event delegation for tabs (works with CSP — no inline onclick needed)
+document.addEventListener('click', function(e) {
+  const btn = e.target.closest('.tab[data-group]');
+  if (!btn) return;
+  const group = btn.getAttribute('data-group');
+  const idx = parseInt(btn.getAttribute('data-idx'), 10);
+  switchTab(group, idx);
+});
 
 // ── WARMUP CHART ──
 const warmupData=[
