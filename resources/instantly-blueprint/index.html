@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InboxGlobal™ — System Integrity for Outbound Email</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0B0F2B;
+    --surface: #0E1333;
+    --surface-2: #121839;
+    --border: rgba(34,211,238,0.12);
+    --border-strong: rgba(34,211,238,0.25);
+    --accent: #22D3EE;
+    --accent-dim: rgba(34,211,238,0.08);
+    --accent-mid: rgba(34,211,238,0.18);
+    --text: #E2EBF3;
+    --text-muted: #94A3B8;
+    --text-dim: #5A7189;
+    --red: #F87171;
+    --amber: #FBBF24;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 18px;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* Grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(34,211,238,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(34,211,238,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Radial glow top */
+  body::after {
+    content: '';
+    position: fixed;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 900px;
+    height: 500px;
+    background: radial-gradient(ellipse, rgba(34,211,238,0.07) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 32px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--border);
+    background: rgba(11,15,43,0.85);
+    backdrop-filter: blur(12px);
+  }
+
+  .nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 32px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .nav-logo span {
+    color: var(--text-muted);
+    font-weight: 300;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  .nav-cta {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--bg) !important;
+    background: var(--accent);
+    padding: 8px 18px;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 4px;
+    transition: opacity 0.2s;
+  }
+
+  .nav-cta:hover { opacity: 0.85; }
+
+  /* ─── HERO ─── */
+  .hero {
+    padding: 160px 0 100px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-tag {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: #94A3B8;
+    margin-bottom: 32px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 8px 18px;
+    border-radius: 100px;
+  }
+
+  .hero-tag-dot {
+    width: 8px;
+    height: 8px;
+    background: #22C55E;
+    border-radius: 50%;
+    flex-shrink: 0;
+    animation: pulse 2s infinite;
+  }
+
+  .hero-tag-divider {
+    color: rgba(255,255,255,0.2);
+  }
+
+  .hero h1 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(48px, 7.5vw, 96px);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    margin-bottom: 36px;
+    max-width: 960px;
+    padding-bottom: 8px;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    background: linear-gradient(90deg, #22D3EE 0%, #67E8F9 50%, #A5F3FC 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: block;
+    padding-bottom: 0.12em;
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--text-muted);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 48px;
+  }
+
+  .hero-sub strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .btn-primary {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--bg);
+    background: var(--accent);
+    padding: 14px 28px;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 4px;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  .btn-ghost {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--text-muted);
+    border: 1px solid var(--border-strong);
+    padding: 14px 28px;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 4px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .btn-ghost:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* ─── DIVIDER ─── */
+  .section-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0;
+  }
+
+  /* ─── PROBLEM STRIP ─── */
+  .problem-strip {
+    padding: 80px 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 40px;
+  }
+
+  .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .problem-item {
+    background: var(--bg);
+    padding: 32px;
+    position: relative;
+    border-left: 2px solid transparent;
+    transition: border-color 0.3s;
+  }
+
+  .problem-item:hover {
+    border-left-color: var(--red);
+  }
+
+  .problem-item::before {
+    content: attr(data-num);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--red);
+    display: block;
+    margin-bottom: 12px;
+    letter-spacing: 0.08em;
+  }
+
+  .problem-item p {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .problem-item strong {
+    color: var(--red);
+    font-weight: 500;
+  }
+
+  /* ─── SECTION HEADINGS ─── */
+  .section-heading {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(36px, 5vw, 60px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.0;
+  }
+
+  .section-heading em {
+    font-style: normal;
+    background: linear-gradient(90deg, #22D3EE 0%, #67E8F9 50%, #A5F3FC 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ─── OFFERS ─── */
+  .offers-section {
+    padding: 100px 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .offers-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 56px;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .offers-header p {
+    font-size: 16px;
+    color: var(--text-muted);
+    font-weight: 300;
+    max-width: 380px;
+    line-height: 1.7;
+  }
+
+  .offer-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .offer-card {
+    background: var(--surface);
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+
+  .offer-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: transparent;
+    transition: background 0.3s;
+  }
+
+  .offer-card:hover { background: var(--surface-2); }
+  .offer-card:hover::before { background: var(--accent); }
+
+  .offer-badge {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-dim);
+    border: 1px solid var(--border-strong);
+    padding: 5px 12px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 28px;
+    align-self: flex-start;
+  }
+
+  .offer-card h3 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+
+  .offer-price {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+
+  .offer-meta {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-dim);
+    margin-bottom: 32px;
+  }
+
+  .offer-desc {
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 32px;
+    flex-grow: 1;
+  }
+
+  .offer-deliverables {
+    list-style: none;
+    margin-bottom: 36px;
+  }
+
+  .offer-deliverables li {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-muted);
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.5;
+  }
+
+  .offer-deliverables li::before {
+    content: '→';
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .offer-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  /* ─── FEATURED OFFER ─── */
+  .offer-card.featured {
+    background: var(--surface-2);
+    border: 1px solid var(--border-strong);
+  }
+
+  /* ─── PRINCIPLES ─── */
+  .principles-section {
+    padding: 100px 0;
+    position: relative;
+    z-index: 1;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .principles-layout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .principles-intro h2 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 48px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin-bottom: 20px;
+  }
+
+  .principles-intro p {
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .principles-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .principle {
+    padding: 28px 0;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 32px;
+    align-items: baseline;
+  }
+
+  .principle:first-child { border-top: 1px solid var(--border); }
+
+  .principle-name {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--accent);
+  }
+
+  .principle-desc {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.65;
+  }
+
+  /* ─── FOUNDER ─── */
+  .founder-section {
+    padding: 100px 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .founder-layout {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .founder-content .section-heading {
+    margin-bottom: 32px;
+  }
+
+  .founder-quote {
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.75;
+    margin-bottom: 24px;
+  }
+
+  .founder-quote strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .founder-sig {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-top: 32px;
+  }
+
+  .founder-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .founder-img {
+    width: 100%;
+    aspect-ratio: 4/5;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    filter: grayscale(20%) contrast(1.05);
+    background: var(--surface-2);
+  }
+
+  .founder-img-placeholder {
+    width: 100%;
+    aspect-ratio: 4/5;
+    background: var(--surface-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .founder-img-placeholder span {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-dim);
+    letter-spacing: 0.06em;
+  }
+
+  .founder-card-meta {
+    padding: 20px 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .founder-name {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 4px;
+  }
+
+  .founder-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* ─── ICP ─── */
+  .icp-section {
+    padding: 100px 0;
+    position: relative;
+    z-index: 1;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .icp-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    margin-top: 56px;
+  }
+
+  .icp-col h4 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .icp-col.yes h4 { color: var(--accent); }
+  .icp-col.no h4 { color: var(--red); }
+
+  .icp-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .icp-list li {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--text-muted);
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    line-height: 1.5;
+  }
+
+  .icp-list li span.icon {
+    flex-shrink: 0;
+    font-size: 12px;
+  }
+
+  .icp-col.yes .icp-list li span.icon { color: var(--accent); }
+  .icp-col.no .icp-list li span.icon { color: var(--red); }
+
+  /* ─── CHECKLIST ─── */
+  .checklist-section {
+    padding: 100px 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .checklist-layout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 80px;
+    margin-top: 56px;
+    align-items: start;
+  }
+
+  .checklist-intro p {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-top: 16px;
+  }
+
+  .checklist-warning {
+    margin-top: 32px;
+    padding: 16px 20px;
+    background: rgba(251,191,36,0.06);
+    border: 1px solid rgba(251,191,36,0.2);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--amber);
+    line-height: 1.6;
+  }
+
+  .checklist-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .checklist-group {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .group-header {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding: 20px 0 12px;
+  }
+
+  .checklist-items {
+    list-style: none;
+    padding-bottom: 12px;
+  }
+
+  .checklist-items li {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--text-muted);
+    padding: 8px 0;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    line-height: 1.5;
+  }
+
+  .check-box {
+    width: 14px;
+    height: 14px;
+    border: 1px solid var(--border-strong);
+    flex-shrink: 0;
+    margin-top: 1px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+
+  .check-box.checked {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .check-box.checked::after {
+    content: '✓';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    color: var(--bg);
+    font-weight: 700;
+  }
+
+  /* ─── CTA ─── */
+  .cta-section {
+    padding: 100px 0;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+  }
+
+  .cta-section h2 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(48px, 7vw, 88px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 0.96;
+    margin-bottom: 24px;
+  }
+
+  .cta-section h2 em {
+    font-style: normal;
+    background: linear-gradient(90deg, #22D3EE 0%, #67E8F9 50%, #A5F3FC 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .cta-section p {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--text-muted);
+    max-width: 460px;
+    margin: 0 auto 48px;
+    line-height: 1.7;
+  }
+
+  .cta-entry-points {
+    display: flex;
+    gap: 1px;
+    max-width: 700px;
+    margin: 0 auto 48px;
+    background: var(--border);
+  }
+
+  .cta-entry {
+    flex: 1;
+    background: var(--surface);
+    padding: 28px 24px;
+    text-align: left;
+    text-decoration: none;
+    transition: background 0.2s;
+    display: block;
+  }
+
+  .cta-entry:hover { background: var(--surface-2); }
+
+  .cta-entry-price {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+
+  .cta-entry-name {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  .cta-entry-action {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .cta-entry-action::after { content: '→'; }
+
+  .cta-contact {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--text-muted);
+    margin-top: 8px;
+  }
+
+  .cta-contact a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(34,211,238,0.3);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .cta-contact a:hover { color: #67E8F9; border-color: #67E8F9; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .footer-logo {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .footer-copy {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-dim);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--accent); }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-tag { animation: fadeUp 0.6s ease both; }
+  .hero h1 { animation: fadeUp 0.6s 0.1s ease both; }
+  .hero-sub { animation: fadeUp 0.6s 0.2s ease both; }
+  .hero-ctas { animation: fadeUp 0.6s 0.3s ease both; }
+
+  /* ─── MOBILE NAV TOGGLE ─── */
+  .nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .nav-toggle span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--text-muted);
+    transition: all 0.25s;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .nav-toggle { display: flex; }
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 60px;
+      left: 0;
+      right: 0;
+      background: rgba(11,15,43,0.97);
+      backdrop-filter: blur(16px);
+      flex-direction: column;
+      padding: 24px 32px;
+      gap: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-links.open { display: flex; }
+    .nav-cta { text-align: center; }
+    .offer-cards { grid-template-columns: 1fr; }
+    .problem-grid { grid-template-columns: 1fr; }
+    .principles-layout { grid-template-columns: 1fr; gap: 48px; }
+    .founder-layout { grid-template-columns: 1fr; }
+    .icp-layout { grid-template-columns: 1fr; }
+    .checklist-layout { grid-template-columns: 1fr; gap: 40px; }
+    .principle { grid-template-columns: 1fr; gap: 8px; }
+    .cta-entry-points { flex-direction: column; }
+    .offer-card { padding: 32px 28px; }
+  }
+
+  /* Score badge */
+  .score-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--accent-dim);
+    border: 1px solid var(--border-strong);
+    padding: 10px 18px;
+    margin-bottom: 40px;
+  }
+
+  .score-badge-dot {
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .score-badge-text {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">InboxGlobal<span>™</span></a>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="/#offers">Services</a></li>
+      <li><a href="/#principles">Principles</a></li>
+      <li><a href="/#founder">About</a></li>
+      <li><a href="/resources">Resources</a></li>
+      <li><a href="https://calendly.com/hello-inboxglobal/30min" class="nav-cta">Book a Call</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-tag"><span class="hero-tag-dot"></span> Deliverability-First Expert Resource <span class="hero-tag-divider">·</span> Operator-Led Diagnostics</div>
+    <h1>Outbound didn't get harder.<br><em>It got less forgiving.</em></h1>
+    <p class="hero-sub">
+     Provider rules tightened. Reputation signals got more volatile. Most teams don't find out something is broken until a domain gets blocked and pipeline stops moving. <strong>InboxGlobal keeps your sending system clean and enforceable — so performance issues get caught before they become revenue problems.</strong>
+    </p>
+    <div class="hero-ctas">
+      <a href="https://buy.stripe.com/14A3cv9bW5m7bRH8CM3Je00" class="btn-primary">Get a system health check — $950</a>
+      <a href="#offers" class="btn-ghost">See All Services</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PROBLEM STRIP -->
+<section class="problem-strip">
+  <div class="container">
+    <div class="label" style="color: var(--red);">// What breaks first when you scale</div>
+    <div class="problem-grid">
+      <div class="problem-item" data-num="01">
+        <p><strong>Deliverability treated as one-time setup.</strong> Not as an operating system that requires governance, enforcement, and ongoing monitoring.</p>
+      </div>
+      <div class="problem-item" data-num="02">
+        <p><strong>Monitoring is inconsistent.</strong> Rules live in people's heads. When those people leave, the system degrades silently.</p>
+      </div>
+      <div class="problem-item" data-num="03">
+        <p><strong>Tool stacks change.</strong> System architecture doesn't keep up. New tools inherit the same broken patterns at higher volume.</p>
+      </div>
+      <div class="problem-item" data-num="04">
+        <p><strong>When blocks hit, teams scramble.</strong> You lose pipeline time, not just inbox placement. Recovery is expensive. Prevention is not.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- OFFERS -->
+<section class="offers-section" id="offers">
+  <div class="container">
+    <div class="offers-header">
+      <div>
+        <div class="label">// Entry points</div>
+        <h2 class="section-heading">Two ways<br>to start.</h2>
+      </div>
+      <p>Both are fixed-scope, fixed-price, and operator-delivered. No tool reports. No AI-generated summaries. Direct read on your system.</p>
+    </div>
+    <div class="offer-cards">
+
+      <!-- PulseCheck -->
+      <div class="offer-card">
+        <div class="offer-badge">Entry · Fast Signal</div>
+        <h3>Outbound Deliverability<br>PulseCheck™</h3>
+        <div class="offer-price">$950</div>
+        <div class="offer-meta">Flat fee · 5 business days · USD</div>
+        <p class="offer-desc">
+          An independent operator review of your sending system before you make a change that costs you a domain. A direct read on what's stable, what's at risk, and what to fix first.
+        </p>
+        <ul class="offer-deliverables">
+          <li>30–45 min operator review call — diagnosis, not a readout</li>
+          <li>System Integrity Score (0–100) calibrated against real failure patterns</li>
+          <li>Authentication + reputation snapshot with meaning, not just data</li>
+          <li>Top 3 risks ranked by urgency — what breaks first if you don't act</li>
+          <li>Immediate fixes: 2–3 stabilization actions for this week</li>
+          <li>Written summary + priorities list for your team</li>
+        </ul>
+        <div class="offer-actions">
+          <a href="https://buy.stripe.com/14A3cv9bW5m7bRH8CM3Je00" class="btn-primary">Buy Now</a>
+          <a href="/pulsecheck" class="btn-ghost">See Deliverables</a>
+        </div>
+      </div>
+
+      <!-- System Integrity Audit -->
+      <div class="offer-card featured">
+        <div class="offer-badge">Full System · Scale-Ready</div>
+        <h3>System Integrity<br>Audit™</h3>
+        <div class="offer-price">$3,500</div>
+        <div class="offer-meta">Flat fee · 7–10 business days · USD</div>
+        <p class="offer-desc">
+          Full system teardown and staged remediation plan with enforcement. Not just what's broken — how your risks connect, what to fix first, and how to keep it stable as you scale.
+        </p>
+        <ul class="offer-deliverables">
+          <li>Failure map + risk sequencing across all system layers</li>
+          <li>30/60/90 day stabilization sequence with staged dependencies</li>
+          <li>Enforcement rules built into your workflow — not suggestions</li>
+          <li>System Integrity Score with quantified risk across auth, reputation, infra</li>
+          <li>Standards + separation plan: what good looks like for your setup</li>
+          <li>System Integrity Brief (PDF): executive summary + technical appendix</li>
+          <li>Live review call: priority sequence, ownership, what not to do next</li>
+        </ul>
+        <div class="offer-actions">
+          <a href="https://buy.stripe.com/00wcN51JubKvbRH4mw3Je01" class="btn-primary">Buy Now</a>
+          <a href="/audit" class="btn-ghost">See Deliverables</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRINCIPLES -->
+<section class="principles-section" id="principles">
+  <div class="container">
+    <div class="principles-layout">
+      <div class="principles-intro">
+        <div class="label">// How we operate</div>
+        <h2 class="section-heading">Operating<br>Principles.</h2>
+        <p>These aren't values. They're enforcement rules for how we work and how we expect clients to work. Not flexible. Not debated.</p>
+      </div>
+      <div class="principles-list">
+        <div class="principle">
+          <div class="principle-name">System integrity<br>over hacks</div>
+          <div class="principle-desc">Sustained performance comes from coherent system design, not short-term tactics or isolated optimizations.</div>
+        </div>
+        <div class="principle">
+          <div class="principle-name">Separation<br>before scale</div>
+          <div class="principle-desc">Domains, identities, and workflows must be isolated by purpose before volume is introduced.</div>
+        </div>
+        <div class="principle">
+          <div class="principle-name">Prevention<br>over recovery</div>
+          <div class="principle-desc">Failures are expensive to reverse. Systems should be designed to avoid degradation in advance.</div>
+        </div>
+        <div class="principle">
+          <div class="principle-name">Standards<br>over opinions</div>
+          <div class="principle-desc">Scalable operations require defined standards and enforcement, not individual preference or debate.</div>
+        </div>
+        <div class="principle">
+          <div class="principle-name">Operators,<br>not marketers</div>
+          <div class="principle-desc">Email systems are operated, governed, and protected. They are not managed as campaigns.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDER -->
+<section class="founder-section" id="founder">
+  <div class="container">
+    <div class="founder-layout">
+      <div class="founder-content">
+        <div class="label">// The operator behind InboxGlobal</div>
+        <h2 class="section-heading" style="margin-bottom:32px;">Built from<br>the <em>inside out.</em></h2>
+        <p class="founder-quote">
+          Most deliverability consultants come from marketing or email service providers. I came from operations.
+        </p>
+        <p class="founder-quote">
+          I spent 15 years building and scaling revenue infrastructure in EdTech and SaaS, <strong>where email wasn't a channel, it was the product.</strong> If the sending system broke, revenue stopped.
+        </p>
+        <p class="founder-quote">
+          I didn't learn deliverability from a course. I learned it by keeping systems stable under real load: scaling outbound from 200K to 2M+ emails/month and building enforcement that survived team turnover.
+        </p>
+        <p class="founder-quote">
+          <strong>When companies acquired new brands, I was the one stabilizing systems after domains and tools collided.</strong> That's where the operating model came from — not theory, but pressure.
+        </p>
+        <p class="founder-quote">
+          InboxGlobal exists because I kept seeing the same pattern: teams hire for growth, then scramble to build governance after something breaks. <strong>Prevention is cheaper. Enforcement is what scales.</strong>
+        </p>
+        <div class="founder-sig">— Melissa Yilaly · Founder, InboxGlobal™</div>
+      </div>
+      <div>
+        <div class="founder-card">
+          <img src="Mel_headshot_2.jpeg" alt="Melissa Yilaly — Founder, InboxGlobal™" class="founder-img">
+          <div class="founder-card-meta">
+            <div class="founder-name">Melissa Yilaly</div>
+            <div class="founder-title">Founder · InboxGlobal™</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ICP -->
+<section class="icp-section">
+  <div class="container">
+    <div class="label">// Fit criteria</div>
+    <h2 class="section-heading">This is for you<br><em>if.</em></h2>
+    <div class="icp-layout">
+      <div class="icp-col yes">
+        <h4>// This is for you</h4>
+        <ul class="icp-list">
+          <li><span class="icon">→</span> You're sending 10K+ emails/month across multiple domains</li>
+          <li><span class="icon">→</span> You've hit deliverability issues and need a structural diagnosis</li>
+          <li><span class="icon">→</span> You're scaling outbound and can't afford to guess what breaks first</li>
+          <li><span class="icon">→</span> You need enforceable standards — not blog-post best practices</li>
+          <li><span class="icon">→</span> You're a RevOps leader, CEO/COO, or outbound operator who owns the sending stack</li>
+          <li><span class="icon">→</span> You're expanding into global markets</li>
+        </ul>
+      </div>
+      <div class="icp-col no">
+        <h4>// This is not for you</h4>
+        <ul class="icp-list">
+          <li><span class="icon">✕</span> You want copywriting, offer rewrites, or campaign creative</li>
+          <li><span class="icon">✕</span> You need inbox placement guarantees</li>
+          <li><span class="icon">✕</span> You're not ready to enforce rules or change how the system operates</li>
+          <li><span class="icon">✕</span> You want day-to-day campaign management</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHECKLIST -->
+<section class="checklist-section">
+  <div class="container">
+    <div class="label">// Outbound Email Reliability Checklist</div>
+    <h2 class="section-heading" style="margin-bottom: 8px;">60-second<br>self-assessment.</h2>
+    <div class="checklist-layout">
+      <div class="checklist-intro">
+        <div class="checklist-warning">
+          If you answer "Not sure" to 4+, the system is operating on luck.
+        </div>
+      </div>
+      <div class="checklist-groups">
+
+        <div class="checklist-group">
+          <div class="group-header">A / Separation</div>
+          <ul class="checklist-items">
+            <li><div class="check-box" onclick="this.classList.toggle('checked')"></div> Outbound domains are separate from core brand, product, and transactional email.</li>
+            <li><div class="check-box" onclick="this.classList.toggle('checked')"></div> Inbox identities are not reused across teams, motions, or offers.</li>
+            <li><div class="check-box" onclick="this.classList.toggle('checked')"></div> Streams are segmented by purpose — not mixed.</li>
+          </ul>
+        </div>
+
+        <div class="checklist-group">
+          <div class="group-header">B / Pacing</div>
+          <ul class="checklist-items">
+            <li><div class="check-box" onclick="this.classList.toggle('checked')"></div> Volume increases are controlled and gradual — not driven by hiring pushes.</li>
+            <li><div class="check-box" onclick="this.classList.toggle('checked')"></div> Sequences have hard caps to prevent silent flooding.</li>
+            <li><div class="check-box" onclick="this.classList.toggle('checked')"></div> You have a clear send calendar with no unexpected spike days.</li>
+          </ul>
+        </div>
+
+        <div class="checklist-group">
+          <div class="group-header">C / Enforcement</div>
+          <ul class="checklist-items">
+            <li><div class="check-box" onclick="this.classList.toggle('checked')"></div> Rules are written — who can send, from where, under what limits.</li>
+            <li><div class="check-box" onclick="this.classList.toggle('checked')"></div> Rules are enforced with a clear owner. Exceptions are rare and documented.</li>
+            <li><div class="check-box" onclick="this.classList.toggle('checked')"></div> Changes follow a change log with what changed, when, why, and who approved.</li>
+          </ul>
+        </div>
+
+        <div class="checklist-group">
+          <div class="group-header">D / Monitoring + Reporting</div>
+          <ul class="checklist-items">
+            <li><div class="check-box" onclick="this.classList.toggle('checked')"></div> You track leading indicators — not just replies.</li>
+            <li><div class="check-box" onclick="this.classList.toggle('checked')"></div> You have thresholds that trigger action.</li>
+            <li><div class="check-box" onclick="this.classList.toggle('checked')"></div> Weekly reporting shows what changed and what action was taken.</li>
+          </ul>
+        </div>
+
+        <div class="checklist-group">
+          <div class="group-header">E / Handoff + Infrastructure</div>
+          <ul class="checklist-items">
+            <li><div class="check-box" onclick="this.classList.toggle('checked')"></div> Ownership is explicit across setup, daily ops, and exceptions.</li>
+            <li><div class="check-box" onclick="this.classList.toggle('checked')"></div> Continuity is real: docs, rules, access, and onboarding exist — not tribal knowledge.</li>
+            <li><div class="check-box" onclick="this.classList.toggle('checked')"></div> You have a sender inventory: every platform that can send email is documented.</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CTA -->
+<section class="cta-section" id="cta">
+  <div class="container">
+    <div class="label" style="justify-content:center; display:flex; margin-bottom:32px;">// Start here</div>
+    <h2>Don't guess<br>what breaks <em>first.</em></h2>
+    <p>Participation is limited to teams willing to operate within defined standards — not debate them.</p>
+    <div class="cta-entry-points">
+      <a href="https://buy.stripe.com/14A3cv9bW5m7bRH8CM3Je00" class="cta-entry">
+        <span class="cta-entry-price">$950</span>
+        <span class="cta-entry-name">PulseCheck™ · 5 days</span>
+        <span class="cta-entry-action">Buy Now</span>
+      </a>
+      <a href="https://buy.stripe.com/00wcN51JubKvbRH4mw3Je01" class="cta-entry">
+        <span class="cta-entry-price">$3,500</span>
+        <span class="cta-entry-name">System Integrity Audit™ · 7–10 days</span>
+        <span class="cta-entry-action">Buy Now</span>
+      </a>
+    </div>
+    <div class="cta-contact">Not sure which one? <a href="/cdn-cgi/l/email-protection#59313c3535361930373b36213e35363b3835773036">Email us</a> or book a 15-min qualifier.</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <a href="#" class="footer-logo">InboxGlobal™</a>
+    <ul class="footer-links">
+      <li><a href="/pulsecheck">PulseCheck</a></li>
+      <li><a href="/audit">Audit</a></li>
+      <li><a href="/resources">Resources</a></li>
+    </ul>
+    <div class="footer-copy">© 2026 InboxGlobal™ LLC. All rights reserved.</div>
+    <a href="https://www.linkedin.com/company/inboxglobal" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:7px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:#6B859E;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#22D3EE'" onmouseout="this.style.color='#6B859E'"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>LinkedIn</a>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// Close mobile nav on link click
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', () => {
+    document.querySelector('.nav-links').classList.remove('open');
+  });
+});
+</script>
+
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v67327c56f0bb4ef8b305cae61679db8f1769101564043" integrity="sha512-rdcWY47ByXd76cbCFzznIcEaCN71jqkWBBqlwhF1SY7KubdLKZiEGeP7AyieKZlGP9hbY/MhGrwXzJC/HulNyg==" data-cf-beacon='{"version":"2024.11.0","token":"15b516814e3e45c1bcc8fadc4dff0621","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge
