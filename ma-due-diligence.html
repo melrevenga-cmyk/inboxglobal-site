@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Email Infrastructure Due Diligence&#8482; &#8212; M&amp;A Risk Assessment | InboxGlobal&#8482;</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0B0F2B;
+    --surface: #0E1333;
+    --surface-2: #121839;
+    --border: rgba(34,211,238,0.12);
+    --border-strong: rgba(34,211,238,0.25);
+    --accent: #22D3EE;
+    --text: #E2EBF3;
+    --text-muted: #94A3B8;
+    --text-dim: #5A7189;
+    --red: #F87171;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 18px;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(34,211,238,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(34,211,238,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 900px;
+    height: 500px;
+    background: radial-gradient(ellipse, rgba(34,211,238,0.07) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 1; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; border-bottom: 1px solid var(--border); background: rgba(11,15,43,0.85); backdrop-filter: blur(12px); }
+  .nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 32px; height: 60px; display: flex; align-items: center; justify-content: space-between; }
+  .nav-logo { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 800; letter-spacing: -0.01em; color: var(--accent); text-decoration: none; }
+  .nav-logo span { color: var(--text-muted); font-weight: 300; }
+  .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+  .nav-links a { font-family: 'DM Sans', sans-serif; font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta { font-family: 'DM Sans', sans-serif; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--bg) !important; background: var(--accent); padding: 8px 18px; text-decoration: none; font-weight: 600; border-radius: 4px; transition: opacity 0.2s; }
+  .nav-cta:hover { opacity: 0.85; }
+  .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; flex-direction: column; gap: 5px; }
+  .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--text-muted); transition: all 0.25s; }
+
+  /* SHARED */
+  .label { font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 40px; }
+  .section-divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+  .section-heading { font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(32px, 4.5vw, 52px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 48px; }
+  .section-heading em { font-style: normal; background: linear-gradient(90deg, #22D3EE 0%, #67E8F9 50%, #A5F3FC 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .btn-primary { font-family: 'DM Sans', sans-serif; font-size: 13px; letter-spacing: 0.05em; text-transform: uppercase; font-weight: 600; color: var(--bg); background: var(--accent); padding: 14px 28px; text-decoration: none; display: inline-block; border-radius: 4px; transition: opacity 0.2s, transform 0.2s; }
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+  .btn-ghost { font-family: 'DM Sans', sans-serif; font-size: 13px; letter-spacing: 0.05em; text-transform: uppercase; font-weight: 500; color: var(--text-muted); border: 1px solid var(--border-strong); padding: 14px 28px; text-decoration: none; display: inline-block; border-radius: 4px; transition: color 0.2s, border-color 0.2s; }
+  .btn-ghost:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* HERO */
+  .page-hero { padding: 140px 0 80px; position: relative; z-index: 1; border-bottom: 1px solid var(--border); }
+  .hero-tag { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 0.02em; color: #94A3B8; margin-bottom: 32px; display: inline-flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); padding: 8px 18px; border-radius: 100px; animation: fadeUp 0.6s ease both; }
+  .hero-tag-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; flex-shrink: 0; animation: pulse 2s infinite; }
+  .page-hero h1 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(36px, 6.5vw, 68px); font-weight: 800; line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 24px; max-width: 820px; animation: fadeUp 0.6s 0.1s ease both; }
+  .page-hero h1 em { font-style: normal; background: linear-gradient(90deg, #22D3EE 0%, #67E8F9 50%, #A5F3FC 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero-sub { font-size: 18px; font-weight: 300; color: var(--text-muted); max-width: 620px; line-height: 1.75; margin-bottom: 40px; animation: fadeUp 0.6s 0.2s ease both; }
+  .hero-sub strong { color: var(--text); font-weight: 500; }
+  .hero-price { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 36px; font-weight: 800; color: var(--accent); letter-spacing: -0.02em; margin-bottom: 8px; animation: fadeUp 0.6s 0.25s ease both; }
+  .hero-price-note { font-size: 14px; color: var(--text-dim); margin-bottom: 36px; animation: fadeUp 0.6s 0.28s ease both; }
+  .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; animation: fadeUp 0.6s 0.3s ease both; }
+
+  /* WHO */
+  .who-section { padding: 80px 0; position: relative; z-index: 1; }
+  .who-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); margin-top: 8px; }
+  .who-card { background: var(--surface); padding: 32px; transition: background 0.25s; }
+  .who-card:hover { background: var(--surface-2); }
+  .who-card-tag { font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+  .who-card h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 12px; line-height: 1.3; }
+  .who-card p { font-size: 14px; font-weight: 300; color: var(--text-muted); line-height: 1.65; }
+
+  /* VALUE */
+  .value-section { padding: 80px 0; position: relative; z-index: 1; }
+  .value-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--border); margin-top: 8px; }
+  .value-item { background: var(--bg); padding: 28px 32px; display: flex; gap: 14px; align-items: flex-start; }
+  .value-icon { color: var(--accent); font-size: 14px; flex-shrink: 0; margin-top: 3px; }
+  .value-item p { font-size: 15px; font-weight: 400; color: var(--text-muted); line-height: 1.65; }
+  .value-item p strong { color: var(--text); font-weight: 500; }
+
+  /* CONTENT */
+  .content-section { padding: 80px 0; position: relative; z-index: 1; }
+  .content-section.alt-bg { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+  /* SCOPE */
+  .scope-list { display: flex; flex-direction: column; }
+  .scope-item { padding: 28px 0; border-bottom: 1px solid var(--border); display: grid; grid-template-columns: 48px 1fr; gap: 24px; align-items: start; }
+  .scope-item:first-child { border-top: 1px solid var(--border); }
+  .scope-num { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 700; color: var(--accent); padding-top: 2px; }
+  .scope-item h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 8px; }
+  .scope-item p { font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.7; }
+
+  /* RISK BANNER */
+  .risk-banner { background: rgba(248,113,113,0.06); border: 1px solid rgba(248,113,113,0.2); border-radius: 6px; padding: 20px 28px; margin-top: 48px; display: flex; gap: 16px; align-items: flex-start; }
+  .risk-banner-icon { color: var(--red); font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; font-family: 'DM Sans', sans-serif; flex-shrink: 0; padding-top: 2px; }
+  .risk-banner p { font-size: 14px; font-weight: 400; color: var(--text-muted); line-height: 1.65; }
+  .risk-banner p strong { color: var(--text); font-weight: 500; }
+
+  /* DELIVERABLES */
+  .deliverable-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--border); }
+  .deliverable-card { background: var(--surface); padding: 32px; transition: background 0.25s; }
+  .deliverable-card:hover { background: var(--surface-2); }
+  .deliverable-label { font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+  .deliverable-card h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 17px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.25; margin-bottom: 10px; }
+  .deliverable-card p { font-size: 14px; font-weight: 300; color: var(--text-muted); line-height: 1.65; }
+
+  /* REQUIREMENTS */
+  .req-list { list-style: none; }
+  .req-list li { font-size: 15px; font-weight: 400; color: var(--text-muted); padding: 14px 0; border-bottom: 1px solid var(--border); display: flex; gap: 14px; align-items: flex-start; line-height: 1.55; }
+  .req-list li:first-child { border-top: 1px solid var(--border); }
+  .req-icon { color: var(--accent); flex-shrink: 0; font-size: 13px; margin-top: 3px; }
+  .excl-list { list-style: none; margin-top: 40px; padding-top: 40px; border-top: 1px solid var(--border); }
+  .excl-list li { font-size: 14px; color: var(--text-dim); padding: 10px 0; display: flex; gap: 12px; align-items: flex-start; line-height: 1.55; }
+  .excl-icon { color: var(--text-dim); flex-shrink: 0; font-size: 12px; margin-top: 3px; }
+
+  /* TERMS */
+  .terms-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--border); }
+  .term-card { background: var(--bg); padding: 28px 32px; }
+  .term-card h4 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 700; margin-bottom: 8px; color: var(--text); }
+  .term-card p { font-size: 14px; font-weight: 300; color: var(--text-muted); line-height: 1.65; }
+
+  /* CTA */
+  .cta-section { padding: 100px 0; position: relative; z-index: 1; text-align: center; }
+  .cta-section h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(40px, 6vw, 72px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 24px; }
+  .cta-section h2 em { font-style: normal; background: linear-gradient(90deg, #22D3EE 0%, #67E8F9 50%, #A5F3FC 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .cta-section p { font-size: 16px; font-weight: 400; color: var(--text-muted); max-width: 520px; margin: 0 auto 40px; line-height: 1.7; }
+  .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--border); padding: 40px 0; position: relative; z-index: 1; }
+  .footer-inner { max-width: 1100px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+  .footer-logo { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 800; letter-spacing: -0.01em; color: var(--accent); text-decoration: none; }
+  .footer-copy { font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--text-dim); }
+  .footer-links { display: flex; gap: 24px; list-style: none; }
+  .footer-links a { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--accent); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .nav-toggle { display: flex; }
+    .nav-links { display: none; position: absolute; top: 60px; left: 0; right: 0; background: rgba(11,15,43,0.97); backdrop-filter: blur(16px); flex-direction: column; padding: 24px 32px; gap: 20px; border-bottom: 1px solid var(--border); }
+    .nav-links.open { display: flex; }
+    .nav-cta { text-align: center; }
+    .who-grid { grid-template-columns: 1fr; }
+    .value-grid { grid-template-columns: 1fr; }
+    .deliverable-grid { grid-template-columns: 1fr; }
+    .terms-grid { grid-template-columns: 1fr; }
+    .scope-item { grid-template-columns: 36px 1fr; gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">InboxGlobal<span>&#8482;</span></a>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="/#offers">Services</a></li>
+      <li><a href="/#principles">Principles</a></li>
+      <li><a href="/#founder">About</a></li>
+      <li><a href="/resources">Resources</a></li>
+      <li><a href="#cta" class="nav-cta">Buy Assessment</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="hero-tag"><span class="hero-tag-dot"></span> M&amp;A &middot; Pre-Close Risk Assessment &middot; Deal-Ready Deliverables</div>
+    <h1>Email Infrastructure<br><em>Due Diligence&#8482;</em></h1>
+    <p class="hero-sub">
+      A transaction-ready assessment of the email infrastructure you are acquiring. Know the <strong>liability before the deal closes</strong> &mdash; not after the system degrades your pipeline.
+    </p>
+    <div class="hero-price">$5,500</div>
+    <div class="hero-price-note">USD flat fee &middot; Single entity &middot; Multi-entity pricing available &middot; Typical delivery in 7&ndash;10 business days</div>
+    <div class="hero-ctas">
+      <a href="https://buy.stripe.com/6oU8wP1JubKvaND4mw3Je02" class="btn-primary">Buy Assessment &mdash; $5,500</a>
+      <a href="mailto:hello@inboxglobal.io?subject=Request%20-%20Email%20Infrastructure%20Due%20Diligence" class="btn-ghost">Request Intake Call</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- WHO IT'S FOR -->
+<section class="who-section">
+  <div class="container">
+    <div class="label">// Who this is for</div>
+    <div class="who-grid">
+      <div class="who-card">
+        <div class="who-card-tag">Acquirer</div>
+        <h3>PE Firms &amp; Operating Partners</h3>
+        <p>You need to know if the target's sending infrastructure is a liability before it becomes a post-close problem. One degraded domain portfolio can suppress pipeline across the combined entity for months.</p>
+      </div>
+      <div class="who-card">
+        <div class="who-card-tag">Deal Advisory</div>
+        <h3>M&amp;A Advisors &amp; Transaction Counsel</h3>
+        <p>Email infrastructure rarely appears in standard due diligence. When it fails post-close, it's your deal that surfaces the gap. Add a defined risk surface to your process before the transaction closes.</p>
+      </div>
+      <div class="who-card">
+        <div class="who-card-tag">Integration</div>
+        <h3>COOs &amp; Integration Leads</h3>
+        <p>You inherited a sending system you didn't build and don't fully understand. Before you merge it into your stack, you need a clear map of what's safe, what's broken, and what breaks on migration.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- VALUE PROPS -->
+<section class="value-section">
+  <div class="container">
+    <div class="label">// What you know after this assessment</div>
+    <div class="value-grid">
+      <div class="value-item">
+        <span class="value-icon">&#8594;</span>
+        <p><strong>The exact infrastructure liability you are acquiring</strong> &mdash; documented, ranked, and translated into deal language before close</p>
+      </div>
+      <div class="value-item">
+        <span class="value-icon">&#8594;</span>
+        <p><strong>What reputation risk is inherited on day one</strong> &mdash; blacklist exposure, complaint history signals, domain health that doesn't reset on ownership transfer</p>
+      </div>
+      <div class="value-item">
+        <span class="value-icon">&#8594;</span>
+        <p><strong>What breaks during integration</strong> &mdash; the specific failure points if domains are migrated, CRMs are merged, or sending platforms are consolidated</p>
+      </div>
+      <div class="value-item">
+        <span class="value-icon">&#8594;</span>
+        <p><strong>Estimated remediation scope and sequence</strong> &mdash; time and effort ranges to stabilize post-close, stageable against your integration timeline</p>
+      </div>
+      <div class="value-item">
+        <span class="value-icon">&#8594;</span>
+        <p><strong>Where tribal knowledge lives and what disappears on close</strong> &mdash; enforcement gaps, undocumented rules, and continuity risk from key personnel transitions</p>
+      </div>
+      <div class="value-item">
+        <span class="value-icon">&#8594;</span>
+        <p><strong>A red/yellow/green infrastructure health rating</strong> &mdash; a single-page executive brief your investment committee or board can read in under two minutes</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SCOPE -->
+<section class="content-section alt-bg">
+  <div class="container">
+    <div class="label">// Assessment scope</div>
+    <h2 class="section-heading">Full infrastructure <em>teardown.</em></h2>
+    <div class="scope-list">
+
+      <div class="scope-item">
+        <div class="scope-num">01</div>
+        <div>
+          <h3>Domain Portfolio Review</h3>
+          <p>Complete inventory of every domain asset associated with the target: outbound domains, transactional domains, legacy domains, subdomains, and parked assets that may carry sending history or reputation debt. Domain sprawl is consistently underreported in M&amp;A documentation. We map ownership, registration status, expiration risk, and purpose separation &mdash; then assess whether the portfolio is structured to survive integration or likely to create consolidation conflicts post-close.</p>
+        </div>
+      </div>
+
+      <div class="scope-item">
+        <div class="scope-num">02</div>
+        <div>
+          <h3>Identity and Authentication</h3>
+          <p>SPF, DKIM, and DMARC posture assessed for current state and migration readiness. Root vs subdomain strategy and delegation reviewed. Risk flags: shared identity, misalignment, weak enforcement policy, governance gaps. A rebrand or domain consolidation that breaks authentication can disable sending within days of close.</p>
+        </div>
+      </div>
+
+      <div class="scope-item">
+        <div class="scope-num">03</div>
+        <div>
+          <h3>Mailbox Infrastructure and Reputation</h3>
+          <p>Inbox provider distribution, mailbox configuration, and operational consistency reviewed. Reputation exposure points identified: domain reuse, overlap, weak isolation, shared sending identity. Blacklist status and complaint signal history assessed. Acquired reputation debt does not reset on ownership transfer.</p>
+        </div>
+      </div>
+
+      <div class="scope-item">
+        <div class="scope-num">04</div>
+        <div>
+          <h3>Sending Architecture and Volume Design</h3>
+          <p>Step pacing, ramp logic, and concurrency reviewed for sustainability. Cadence structure assessed for complaint risk, bounce risk, and reply dilution. List hygiene standards and suppression logic evaluated. Systems sending at unsustainable volume to hit numbers create inherited liability that surfaces immediately after close.</p>
+        </div>
+      </div>
+
+      <div class="scope-item">
+        <div class="scope-num">05</div>
+        <div>
+          <h3>Tooling, Stack, and CRM Handoff Integrity</h3>
+          <p>Outbound platform and ESP configuration reviewed at the architectural level. CRM handoff points, lead routing logic, and suppression sync assessed for integration risk. What breaks if the two systems are merged, migrated, or consolidated &mdash; and in what sequence it breaks.</p>
+        </div>
+      </div>
+
+      <div class="scope-item">
+        <div class="scope-num">06</div>
+        <div>
+          <h3>Enforcement and Continuity Risk</h3>
+          <p>What is currently manual, undocumented, or unenforced. Where operating rules exist only in the heads of people who may not survive the transition. What governance exists in writing vs what disappears with key personnel. This is consistently the highest post-close risk category.</p>
+        </div>
+      </div>
+
+      <div class="scope-item">
+        <div class="scope-num">07</div>
+        <div>
+          <h3>Migration and Integration Risk Mapping</h3>
+          <p>Specific failure analysis for likely post-close scenarios: domain migration, rebrand, CRM consolidation, platform migration, or team restructuring. Staged against your integration timeline with clear dependencies. What must be stabilized before anything is merged.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="risk-banner">
+      <div class="risk-banner-icon">! Note</div>
+      <p><strong>Email infrastructure risk is silent until it isn't.</strong> Blacklisted domains, broken authentication, and degraded sending reputation don't appear in financial statements. They surface 30&ndash;90 days post-close as blocked pipeline, declined inbox placement, and suppressed reply rates &mdash; after the deal has closed and remediation is your problem.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DELIVERABLES -->
+<section class="content-section">
+  <div class="container">
+    <div class="label">// Deliverables</div>
+    <h2 class="section-heading">Deal-ready <em>package.</em></h2>
+    <div class="deliverable-grid">
+      <div class="deliverable-card">
+        <div class="deliverable-label">A</div>
+        <h3>Executive Risk Brief (PDF)</h3>
+        <p>One-page summary in deal language. Current state assessment, primary risks, and a red/yellow/green infrastructure health rating. Written for investment committees, boards, and C-suite integration leads &mdash; not for operators.</p>
+      </div>
+      <div class="deliverable-card">
+        <div class="deliverable-label">B</div>
+        <h3>Infrastructure Liability Register</h3>
+        <p>Ranked issues by severity and blast radius. Estimated remediation effort in time and cost ranges. Clear identification of silent failures &mdash; the ones that don't appear until volume increases or systems are merged.</p>
+      </div>
+      <div class="deliverable-card">
+        <div class="deliverable-label">C</div>
+        <h3>Migration Risk Assessment</h3>
+        <p>Specific failure analysis for your post-close integration scenarios. What breaks, in what sequence, under which conditions. What must be completed before any system migration begins.</p>
+      </div>
+      <div class="deliverable-card">
+        <div class="deliverable-label">D</div>
+        <h3>Integration Sequencing Plan</h3>
+        <p>A 30/60/90 roadmap framed against transaction timeline rather than operational rhythm. Stabilization sequence first. What only happens after separation and authentication are confirmed clean.</p>
+      </div>
+      <div class="deliverable-card">
+        <div class="deliverable-label">E</div>
+        <h3>Operator Appendix</h3>
+        <p>Technical detail for the team who will execute remediation. Specific settings, guardrails, enforcement design, and a documented starting state for whoever owns the system post-close.</p>
+      </div>
+      <div class="deliverable-card">
+        <div class="deliverable-label">F</div>
+        <h3>Review Call</h3>
+        <p>Live walkthrough with your deal team, integration lead, or operating partner. Priority sequence, ownership assignment, and a clear answer to what not to do in the first 30 days post-close.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- WHAT WE NEED -->
+<section class="content-section alt-bg">
+  <div class="container">
+    <div class="label">// What we need from you</div>
+    <h2 class="section-heading">Intake <em>requirements.</em></h2>
+    <ul class="req-list">
+      <li><span class="req-icon">&#8594;</span> Domain list used for outbound, transactional, and related sending (target company)</li>
+      <li><span class="req-icon">&#8594;</span> Tool stack &mdash; outbound platform, inbox provider, CRM (target company)</li>
+      <li><span class="req-icon">&#8594;</span> Current sending volumes and target volumes post-integration</li>
+      <li><span class="req-icon">&#8594;</span> Access or screenshots for authentication and sending configuration</li>
+      <li><span class="req-icon">&#8594;</span> Known deliverability symptoms and any recent infrastructure changes</li>
+      <li><span class="req-icon">&#8594;</span> Integration intent &mdash; rebrand, domain migration, CRM consolidation, or platform change</li>
+      <li><span class="req-icon">&#8594;</span> Transaction timeline, if relevant to sequencing deliverables</li>
+    </ul>
+    <ul class="excl-list">
+      <li><span class="excl-icon">&ndash;</span> Does not include copywriting, offer rewrite, or campaign creative</li>
+      <li><span class="excl-icon">&ndash;</span> Does not include full technical implementation inside your tools</li>
+      <li><span class="excl-icon">&ndash;</span> Does not include revenue attribution review, pipeline forecasting, or RevOps reporting</li>
+      <li><span class="excl-icon">&ndash;</span> Does not include inbox placement guarantees</li>
+    </ul>
+  </div>
+</section>
+
+<!-- TERMS -->
+<section class="content-section">
+  <div class="container">
+    <div class="label">// Terms</div>
+    <h2 class="section-heading">How it <em>works.</em></h2>
+    <div class="terms-grid">
+      <div class="term-card">
+        <h4>Timeline</h4>
+        <p>Typical delivery: 7&ndash;10 business days from intake, depending on access readiness. Deal-critical timelines accommodated on request. Delays caused by missing inputs shift the timeline accordingly.</p>
+      </div>
+      <div class="term-card">
+        <h4>Payment</h4>
+        <p>Fixed-fee assessment, paid upfront via Stripe. Multi-entity engagements priced at $4,000 per additional entity. Work begins once payment and intake are received.</p>
+      </div>
+      <div class="term-card">
+        <h4>Access &amp; Confidentiality</h4>
+        <p>You control access scope. We only request what is required. All provided data is treated as confidential. NDA available on request and standard for M&amp;A engagements.</p>
+      </div>
+      <div class="term-card">
+        <h4>Rescheduling</h4>
+        <p>Review call reschedules are allowed with reasonable notice. We understand deal timelines shift. Repeated no-shows may require a new booking.</p>
+      </div>
+      <div class="term-card">
+        <h4>Limitations</h4>
+        <p>Recommendations are based on the system state during the assessment window. Deliverability performance post-close depends on execution, list quality, and integration decisions made after delivery.</p>
+      </div>
+      <div class="term-card">
+        <h4>Next Steps</h4>
+        <p>Buy directly via Stripe to begin immediately, or email us to confirm scope and fit first. NDA executed on request before any materials are exchanged.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CTA -->
+<section class="cta-section" id="cta">
+  <div class="container">
+    <div class="label" style="justify-content:center; display:flex; margin-bottom:32px;">// Start here</div>
+    <h2>Know the liability<br><em>before you close.</em></h2>
+    <p>$5,500 flat fee. Full infrastructure teardown. Deal-ready deliverables. Operator-delivered. Multi-entity pricing available.</p>
+    <div class="cta-buttons">
+      <a href="https://buy.stripe.com/6oU8wP1JubKvaND4mw3Je02" class="btn-primary">Buy Assessment &mdash; $5,500</a>
+      <a href="mailto:hello@inboxglobal.io?subject=Request%20-%20Email%20Infrastructure%20Due%20Diligence" class="btn-ghost">Request Intake Call</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <a href="/" class="footer-logo">InboxGlobal&#8482;</a>
+    <ul class="footer-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/resources">Resources</a></li>
+      <li><a href="/pulsecheck">PulseCheck</a></li>
+      <li><a href="/audit">System Integrity Audit</a></li>
+    </ul>
+    <div class="footer-copy">&copy; 2026 InboxGlobal&#8482; LLC. All rights reserved.</div>
+  </div>
+</footer>
+
+</body>
+</html>
