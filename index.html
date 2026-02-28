@@ -362,7 +362,7 @@
 
   .offer-cards {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 1px;
     background: var(--border);
   }
@@ -437,7 +437,16 @@
     color: var(--text-muted);
     line-height: 1.7;
     margin-bottom: 32px;
-    flex-grow: 1;
+  }
+
+  .offer-deliverables-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
   }
 
   .offer-deliverables {
@@ -978,20 +987,19 @@
 
   .footer-links a:hover { color: var(--accent); }
 
-  /* ─── M&A CARD ─── */
-  .offer-card-ma {
-    grid-column: 1 / -1;
-  }
-
-  .offer-card-ma-inner {
+  /* ─── CARD INNER LAYOUT (all full-width cards) ─── */
+  .offer-card-inner {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 56px;
     align-items: start;
   }
 
+  .offer-card-ma { /* keep for specificity, no extra styles needed */ }
+  .offer-card-ma-inner { display: contents; } /* flatten, using offer-card-inner now */
+
   @media (max-width: 900px) {
-    .offer-card-ma-inner { grid-template-columns: 1fr; gap: 32px; }
+    .offer-card-inner { grid-template-columns: 1fr; gap: 32px; }
   }
 
   /* ─── ANIMATIONS ─── */
@@ -1042,7 +1050,6 @@
     }
     .nav-links.open { display: flex; }
     .nav-cta { text-align: center; }
-    .offer-cards { grid-template-columns: 1fr; }
     .problem-grid { grid-template-columns: 1fr; }
     .principles-layout { grid-template-columns: 1fr; gap: 48px; }
     .founder-layout { grid-template-columns: 1fr; }
@@ -1159,82 +1166,94 @@
 
       <!-- PulseCheck -->
       <div class="offer-card">
-        <div class="offer-badge offer-badge-amber">Entry · Fast Signal</div>
-        <h3>Outbound Deliverability<br>PulseCheck™</h3>
-        <div class="offer-price">$950</div>
-        <div class="offer-meta">Flat fee · 5 business days · USD</div>
-        <p class="offer-desc">
-          An independent operator review of your sending system before you make a change that costs you a domain. A direct read on what's stable, what's at risk, and what to fix first.
-        </p>
-        <ul class="offer-deliverables">
-          <li>30–45 min operator review call — diagnosis, not a readout</li>
-          <li>System Integrity Score (0–100) calibrated against real failure patterns</li>
-          <li>Authentication + reputation snapshot with meaning, not just data</li>
-          <li>Top 3 risks ranked by urgency — what breaks first if you don't act</li>
-          <li>Immediate fixes: 2–3 stabilization actions for this week</li>
-          <li>Written summary + priorities list for your team</li>
-        </ul>
-        <div class="offer-actions">
-          <a href="https://buy.stripe.com/14A3cv9bW5m7bRH8CM3Je00" class="btn-primary">BUY NOW</a>
-          <a href="/pulsecheck" class="btn-ghost">See Deliverables</a>
+        <div class="offer-card-inner">
+          <div>
+            <div class="offer-badge offer-badge-amber">Entry · Fast Signal</div>
+            <h3>Outbound Deliverability<br>PulseCheck&#8482;</h3>
+            <div class="offer-price">$950</div>
+            <div class="offer-meta">Flat fee · 5 business days · USD</div>
+            <p class="offer-desc">
+              An independent operator review of your sending system before you make a change that costs you a domain. A direct read on what's stable, what's at risk, and what to fix first.
+            </p>
+            <div class="offer-actions">
+              <a href="https://buy.stripe.com/14A3cv9bW5m7bRH8CM3Je00" class="btn-primary">BUY NOW</a>
+              <a href="/pulsecheck" class="btn-ghost">See Deliverables</a>
+            </div>
+          </div>
+          <div>
+            <div class="offer-deliverables-label">// Deliverables</div>
+            <ul class="offer-deliverables">
+              <li>30&ndash;45 min operator review call &mdash; diagnosis, not a readout</li>
+              <li>System Integrity Score (0&ndash;100) calibrated against real failure patterns</li>
+              <li>Authentication + reputation snapshot with meaning, not just data</li>
+              <li>Top 3 risks ranked by urgency &mdash; what breaks first if you don't act</li>
+              <li>Immediate fixes: 2&ndash;3 stabilization actions for this week</li>
+              <li>Written summary + priorities list for your team</li>
+            </ul>
+          </div>
         </div>
       </div>
 
       <!-- System Integrity Audit -->
       <div class="offer-card featured">
-        <div class="offer-badge offer-badge-green">Full System · Scale-Ready</div>
-        <h3>System Integrity<br>Audit™</h3>
-        <div class="offer-price">$3,500</div>
-        <div class="offer-meta">Flat fee · 7–10 business days · USD</div>
-        <p class="offer-desc">
-          Full system teardown and staged remediation plan with enforcement. Not just what's broken — how your risks connect, what to fix first, and how to keep it stable as you scale.
-        </p>
-        <ul class="offer-deliverables">
-          <li>Failure map + risk sequencing across all system layers</li>
-          <li>30/60/90 day stabilization sequence with staged dependencies</li>
-          <li>Enforcement rules built into your workflow — not suggestions</li>
-          <li>System Integrity Score with quantified risk across auth, reputation, infra</li>
-          <li>Standards + separation plan: what good looks like for your setup</li>
-          <li>System Integrity Brief (PDF): executive summary + technical appendix</li>
-          <li>Live review call: priority sequence, ownership, what not to do next</li>
-        </ul>
-        <div class="offer-actions">
-          <a href="https://buy.stripe.com/00wcN51JubKvbRH4mw3Je01" class="btn-primary">BUY NOW</a>
-          <a href="/audit" class="btn-ghost">See Deliverables</a>
-        </div>
-      </div><!-- /.offer-cards -->
-
-      <!-- M&A Due Diligence — full width specialized card -->
-      <div class="offer-cards" style="margin-top: 1px;">
-        <div class="offer-card offer-card-ma">
-          <div class="offer-card-ma-inner">
-            <div class="offer-card-ma-left">
-              <div class="offer-badge offer-badge-cyan">M&amp;A · Specialized</div>
-              <h3>Email Infrastructure<br>Due Diligence&#8482;</h3>
-              <div class="offer-price">$5,500</div>
-              <div class="offer-meta">Flat fee · Single entity · Multi-entity pricing available · 7&ndash;10 business days · USD</div>
-              <p class="offer-desc">A transaction-ready assessment of the email infrastructure you're acquiring. Know the liability before the deal closes — not after the system degrades your pipeline. Covers domain portfolio, authentication posture, reputation debt, CRM handoff integrity, and migration risk across likely post-close scenarios.</p>
-              <div class="offer-actions">
-                <a href="https://buy.stripe.com/6oU8wP1JubKvaND4mw3Je02" class="btn-primary">BUY NOW &mdash; $5,500</a>
-                <a href="http://inboxglobal.io/ma-due-diligence" class="btn-ghost">See Full Scope</a>
-              </div>
-            </div>
-            <div class="offer-card-ma-right">
-              <div style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;">// Deliverables</div>
-              <ul class="offer-deliverables">
-                <li>Domain portfolio review &mdash; full inventory including legacy, subdomain, and parked assets</li>
-                <li>Identity &amp; authentication posture assessed for migration readiness</li>
-                <li>Infrastructure liability register ranked by severity and remediation effort</li>
-                <li>Migration risk assessment &mdash; what breaks, in what sequence, under which conditions</li>
-                <li>CRM handoff &amp; suppression sync integrity reviewed for integration risk</li>
-                <li>Executive risk brief (PDF) with red/yellow/green health rating for deal teams</li>
-                <li>Integration sequencing plan framed against transaction timeline</li>
-                <li>Live review call with deal team, integration lead, or operating partner</li>
-              </ul>
+        <div class="offer-card-inner">
+          <div>
+            <div class="offer-badge offer-badge-green">Full System · Scale-Ready</div>
+            <h3>System Integrity<br>Audit&#8482;</h3>
+            <div class="offer-price">$3,500</div>
+            <div class="offer-meta">Flat fee · 7&ndash;10 business days · USD</div>
+            <p class="offer-desc">
+              Full system teardown and staged remediation plan with enforcement. Not just what's broken &mdash; how your risks connect, what to fix first, and how to keep it stable as you scale.
+            </p>
+            <div class="offer-actions">
+              <a href="https://buy.stripe.com/00wcN51JubKvbRH4mw3Je01" class="btn-primary">BUY NOW</a>
+              <a href="/audit" class="btn-ghost">See Deliverables</a>
             </div>
           </div>
+          <div>
+            <div class="offer-deliverables-label">// Deliverables</div>
+            <ul class="offer-deliverables">
+              <li>Failure map + risk sequencing across all system layers</li>
+              <li>30/60/90 day stabilization sequence with staged dependencies</li>
+              <li>Enforcement rules built into your workflow &mdash; not suggestions</li>
+              <li>System Integrity Score with quantified risk across auth, reputation, infra</li>
+              <li>Standards + separation plan: what good looks like for your setup</li>
+              <li>System Integrity Brief (PDF): executive summary + technical appendix</li>
+              <li>Live review call: priority sequence, ownership, what not to do next</li>
+            </ul>
+          </div>
         </div>
-      </div><!-- /.offer-cards ma -->
+      </div>
+
+      <!-- M&A Due Diligence -->
+      <div class="offer-card offer-card-ma">
+        <div class="offer-card-inner">
+          <div>
+            <div class="offer-badge offer-badge-cyan">M&amp;A · Specialized</div>
+            <h3>Email Infrastructure<br>Due Diligence&#8482;</h3>
+            <div class="offer-price">$5,500</div>
+            <div class="offer-meta">Flat fee · Single entity · Multi-entity pricing available · 7&ndash;10 business days · USD</div>
+            <p class="offer-desc">A transaction-ready assessment of the email infrastructure you're acquiring. Know the liability before the deal closes &mdash; not after the system degrades your pipeline. Covers domain portfolio, authentication posture, reputation debt, CRM handoff integrity, and migration risk across likely post-close scenarios.</p>
+            <div class="offer-actions">
+              <a href="https://buy.stripe.com/6oU8wP1JubKvaND4mw3Je02" class="btn-primary">BUY NOW</a>
+              <a href="http://inboxglobal.io/ma-due-diligence" class="btn-ghost">See Full Scope</a>
+            </div>
+          </div>
+          <div>
+            <div class="offer-deliverables-label">// Deliverables</div>
+            <ul class="offer-deliverables">
+              <li>Domain portfolio review &mdash; full inventory including legacy, subdomain, and parked assets</li>
+              <li>Identity &amp; authentication posture assessed for migration readiness</li>
+              <li>Infrastructure liability register ranked by severity and remediation effort</li>
+              <li>Migration risk assessment &mdash; what breaks, in what sequence, under which conditions</li>
+              <li>CRM handoff &amp; suppression sync integrity reviewed for integration risk</li>
+              <li>Executive risk brief (PDF) with red/yellow/green health rating for deal teams</li>
+              <li>Integration sequencing plan framed against transaction timeline</li>
+              <li>Live review call with deal team, integration lead, or operating partner</li>
+            </ul>
+          </div>
+        </div>
+      </div>
 
     </div>
   </div>
