@@ -477,6 +477,25 @@
     border: 1px solid var(--border-strong);
   }
 
+  /* ─── BADGE VARIANTS ─── */
+  .offer-badge-amber {
+    color: #FBBF24;
+    background: rgba(251,191,36,0.08);
+    border-color: rgba(251,191,36,0.3);
+  }
+
+  .offer-badge-green {
+    color: #22C55E;
+    background: rgba(34,197,94,0.08);
+    border-color: rgba(34,197,94,0.3);
+  }
+
+  .offer-badge-cyan {
+    color: var(--accent);
+    background: rgba(34,211,238,0.06);
+    border-color: rgba(34,211,238,0.25);
+  }
+
   /* ─── PRINCIPLES ─── */
   .principles-section {
     padding: 100px 0;
@@ -959,6 +978,22 @@
 
   .footer-links a:hover { color: var(--accent); }
 
+  /* ─── M&A CARD ─── */
+  .offer-card-ma {
+    grid-column: 1 / -1;
+  }
+
+  .offer-card-ma-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: start;
+  }
+
+  @media (max-width: 900px) {
+    .offer-card-ma-inner { grid-template-columns: 1fr; gap: 32px; }
+  }
+
   /* ─── ANIMATIONS ─── */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(24px); }
@@ -1116,15 +1151,15 @@
     <div class="offers-header">
       <div>
         <div class="label">// Entry points</div>
-        <h2 class="section-heading">Two ways<br>to start.</h2>
+        <h2 class="section-heading">Three ways<br>to start.</h2>
       </div>
-      <p>Both are fixed-scope, fixed-price, and operator-delivered. No tool reports. No AI-generated summaries. Direct read on your system.</p>
+      <p>All fixed-scope, fixed-price, and operator-delivered. No tool reports. No AI-generated summaries. Direct read on your system.</p>
     </div>
     <div class="offer-cards">
 
       <!-- PulseCheck -->
       <div class="offer-card">
-        <div class="offer-badge">Entry · Fast Signal</div>
+        <div class="offer-badge offer-badge-amber">Entry · Fast Signal</div>
         <h3>Outbound Deliverability<br>PulseCheck™</h3>
         <div class="offer-price">$950</div>
         <div class="offer-meta">Flat fee · 5 business days · USD</div>
@@ -1140,14 +1175,14 @@
           <li>Written summary + priorities list for your team</li>
         </ul>
         <div class="offer-actions">
-          <a href="https://buy.stripe.com/14A3cv9bW5m7bRH8CM3Je00" class="btn-primary">Buy Now</a>
+          <a href="https://buy.stripe.com/14A3cv9bW5m7bRH8CM3Je00" class="btn-primary">BUY NOW</a>
           <a href="/pulsecheck" class="btn-ghost">See Deliverables</a>
         </div>
       </div>
 
       <!-- System Integrity Audit -->
       <div class="offer-card featured">
-        <div class="offer-badge">Full System · Scale-Ready</div>
+        <div class="offer-badge offer-badge-green">Full System · Scale-Ready</div>
         <h3>System Integrity<br>Audit™</h3>
         <div class="offer-price">$3,500</div>
         <div class="offer-meta">Flat fee · 7–10 business days · USD</div>
@@ -1164,18 +1199,46 @@
           <li>Live review call: priority sequence, ownership, what not to do next</li>
         </ul>
         <div class="offer-actions">
-          <a href="https://buy.stripe.com/00wcN51JubKvbRH4mw3Je01" class="btn-primary">Buy Now</a>
+          <a href="https://buy.stripe.com/00wcN51JubKvbRH4mw3Je01" class="btn-primary">BUY NOW</a>
           <a href="/audit" class="btn-ghost">See Deliverables</a>
         </div>
-      </div>
+      </div><!-- /.offer-cards -->
+
+      <!-- M&A Due Diligence — full width specialized card -->
+      <div class="offer-cards" style="margin-top: 1px;">
+        <div class="offer-card offer-card-ma">
+          <div class="offer-card-ma-inner">
+            <div class="offer-card-ma-left">
+              <div class="offer-badge offer-badge-cyan">M&amp;A · Specialized</div>
+              <h3>Email Infrastructure<br>Due Diligence&#8482;</h3>
+              <div class="offer-price">$5,500</div>
+              <div class="offer-meta">Flat fee · Single entity · Multi-entity pricing available · 7&ndash;10 business days · USD</div>
+              <p class="offer-desc">A transaction-ready assessment of the email infrastructure you're acquiring. Know the liability before the deal closes — not after the system degrades your pipeline. Covers domain portfolio, authentication posture, reputation debt, CRM handoff integrity, and migration risk across likely post-close scenarios.</p>
+              <div class="offer-actions">
+                <a href="https://buy.stripe.com/6oU8wP1JubKvaND4mw3Je02" class="btn-primary">BUY NOW &mdash; $5,500</a>
+                <a href="http://inboxglobal.io/ma-due-diligence" class="btn-ghost">See Full Scope</a>
+              </div>
+            </div>
+            <div class="offer-card-ma-right">
+              <div style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;">// Deliverables</div>
+              <ul class="offer-deliverables">
+                <li>Domain portfolio review &mdash; full inventory including legacy, subdomain, and parked assets</li>
+                <li>Identity &amp; authentication posture assessed for migration readiness</li>
+                <li>Infrastructure liability register ranked by severity and remediation effort</li>
+                <li>Migration risk assessment &mdash; what breaks, in what sequence, under which conditions</li>
+                <li>CRM handoff &amp; suppression sync integrity reviewed for integration risk</li>
+                <li>Executive risk brief (PDF) with red/yellow/green health rating for deal teams</li>
+                <li>Integration sequencing plan framed against transaction timeline</li>
+                <li>Live review call with deal team, integration lead, or operating partner</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div><!-- /.offer-cards ma -->
 
     </div>
   </div>
 </section>
-
-<hr class="section-divider">
-
-<!-- PRINCIPLES -->
 <section class="principles-section" id="principles">
   <div class="container">
     <div class="principles-layout">
@@ -1354,12 +1417,17 @@
       <a href="https://buy.stripe.com/14A3cv9bW5m7bRH8CM3Je00" class="cta-entry">
         <span class="cta-entry-price">$950</span>
         <span class="cta-entry-name">PulseCheck™ · 5 days</span>
-        <span class="cta-entry-action">Buy Now</span>
+        <span class="cta-entry-action">BUY NOW</span>
       </a>
       <a href="https://buy.stripe.com/00wcN51JubKvbRH4mw3Je01" class="cta-entry">
         <span class="cta-entry-price">$3,500</span>
         <span class="cta-entry-name">System Integrity Audit™ · 7–10 days</span>
-        <span class="cta-entry-action">Buy Now</span>
+        <span class="cta-entry-action">BUY NOW</span>
+      </a>
+      <a href="https://buy.stripe.com/6oU8wP1JubKvaND4mw3Je02" class="cta-entry">
+        <span class="cta-entry-price">$5,500</span>
+        <span class="cta-entry-name">Due Diligence&#8482; · M&amp;A · 7–10 days</span>
+        <span class="cta-entry-action">BUY NOW</span>
       </a>
     </div>
     <div class="cta-contact">Not sure which one? <a href="/cdn-cgi/l/email-protection#59313c3535361930373b36213e35363b3835773036">Email us</a> or book a 15-min qualifier.</div>
@@ -1373,6 +1441,7 @@
     <ul class="footer-links">
       <li><a href="/pulsecheck">PulseCheck</a></li>
       <li><a href="/audit">Audit</a></li>
+      <li><a href="/ma-due-diligence">M&amp;A</a></li>
       <li><a href="/resources">Resources</a></li>
     </ul>
     <div class="footer-copy">© 2026 InboxGlobal™ LLC. All rights reserved.</div>
