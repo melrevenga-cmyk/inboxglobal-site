@@ -215,6 +215,114 @@
   }
 
   .section-label.free { color: var(--accent); }
+  .section-label.paid { color: var(--amber); }
+
+  .badge-paid {
+    color: #FBBF24;
+    background: rgba(251,191,36,0.08);
+    border: 1px solid rgba(251,191,36,0.2);
+  }
+
+  .resource-card.paid-card::before { background: transparent; }
+  .resource-card.paid-card:hover::before { background: var(--amber); }
+  .resource-card.paid-card .card-sub { color: var(--amber); }
+  .resource-card.paid-card .card-cta { color: var(--amber); }
+  .resource-card.paid-card:hover .card-arrow { color: var(--amber); }
+
+  .card-cta--inline {
+    border-top: none;
+    padding-top: 0;
+    margin-top: 10px;
+  }
+    grid-template-columns: 1fr !important;
+  }
+
+  .resources-grid--single .resource-card--full {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .card-header-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 64px;
+    align-items: start;
+    width: 100%;
+  }
+
+  .card-price-block {
+    text-align: right;
+    flex-shrink: 0;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+    gap: 6px;
+    padding-top: 4px;
+  }
+
+  .deliverables-inline {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+    background: var(--border);
+    margin-top: 32px;
+    width: 100%;
+  }
+
+  .deliverable-inline-item {
+    background: var(--bg);
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: background 0.2s;
+  }
+
+  .resource-card:hover .deliverable-inline-item { background: var(--surface); }
+
+  .di-label {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--amber);
+    opacity: 0.7;
+  }
+
+  .di-text {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  @media (max-width: 900px) {
+    .deliverables-inline { grid-template-columns: repeat(4, 1fr); }
+    .card-header-row { grid-template-columns: 1fr; gap: 24px; }
+    .card-price-block { text-align: left; min-width: unset; }
+  }
+
+  @media (max-width: 600px) {
+    .deliverables-inline { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .price-tag {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--amber);
+    line-height: 1;
+  }
+
+  .price-note {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1;
+  }
 
   /* ─── RESOURCES GRID ─── */
   .resources-section {
@@ -638,6 +746,45 @@
   </div>
 </section>
 
+<!-- PAID STANDARDS -->
+<section class="resources-section">
+  <div class="container">
+    <div class="section-label paid">Paid resources · Operator-grade frameworks</div>
+
+    <div style="margin-top:40px;">
+
+      <!-- Outbound Ops Standard -->
+      <a class="resource-card paid-card resource-card--full" href="/resources/outbound-ops-standard" target="_blank" style="display:flex; width:100%; box-sizing:border-box;">
+        <span class="card-arrow">↗</span>
+        <div class="card-header-row">
+          <div>
+            <div class="card-type-badge badge-paid">Notion Workspace</div>
+            <div class="card-icon">🛡️</div>
+            <div class="card-sub">Operating Standard · InboxGlobal™</div>
+            <h3>Outbound Ops Standard™</h3>
+            <p>A complete operating framework for outbound email infrastructure. Severity classification, structured diagnostics, five incident response playbooks, four recovery timelines, and enforcement rules — delivered as a fully functional Notion workspace your team can use on day one.</p>
+          </div>
+          <div class="card-price-block">
+            <div class="price-tag">$349</div>
+            <div class="price-note">One-time · Instant Notion access</div>
+            <div class="card-cta card-cta--inline">Get the Standard</div>
+          </div>
+        </div>
+        <div class="deliverables-inline">
+          <div class="deliverable-inline-item"><span class="di-label">A</span><span class="di-text">Welcome + How to Use</span></div>
+          <div class="deliverable-inline-item"><span class="di-label">B</span><span class="di-text">Severity Framework Database</span></div>
+          <div class="deliverable-inline-item"><span class="di-label">C</span><span class="di-text">Diagnostic Runbook</span></div>
+          <div class="deliverable-inline-item"><span class="di-label">D</span><span class="di-text">5 Incident Response Playbooks</span></div>
+          <div class="deliverable-inline-item"><span class="di-label">E</span><span class="di-text">4 Recovery Timeline Templates</span></div>
+          <div class="deliverable-inline-item"><span class="di-label">F</span><span class="di-text">Enforcement Rules</span></div>
+          <div class="deliverable-inline-item"><span class="di-label">G</span><span class="di-text">Quick Reference Card</span></div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
 <!-- COMING SOON -->
 <section class="coming-soon-section">
   <div class="container">
@@ -674,12 +821,6 @@
         <div class="coming-card-type">Reference Guide</div>
         <h4>Authentication Standards Map</h4>
         <p>SPF, DKIM, DMARC — what each enforces, how misalignment compounds, and what enforcement-ready configuration looks like across multi-domain setups.</p>
-      </div>
-
-      <div class="coming-card">
-        <div class="coming-card-type">Template Pack</div>
-        <h4>Incident Response Playbook</h4>
-        <p>What to do when a domain gets blocked or reputation drops. Structured decision tree, escalation triggers, rollback steps, and post-incident documentation.</p>
       </div>
 
       <div class="coming-card">
