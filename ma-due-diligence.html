@@ -164,6 +164,34 @@
   .footer-links a { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
   .footer-links a:hover { color: var(--accent); }
 
+  /* OPERATOR */
+  .operator-section { padding: 80px 0; position: relative; z-index: 1; }
+  .operator-grid { display: grid; grid-template-columns: 280px 1fr; gap: 48px; align-items: start; }
+  .operator-photo { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .operator-photo img { width: 100%; aspect-ratio: 3/4; object-fit: cover; object-position: center top; display: block; }
+  .operator-photo-meta { padding: 16px 20px; border-top: 1px solid var(--border); }
+  .operator-photo-meta h4 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 700; color: var(--accent); margin-bottom: 3px; }
+  .operator-photo-meta p { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); }
+  .operator-bio p { font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.8; margin-bottom: 18px; }
+  .operator-bio p strong { color: var(--text); font-weight: 500; }
+  .operator-bio .operator-sig { margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--border); font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); }
+  .deal-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 24px 28px; margin-top: 32px; }
+  .deal-card-tag { font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+  .deal-card h4 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 10px; color: var(--text); line-height: 1.3; }
+  .deal-card p { font-size: 14px; font-weight: 300; color: var(--text-muted); line-height: 1.65; }
+  .deal-card .deal-meta { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); display: flex; gap: 32px; flex-wrap: wrap; }
+  .deal-card .deal-meta span { font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--text-dim); letter-spacing: 0.04em; }
+  .deal-card .deal-meta strong { color: var(--text-muted); font-weight: 500; }
+  .ref-block { background: rgba(34,211,238,0.04); border: 1px solid rgba(34,211,238,0.15); border-radius: 8px; padding: 20px 24px; margin-top: 20px; }
+  .ref-block p { font-size: 14px; font-weight: 400; color: var(--text-muted); line-height: 1.65; margin: 0; }
+  .ref-block .ref-name { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-dim); margin-top: 12px; }
+
+  @media (max-width: 768px) {
+    .operator-grid { grid-template-columns: 1fr; gap: 32px; }
+    .operator-photo { max-width: 280px; }
+    .deal-card .deal-meta { flex-direction: column; gap: 8px; }
+  }
+
   /* ANIMATIONS */
   @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
@@ -240,6 +268,18 @@
         <h3>COOs &amp; Integration Leads</h3>
         <p>You inherited a sending system you didn't build and don't fully understand. Before you merge it into your stack, you need a clear map of what's safe, what's broken, and what breaks on migration.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- WHY SPECIALIST -->
+<section style="padding:48px 0;position:relative;z-index:1;">
+  <div class="container">
+    <div class="risk-banner" style="margin:0;background:rgba(34,211,238,0.04);border-color:rgba(34,211,238,0.18);">
+      <div class="risk-banner-icon" style="color:var(--accent);">Why this</div>
+      <p><strong style="color:var(--text);">Your IT team checks infrastructure. Your legal team checks contracts. Nobody checks the sending system.</strong> Email infrastructure sits between IT and marketing &mdash; owned by neither, understood by neither in a transaction context. Standard tech due diligence assesses servers, SaaS contracts, and security posture. It does not assess domain reputation debt, authentication survivability through migration, or whether the sending architecture collapses when two systems are merged. That's the gap this assessment fills.</p>
     </div>
   </div>
 </section>
@@ -389,6 +429,49 @@
         <div class="deliverable-label">F</div>
         <h3>Review Call</h3>
         <p>Live walkthrough with your deal team, integration lead, or operating partner. Priority sequence, ownership assignment, and a clear answer to what not to do in the first 30 days post-close.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- OPERATOR -->
+<section class="operator-section">
+  <div class="container">
+    <div class="label">// Who delivers this</div>
+    <h2 class="section-heading">Operator-led.<br><em>Not outsourced.</em></h2>
+    <div class="operator-grid">
+      <div>
+        <div class="operator-photo">
+          <img src="/Mel_headshot_2.jpeg" alt="Melissa Yilaly">
+          <div class="operator-photo-meta">
+            <h4>Melissa Yilaly</h4>
+            <p>Founder &middot; InboxGlobal&trade;</p>
+          </div>
+        </div>
+      </div>
+      <div class="operator-bio">
+        <p>Most deliverability consultants come from marketing agencies or ESPs. I came from operations &mdash; inside companies where <strong>email infrastructure was revenue infrastructure</strong>, and where a system failure didn't hurt a campaign, it stopped the business.</p>
+
+        <p>I spent 15 years building and scaling sending systems in EdTech and SaaS, scaling outbound from 200K to 2M+ emails/month. I didn't learn deliverability from a course. I learned it by keeping systems stable under real load &mdash; and by <strong>stabilizing infrastructure after acquisitions</strong>, when domains collided, tools merged, and the sending system nobody thought to diligence became the first thing that broke.</p>
+
+        <p>That operating background is why this assessment exists. I've been the person inside the acquired company watching email systems degrade post-close because nobody mapped the infrastructure before the deal closed. <strong>This is the assessment I wished existed on the other side of those transactions.</strong></p>
+
+        <div class="operator-sig">&mdash; Melissa Yilaly &middot; Founder, InboxGlobal&trade;</div>
+
+        <div class="deal-card">
+          <div class="deal-card-tag">M&amp;A Experience</div>
+          <h4>CDI Technologies &amp; Troxell Acquisition</h4>
+          <p>Marketing Manager at CDI Technologies (Canada), reporting directly to the CEO. Contributed to capital raises through investor presentations and executive-facing materials, working in close collaboration with the CEO and leadership team on fundraising execution during a PE-backed acquisition process.</p>
+          <div class="deal-meta">
+            <span><strong>Sponsor:</strong> H.I.G. Growth Partners</span>
+            <span><strong>Role:</strong> Marketing &middot; Reporting to CEO</span>
+            <span><strong>Scope:</strong> Capital raises &middot; Investor materials</span>
+          </div>
+        </div>
+
+
       </div>
     </div>
   </div>
