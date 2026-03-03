@@ -16,12 +16,9 @@
     --border-strong: rgba(34,211,238,0.25);
     --accent: #22D3EE;
     --amber: #22C55E;
-    --amber-dim: rgba(34,197,94,0.08);
-    --amber-border: rgba(34,197,94,0.2);
     --text: #E2EBF3;
     --text-muted: #94A3B8;
     --text-dim: #5A7189;
-    --red: #F87171;
     --sev1: #F87171;
     --sev2: #FB923C;
     --sev3: #22C55E;
@@ -84,7 +81,7 @@
   .nav-links a { font-family: 'DM Sans', sans-serif; font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
   .nav-links a:hover { color: var(--accent); }
   .nav-cta { font-size: 12px !important; letter-spacing: 0.06em !important; color: var(--bg) !important; background: var(--accent); padding: 8px 18px; border-radius: 4px; font-weight: 600 !important; transition: opacity 0.2s; }
-  .nav-cta:hover { opacity: 0.85; color: var(--bg) !important; }
+  .nav-cta:hover { opacity: 0.85; }
 
   /* SHARED */
   .label { font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 40px; }
@@ -137,7 +134,7 @@
   .hero-price-note { font-size: 14px; color: var(--text-dim); margin-bottom: 36px; animation: fadeUp 0.6s 0.28s ease both; }
   .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; animation: fadeUp 0.6s 0.3s ease both; }
 
-  /* WHAT YOU GET UPFRONT */
+  /* VALUE SECTION */
   .value-section { padding: 80px 0; position: relative; z-index: 1; }
   .value-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); margin-top: 8px; }
   .value-item { background: var(--bg); padding: 32px; display: flex; flex-direction: column; gap: 12px; }
@@ -145,7 +142,7 @@
   .value-item h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 17px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.25; }
   .value-item p { font-size: 14px; font-weight: 300; color: var(--text-muted); line-height: 1.65; }
 
-  /* SEVERITY FRAMEWORK */
+  /* SEVERITY SECTION */
   .severity-section { padding: 80px 0; position: relative; z-index: 1; background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
   .sev-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
   .sev-table thead tr { border-bottom: 1px solid var(--border); }
@@ -164,12 +161,11 @@
 
   /* DELIVERABLES */
   .deliverables-section { padding: 80px 0; position: relative; z-index: 1; }
-  .deliverable-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); margin-top: 8px; }
-  .deliverable-card { background: var(--surface); padding: 32px; display: flex; flex-direction: column; gap: 12px; transition: background 0.25s; }
+  .deliverable-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--border); margin-top: 8px; }
+  .deliverable-card { background: var(--surface); padding: 24px; display: flex; flex-direction: column; gap: 12px; transition: background 0.25s; text-align: center; }
   .deliverable-card:hover { background: var(--surface-2); }
   .deliverable-label { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; font-weight: 800; color: var(--amber); }
-  .deliverable-card h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.25; }
-  .deliverable-card p { font-size: 14px; font-weight: 300; color: var(--text-muted); line-height: 1.65; }
+  .deliverable-card h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.25; }
 
   /* HOW IT WORKS */
   .how-section { padding: 80px 0; position: relative; z-index: 1; background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
@@ -178,22 +174,6 @@
   .how-step-num { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 32px; font-weight: 800; color: var(--amber); opacity: 0.3; letter-spacing: -0.03em; }
   .how-step h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
   .how-step p { font-size: 14px; font-weight: 300; color: var(--text-muted); line-height: 1.65; }
-
-  /* WHO */
-  .who-section { padding: 80px 0; position: relative; z-index: 1; }
-  .who-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--border); margin-top: 8px; }
-  .who-card { background: var(--surface); padding: 32px; display: flex; gap: 16px; align-items: flex-start; transition: background 0.25s; }
-  .who-card:hover { background: var(--surface-2); }
-  .who-check { color: var(--amber); font-size: 16px; flex-shrink: 0; margin-top: 2px; }
-  .who-card h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 6px; }
-  .who-card p { font-size: 14px; font-weight: 300; color: var(--text-muted); line-height: 1.65; }
-
-  /* NOT FOR */
-  .not-section { padding: 40px 0 80px; position: relative; z-index: 1; }
-  .not-banner { background: rgba(248,113,113,0.04); border: 1px solid rgba(248,113,113,0.15); border-radius: 6px; padding: 24px 32px; display: flex; gap: 16px; align-items: flex-start; }
-  .not-icon { color: var(--red); font-size: 16px; flex-shrink: 0; margin-top: 2px; }
-  .not-banner p { font-size: 15px; color: var(--text-muted); line-height: 1.7; }
-  .not-banner p strong { color: var(--text); font-weight: 500; }
 
   /* CTA */
   .cta-section { padding: 100px 0; position: relative; z-index: 1; text-align: center; border-top: 1px solid var(--border); }
@@ -215,10 +195,9 @@
 
   @media (max-width: 768px) {
     .nav-links { display: none; }
-    .value-grid, .deliverable-grid, .who-grid { grid-template-columns: 1fr; }
+    .value-grid { grid-template-columns: 1fr; }
+    .deliverable-grid { grid-template-columns: repeat(2, 1fr); }
     .how-grid { grid-template-columns: repeat(2, 1fr); }
-    .sev-table { font-size: 13px; }
-    .sev-table th:nth-child(3), .sev-table td:nth-child(3) { display: none; }
   }
 </style>
 </head>
@@ -245,7 +224,7 @@
       Operator standard · Notion workspace · Instant access
     </div>
     <h1>Stop managing incidents<br>with <em>tribal knowledge.</em></h1>
-    <p class="hero-sub">The Outbound Ops Standard™ is a complete operating framework for outbound email infrastructure. <strong>Severity classification, structured diagnostics, five incident playbooks, and enforcement rules</strong> — built as a Notion workspace your team uses the day they buy it.</p>
+    <p class="hero-sub">The Outbound Ops Standard™ is a complete operating framework for outbound email infrastructure. <strong>Severity classification, structured diagnostics, five incident playbooks, and enforcement rules</strong> — delivered as a fully functional Notion workspace your team uses the day you buy it.</p>
     <div class="hero-price">$349</div>
     <div class="hero-price-note">One-time purchase · Instant Notion access · No subscription</div>
     <div class="hero-ctas">
@@ -301,21 +280,21 @@
         <tr>
           <td><span class="sev-badge sev1"><span class="sev-dot"></span>SEV-1</span></td>
           <td><span class="sev-name">Critical — Domain Down</span></td>
-          <td>Blacklisted on major list, account suspended, reputation "Bad" 7+ days, inbox placement &lt;10%</td>
+          <td>Blacklisted on a major list, account suspended, reputation Bad/Low for 7+ days, inbox placement &lt;10%</td>
           <td>Stop all sending immediately. Notify leadership. Open SEV-1 playbook.</td>
           <td>Begin within <strong>1 hour</strong></td>
         </tr>
         <tr>
           <td><span class="sev-badge sev2"><span class="sev-dot"></span>SEV-2</span></td>
           <td><span class="sev-name">Severe — Reputation Compromised</span></td>
-          <td>Reputation "Low," placement 10–40%, complaint rate &gt;0.3%, bounce spike &gt;5%</td>
+          <td>Reputation Low, placement 10–40%, spam complaint rate &gt;0.3%, bounce spike &gt;5%</td>
           <td>Pause all campaigns within 2 hours. Run diagnostic. Open SEV-2 playbook.</td>
           <td>Begin within <strong>4 hours</strong></td>
         </tr>
         <tr>
           <td><span class="sev-badge sev3"><span class="sev-dot"></span>SEV-3</span></td>
           <td><span class="sev-name">Moderate — Active Degradation</span></td>
-          <td>Bounce 3–5%, complaint 0.1–0.3%, placement 40–65%, reputation "Medium," 1 inbox showing issues</td>
+          <td>Bounce 3–5%, spam complaint 0.1–0.3%, placement 40–65%, reputation Medium, one inbox showing issues</td>
           <td>Pause affected inboxes. Reduce volume 50%. Open SEV-3 playbook.</td>
           <td>Begin <strong>same day</strong></td>
         </tr>
@@ -328,7 +307,7 @@
         </tr>
         <tr>
           <td><span class="sev-badge sev5"><span class="sev-dot"></span>SEV-5</span></td>
-          <td><span class="sev-name">Hygiene — Maintenance Required</span></td>
+          <td><span class="sev-name">List Hygiene — Maintenance Required</span></td>
           <td>List stale, docs outdated, verification overdue, quarterly review missed</td>
           <td>Schedule fix. Assign owner. Document what needs updating.</td>
           <td>Resolve within <strong>2 weeks</strong></td>
@@ -344,43 +323,110 @@
 <section class="deliverables-section">
   <div class="container">
     <div class="label">// What's inside</div>
-    <h2 class="section-heading">Seven sections. One<br><em>complete workspace.</em></h2>
-    <div class="deliverable-grid">
-      <div class="deliverable-card">
-        <div class="deliverable-label">A</div>
-        <h3>Welcome + How to Use</h3>
-        <p>Onboarding guide for the workspace. What each section is for, when to use it, and how to hand it off to a new team member without explanation.</p>
+    <h2 class="section-heading">Four sections. One<br><em>complete workspace.</em></h2>
+    
+    <div style="margin-top: 48px; display: flex; flex-direction: column; gap: 48px;">
+      
+      <!-- Diagnose -->
+      <div>
+        <h3 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 20px; color: var(--text);">1. Diagnose <span style="color: var(--text-muted); font-weight: 400; font-size: 18px;">(What's happening?)</span></h3>
+        <div style="display: flex; flex-direction: column; gap: 12px; margin-left: 0;">
+          <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <span style="font-size: 16px; flex-shrink: 0;">📊</span>
+            <div>
+              <h4 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 2px;">System Status</h4>
+            </div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <span style="font-size: 16px; flex-shrink: 0;">⚡</span>
+            <div>
+              <h4 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 2px;">Severity Framework</h4>
+            </div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <span style="font-size: 16px; flex-shrink: 0;">🔍</span>
+            <div>
+              <h4 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 2px;">Diagnostic Runbook — Triage Checklist (15–20 min)</h4>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="deliverable-card">
-        <div class="deliverable-label">B</div>
-        <h3>Severity Framework Database</h3>
-        <p>Full Notion database with table and gallery views. All five severity levels with trigger conditions, pipeline impact, response windows, and links to matching playbooks.</p>
+
+      <!-- Respond -->
+      <div>
+        <h3 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 20px; color: var(--text);">2. Respond <span style="color: var(--text-muted); font-weight: 400; font-size: 18px;">(Stop the damage)</span></h3>
+        <div style="display: flex; flex-direction: column; gap: 12px; margin-left: 0;">
+          <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <span style="font-size: 16px; flex-shrink: 0;">🚨</span>
+            <div>
+              <h4 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 2px;">Incident Response Playbooks</h4>
+            </div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <span style="font-size: 16px; flex-shrink: 0;">🔎</span>
+            <div>
+              <h4 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 2px;">Investigation Manuals — Root Cause Guides (deep dive)</h4>
+            </div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <span style="font-size: 16px; flex-shrink: 0;">📋</span>
+            <div>
+              <h4 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 2px;">Incident Log</h4>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="deliverable-card">
-        <div class="deliverable-label">C</div>
-        <h3>Diagnostic Runbook</h3>
-        <p>Eight-step structured triage — from "something feels off" to a confirmed severity level in 15–20 minutes. Toggle blocks for each step. Built for use during a live incident.</p>
+
+      <!-- Recover -->
+      <div>
+        <h3 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 20px; color: var(--text);">3. Recover <span style="color: var(--text-muted); font-weight: 400; font-size: 18px;">(Return to stable)</span></h3>
+        <div style="display: flex; flex-direction: column; gap: 12px; margin-left: 0;">
+          <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <span style="font-size: 16px; flex-shrink: 0;">🛟</span>
+            <div>
+              <h4 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 2px;">Recovery Playbooks</h4>
+            </div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <span style="font-size: 16px; flex-shrink: 0;">📅</span>
+            <div>
+              <h4 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 2px;">Recovery Timeline Templates</h4>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="deliverable-card">
-        <div class="deliverable-label">D</div>
-        <h3>Five Incident Response Playbooks</h3>
-        <p>One per severity level. Time-boxed actions (Hour 1, Hours 2–4, End of Day), all as checkboxes. SEV-1 includes delisting process, recover vs. retire framework, and a stakeholder communication template.</p>
+
+      <!-- Prevent -->
+      <div>
+        <h3 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 20px; color: var(--text);">4. Prevent <span style="color: var(--text-muted); font-weight: 400; font-size: 18px;">(Make it harder to repeat)</span></h3>
+        <div style="display: flex; flex-direction: column; gap: 12px; margin-left: 0;">
+          <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <span style="font-size: 16px; flex-shrink: 0;">🔒</span>
+            <div>
+              <h4 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 2px;">Compliance Controls</h4>
+            </div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <span style="font-size: 16px; flex-shrink: 0;">⚙️</span>
+            <div>
+              <h4 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 2px;">Configuration & Baselines</h4>
+            </div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <span style="font-size: 16px; flex-shrink: 0;">🛡️</span>
+            <div>
+              <h4 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 2px;">Enforcement Rules</h4>
+            </div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <span style="font-size: 16px; flex-shrink: 0;">📍</span>
+            <div>
+              <h4 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 2px;">30-Day Onboarding</h4>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="deliverable-card">
-        <div class="deliverable-label">E</div>
-        <h3>Four Recovery Timeline Templates</h3>
-        <p>90-day full rebuild (SEV-1), 60-day reputation recovery (SEV-2), 30-day stabilization (SEV-3), and a domain retirement and fresh-start checklist. Structured as project trackers with week-by-week phases.</p>
-      </div>
-      <div class="deliverable-card">
-        <div class="deliverable-label">F</div>
-        <h3>Enforcement Rules</h3>
-        <p>Sending limits, list quality gates, monitoring cadence, escalation triggers, and change control — defined in tables your team can implement immediately and review monthly.</p>
-      </div>
-      <div class="deliverable-card">
-        <div class="deliverable-label">G</div>
-        <h3>Quick Reference Card</h3>
-        <p>One-page cheat sheet: severity levels at a glance, sending limits, and a five-step "when in doubt" protocol. Built to be bookmarked. The first place operators go when something breaks.</p>
-      </div>
+
     </div>
   </div>
 </section>
@@ -419,62 +465,12 @@
 
 <hr class="section-divider">
 
-<!-- WHO IT'S FOR -->
-<section class="who-section">
-  <div class="container">
-    <div class="label">// Who this is for</div>
-    <h2 class="section-heading">Built for operators.<br><em>Not for marketers.</em></h2>
-    <div class="who-grid">
-      <div class="who-card">
-        <span class="who-check">→</span>
-        <div>
-          <h3>RevOps leaders responsible for pipeline reliability</h3>
-          <p>You own the sending stack and get blamed when it breaks. This gives your team a documented operating standard that doesn't live in someone's head.</p>
-        </div>
-      </div>
-      <div class="who-card">
-        <span class="who-check">→</span>
-        <div>
-          <h3>SDR managers and outbound operators</h3>
-          <p>You're close enough to the system to know when something feels off. This gives you the framework to classify it, respond to it, and document it.</p>
-        </div>
-      </div>
-      <div class="who-card">
-        <span class="who-check">→</span>
-        <div>
-          <h3>CEOs and COOs running outbound at growth-stage companies</h3>
-          <p>You don't have a dedicated deliverability team. This is the operating system that fills that gap without requiring one.</p>
-        </div>
-      </div>
-      <div class="who-card">
-        <span class="who-check">→</span>
-        <div>
-          <h3>Anyone onboarding a new team member onto the sending stack</h3>
-          <p>Hand them this workspace. If they understand the severity framework and enforcement rules, they can operate the system without breaking it.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- NOT FOR -->
-<section class="not-section">
-  <div class="container">
-    <div class="not-banner">
-      <span class="not-icon">–</span>
-      <p><strong>This is not a setup guide.</strong> It doesn't cover domain registration, warmup tool selection, or how to write outbound copy. It's what you use after setup — to operate, monitor, protect, and recover your sending systems. If you need a full infrastructure review, that's the <a href="/system-integrity-audit" style="color: var(--accent); text-decoration: none;">System Integrity Audit™</a>.</p>
-    </div>
-  </div>
-</section>
-
-<hr class="section-divider">
-
 <!-- CTA -->
 <section class="cta-section" id="cta">
   <div class="container">
     <div class="label" style="justify-content:center; display:flex; margin-bottom:32px;">// Get the standard</div>
     <h2>The best incident is the one<br><em>that never happens.</em></h2>
-    <p>Severity framework. Five playbooks. Enforcement rules. Recovery timelines. All in one Notion workspace.</p>
+    <p>Severity framework. Diagnostic runbook. Five playbooks. Recovery timelines. Enforcement rules. All in one Notion workspace.</p>
     <div class="cta-price">$349</div>
     <div class="cta-price-note">One-time · Instant access · No subscription</div>
     <div class="cta-buttons">
@@ -490,9 +486,9 @@
     <a href="https://inboxglobal.io" class="footer-logo">InboxGlobal™</a>
     <ul class="footer-links">
       <li><a href="/">Home</a></li>
-      <li><a href="/resources">Resources</a></li>
-      <li><a href="/pulsecheck">PulseCheck</a></li>
-      <li><a href="/system-integrity-audit">Audit</a></li>
+      <li><a href="https://inboxglobal.io/resources">Resources</a></li>
+      <li><a href="https://inboxglobal.io/pulsecheck">PulseCheck</a></li>
+      <li><a href="https://inboxglobal.io/system-integrity-audit">Audit</a></li>
     </ul>
     <div class="footer-copy">© 2026 InboxGlobal™ LLC. All rights reserved.</div>
   </div>
