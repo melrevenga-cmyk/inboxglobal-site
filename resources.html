@@ -20,6 +20,11 @@
     --text-muted: #6B859E;
     --text-dim: #3A5068;
     --amber: #22C55E;
+    --sev1: #EF4444;
+    --sev2: #F97316;
+    --sev3: #EAB308;
+    --sev4: #3B82F6;
+    --sev5: #8B5CF6;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -235,10 +240,12 @@
     padding-top: 0;
     margin-top: 10px;
   }
+
+  .resources-grid--single {
     grid-template-columns: 1fr !important;
   }
 
-  .resources-grid--single .resource-card--full {
+  .resource-card--full {
     flex-direction: column;
     width: 100%;
   }
@@ -263,50 +270,189 @@
     padding-top: 4px;
   }
 
-  .deliverables-inline {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 1px;
-    background: var(--border);
-    margin-top: 32px;
+  /* ─── SEVERITY FRAMEWORK TABLE ─── */
+  .severity-framework {
+    margin-top: 40px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .severity-table {
     width: 100%;
+    border-collapse: collapse;
   }
 
-  .deliverable-inline-item {
-    background: var(--bg);
-    padding: 18px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    transition: background 0.2s;
+  .severity-table th {
+    background: var(--surface-2);
+    padding: 20px;
+    text-align: left;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    border-bottom: 1px solid var(--border);
   }
 
-  .resource-card:hover .deliverable-inline-item { background: var(--surface); }
+  .severity-table td {
+    padding: 24px 20px;
+    border-bottom: 1px solid var(--border);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
 
-  .di-label {
+  .severity-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .severity-badge {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 11px;
     font-weight: 800;
-    color: var(--amber);
-    opacity: 0.7;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border-radius: 4px;
+    display: inline-block;
+    white-space: nowrap;
   }
 
-  .di-text {
+  .severity-badge.sev1 {
+    background: rgba(239, 68, 68, 0.15);
+    color: #EF4444;
+  }
+
+  .severity-badge.sev2 {
+    background: rgba(249, 115, 22, 0.15);
+    color: #F97316;
+  }
+
+  .severity-badge.sev3 {
+    background: rgba(234, 179, 8, 0.15);
+    color: #EAB308;
+  }
+
+  .severity-badge.sev4 {
+    background: rgba(59, 130, 246, 0.15);
+    color: #3B82F6;
+  }
+
+  .severity-badge.sev5 {
+    background: rgba(139, 92, 246, 0.15);
+    color: #8B5CF6;
+  }
+
+  .classification {
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  /* ─── MODULES GRID ─── */
+  .modules-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--border);
+    margin-top: 32px;
+  }
+
+  .module-card {
+    background: var(--surface);
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: background 0.2s;
+  }
+
+  .module-card:hover {
+    background: var(--surface-2);
+  }
+
+  .module-number {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.4;
+  }
+
+  .module-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    line-height: 1.2;
+  }
+
+  .module-items {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .module-item {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.5;
+  }
+
+  .module-item::before {
+    content: '◇';
+    flex-shrink: 0;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .deliverables-summary {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    margin-top: 32px;
+  }
+
+  .deliverable-item {
+    background: var(--bg);
+    padding: 20px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+    transition: background 0.2s;
+  }
+
+  .resource-card:hover .deliverable-item {
+    background: var(--surface);
+  }
+
+  .deliverable-label {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--amber);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .deliverable-text {
     font-family: 'DM Sans', sans-serif;
     font-size: 12px;
     font-weight: 500;
     color: var(--text-muted);
     line-height: 1.4;
-  }
-
-  @media (max-width: 900px) {
-    .deliverables-inline { grid-template-columns: repeat(4, 1fr); }
-    .card-header-row { grid-template-columns: 1fr; gap: 24px; }
-    .card-price-block { text-align: left; min-width: unset; }
-  }
-
-  @media (max-width: 600px) {
-    .deliverables-inline { grid-template-columns: repeat(2, 1fr); }
   }
 
   .price-tag {
@@ -370,7 +516,6 @@
   .resource-card:hover { background: var(--surface-2); }
   .resource-card:hover::before { background: var(--accent); }
 
-  /* Interactive tool cards get a slightly different hover arrow */
   .resource-card .card-arrow {
     position: absolute;
     top: 40px; right: 40px;
@@ -518,8 +663,8 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: rgba(34,197,94,0.06);
-    border: 1px solid rgba(34,197,94,0.2);
+    background: rgba(251, 191, 36, 0.08);
+    border: 1px solid rgba(251, 191, 36, 0.2);
     padding: 8px 16px;
     border-radius: 4px;
     font-family: 'DM Sans', sans-serif;
@@ -527,14 +672,14 @@
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--amber);
+    color: #FBBF24;
     white-space: nowrap;
     flex-shrink: 0;
   }
 
   .dev-badge-dot {
     width: 6px; height: 6px;
-    background: var(--amber);
+    background: #FBBF24;
     border-radius: 50%;
     animation: pulse 2.5s infinite;
   }
@@ -671,6 +816,16 @@
     .coming-grid { grid-template-columns: 1fr; }
     .resource-card { padding: 28px 24px; }
     .coming-soon-intro { flex-direction: column; gap: 20px; }
+    .modules-grid { grid-template-columns: 1fr; }
+    .deliverables-summary { grid-template-columns: repeat(2, 1fr); }
+    .severity-table td, .severity-table th { padding: 16px 12px; }
+    .card-header-row { grid-template-columns: 1fr; gap: 24px; }
+    .card-price-block { text-align: left; min-width: unset; }
+  }
+
+  @media (max-width: 600px) {
+    .deliverables-summary { grid-template-columns: 1fr; }
+    .severity-table { font-size: 12px; }
   }
 </style>
 </head>
@@ -763,7 +918,7 @@
             <div class="card-icon">🛡️</div>
             <div class="card-sub">Operating Standard · InboxGlobal™</div>
             <h3>Outbound Ops Standard™</h3>
-            <p>A complete operating framework for outbound email infrastructure. Severity classification, structured diagnostics, five incident response playbooks, four recovery timelines, and enforcement rules — delivered as a fully functional Notion workspace your team can use on day one.</p>
+            <p>A complete operating framework for outbound email infrastructure. Severity classification, structured diagnostics, incident response playbooks, recovery timelines, and enforcement rules — delivered as a fully functional Notion workspace your team can use on day one.</p>
           </div>
           <div class="card-price-block">
             <div class="price-tag">$349</div>
@@ -771,15 +926,8 @@
             <div class="card-cta card-cta--inline">Get the Standard</div>
           </div>
         </div>
-        <div class="deliverables-inline">
-          <div class="deliverable-inline-item"><span class="di-label">A</span><span class="di-text">Welcome + How to Use</span></div>
-          <div class="deliverable-inline-item"><span class="di-label">B</span><span class="di-text">Severity Framework Database</span></div>
-          <div class="deliverable-inline-item"><span class="di-label">C</span><span class="di-text">Diagnostic Runbook</span></div>
-          <div class="deliverable-inline-item"><span class="di-label">D</span><span class="di-text">5 Incident Response Playbooks</span></div>
-          <div class="deliverable-inline-item"><span class="di-label">E</span><span class="di-text">4 Recovery Timeline Templates</span></div>
-          <div class="deliverable-inline-item"><span class="di-label">F</span><span class="di-text">Enforcement Rules</span></div>
-          <div class="deliverable-inline-item"><span class="di-label">G</span><span class="di-text">Quick Reference Card</span></div>
-        </div>
+
+
       </a>
 
     </div>
