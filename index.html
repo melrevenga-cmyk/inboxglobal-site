@@ -1127,7 +1127,7 @@
     transition: height 0.52s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .flip-wrap.flipped { height: 440px; }
+  .flip-wrap.flipped { /* height set dynamically by JS */ }
 
   .flip-card {
     width: 100%;
@@ -1433,7 +1433,7 @@
     .back-inner { grid-template-columns: 1fr; gap: 24px; padding: 28px; }
     .back-col-left, .back-col-mid { border-right: none; padding-right: 0; border-bottom: 1px solid var(--border); padding-bottom: 20px; height: auto; }
     .flip-wrap { height: 140px; }
-    .flip-wrap.flipped { height: 960px; }
+    .flip-wrap.flipped { /* height set by JS */ }
     .flip-hint { display: none; }
     .results-footer { flex-direction: column; align-items: flex-start; }
   }
@@ -2144,17 +2144,43 @@
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-// Results flip cards
+// Results flip cards — dynamic height
+function getBackHeight(wrap) {
+  const back = wrap.querySelector('.flip-face.back');
+  const inner = wrap.querySelector('.back-inner');
+  if (!inner) return 440;
+  // Temporarily make back visible to measure
+  back.style.visibility = 'hidden';
+  back.style.overflow = 'visible';
+  back.style.position = 'relative';
+  back.style.transform = 'none';
+  const h = inner.offsetHeight;
+  back.style.visibility = '';
+  back.style.overflow = '';
+  back.style.position = '';
+  back.style.transform = '';
+  return Math.max(h + 88, 380); // 88 = top+bottom padding (44px each)
+}
+
 function toggleCard(el) {
+  const isFlipped = el.classList.contains('flipped');
+  // Close all
   document.querySelectorAll('.flip-wrap.flipped').forEach(c => {
-    if (c !== el) c.classList.remove('flipped');
+    c.classList.remove('flipped');
+    c.style.height = '200px';
   });
-  el.classList.toggle('flipped');
+  if (!isFlipped) {
+    const h = getBackHeight(el);
+    el.style.height = h + 'px';
+    el.classList.add('flipped');
+  }
 }
 
 function closeCard(e, btn) {
   e.stopPropagation();
-  btn.closest('.flip-wrap').classList.remove('flipped');
+  const wrap = btn.closest('.flip-wrap');
+  wrap.classList.remove('flipped');
+  wrap.style.height = '200px';
 }
 
 // Close mobile nav on link click
