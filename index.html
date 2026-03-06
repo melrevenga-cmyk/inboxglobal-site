@@ -1,4 +1,3 @@
-<link rel="manifest" href="/manifest.json">
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -504,6 +503,12 @@
     color: var(--accent);
     background: rgba(34,211,238,0.06);
     border-color: rgba(34,211,238,0.25);
+  }
+
+  .offer-badge-magenta {
+    color: #D946EF;
+    background: rgba(217,70,239,0.07);
+    border-color: rgba(217,70,239,0.28);
   }
 
   /* ─── PRINCIPLES ─── */
@@ -1061,6 +1066,378 @@
     .offer-card { padding: 32px 28px; }
   }
 
+  /* ─── RESULTS SECTION ─── */
+  :root {
+    --magenta: #D946EF;
+    --magenta-dim: rgba(217,70,239,0.07);
+    --magenta-border: rgba(217,70,239,0.25);
+  }
+
+  .results-section {
+    padding: 100px 0 120px;
+    position: relative;
+    z-index: 1;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .results-intro {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 32px;
+    margin-bottom: 64px;
+    flex-wrap: wrap;
+  }
+
+  .results-intro-sub {
+    font-size: 15px;
+    color: var(--text-muted);
+    font-weight: 300;
+    max-width: 360px;
+    line-height: 1.7;
+  }
+
+  .flip-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    padding: 8px 14px;
+  }
+
+  .results-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    background: var(--border);
+  }
+
+  .flip-wrap {
+    perspective: 1400px;
+    cursor: pointer;
+    height: 200px;
+    transition: height 0.52s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .flip-wrap.flipped { height: 440px; }
+
+  .flip-card {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.52s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .flip-wrap.flipped .flip-card { transform: rotateX(-180deg); }
+
+  .flip-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    background: var(--bg);
+    overflow: hidden;
+  }
+
+  .flip-face.back {
+    transform: rotateX(180deg);
+    background: var(--surface-2);
+    overflow-y: auto;
+  }
+
+  .front-inner {
+    display: grid;
+    grid-template-columns: 2fr 1.1fr auto;
+    gap: 48px;
+    align-items: center;
+    padding: 40px 48px;
+    height: 100%;
+    border-left: 2px solid transparent;
+    transition: border-color 0.25s, background 0.2s;
+  }
+
+  .flip-wrap:not(.flipped):hover .front-inner {
+    border-left-color: var(--accent);
+    background: var(--surface);
+  }
+
+  .front-category {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  .front-headline {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    color: var(--text);
+  }
+
+  .front-context {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 8px;
+    letter-spacing: 0.02em;
+  }
+
+  .front-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .front-stat-val {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--accent);
+  }
+
+  .front-stat-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.03em;
+    margin-top: 2px;
+  }
+
+  .front-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    border-left: 1px solid var(--border);
+    padding-left: 40px;
+    height: 100%;
+    justify-content: center;
+  }
+
+  .front-cta-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    transition: color 0.2s;
+  }
+
+  .flip-wrap:not(.flipped):hover .front-cta-label { color: var(--accent); }
+
+  .front-cta-arrow {
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--border-strong);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .flip-wrap:not(.flipped):hover .front-cta-arrow {
+    background: var(--accent-dim);
+    border-color: var(--accent);
+  }
+
+  .front-cta-arrow svg { transition: transform 0.2s; }
+  .flip-wrap:not(.flipped):hover .front-cta-arrow svg { transform: translateY(2px); }
+
+  .back-inner {
+    padding: 44px 48px;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 44px;
+    align-items: start;
+  }
+
+  .back-col-left {
+    border-right: 1px solid var(--border);
+    padding-right: 44px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .back-col-mid {
+    border-right: 1px solid var(--border);
+    padding-right: 44px;
+  }
+
+  .back-col-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .back-situation {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.75;
+    margin-bottom: 24px;
+    flex: 1;
+  }
+
+  .back-result-block {
+    padding: 14px 16px;
+    border-left: 2px solid var(--magenta);
+    background: var(--magenta-dim);
+  }
+
+  .back-result-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--magenta);
+    margin-bottom: 6px;
+  }
+
+  .back-result-text {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .back-bullets { list-style: none; }
+
+  .back-bullets li {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.55;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .back-bullets li:last-child { border-bottom: none; }
+
+  .back-bullets li::before {
+    content: '→';
+    font-size: 11px;
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .tools-grid { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  .tool-pill {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    border: 1px solid var(--border-strong);
+    color: var(--accent);
+    background: var(--accent-dim);
+  }
+
+  .back-close-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-top: 28px;
+    cursor: pointer;
+    transition: color 0.2s;
+    border: none;
+    background: none;
+    padding: 0;
+  }
+
+  .back-close-btn:hover { color: var(--accent); }
+
+  .results-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 48px;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .results-footer-note {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--text-dim);
+    max-width: 440px;
+    line-height: 1.6;
+  }
+
+  .results-footer-note strong { color: var(--text-muted); font-weight: 500; }
+
+  .results-footer-cta {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(34,211,238,0.3);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+  }
+
+  .results-footer-cta:hover { color: #67E8F9; border-color: #67E8F9; }
+
+  .flip-face.back::-webkit-scrollbar { width: 3px; }
+  .flip-face.back::-webkit-scrollbar-track { background: transparent; }
+  .flip-face.back::-webkit-scrollbar-thumb { background: var(--border-strong); }
+
+  @media (max-width: 768px) {
+    .front-inner { grid-template-columns: 1fr auto; gap: 24px; padding: 28px; }
+    .front-stats { display: none; }
+    .front-cta { border-left: none; padding-left: 0; }
+    .back-inner { grid-template-columns: 1fr; gap: 24px; padding: 28px; }
+    .back-col-left, .back-col-mid { border-right: none; padding-right: 0; border-bottom: 1px solid var(--border); padding-bottom: 20px; height: auto; }
+    .flip-wrap { height: 140px; }
+    .flip-wrap.flipped { height: 960px; }
+    .flip-hint { display: none; }
+    .results-footer { flex-direction: column; align-items: flex-start; }
+  }
+
   /* Score badge */
   .score-badge {
     display: inline-flex;
@@ -1105,6 +1482,7 @@
     </button>
     <ul class="nav-links">
       <li><a href="/#offers">Services</a></li>
+      <li><a href="/#results">Results</a></li>
       <li><a href="/#principles">Principles</a></li>
       <li><a href="/#founder">About</a></li>
       <li><a href="/resources">Resources</a></li>
@@ -1230,7 +1608,7 @@
       <div class="offer-card offer-card-ma">
         <div class="offer-card-inner">
           <div>
-            <div class="offer-badge offer-badge-cyan">M&amp;A · Specialized</div>
+            <div class="offer-badge offer-badge-magenta">M&amp;A · Specialized</div>
             <h3>Email Infrastructure<br>Due Diligence&#8482;</h3>
             <div class="offer-price">$8,500</div>
             <div class="offer-meta">Flat fee · Single entity · Multi-entity pricing available · 7&ndash;10 business days · USD</div>
@@ -1259,6 +1637,302 @@
     </div>
   </div>
 </section>
+<!-- RESULTS -->
+<section class="results-section" id="results">
+  <div class="container">
+
+    <div class="results-intro">
+      <div>
+        <div class="label">// Real engagements</div>
+        <h2 class="section-heading">Work<br><em>done.</em></h2>
+        <p class="results-intro-sub">Real systems. Real constraints. Four engagements built from infrastructure problems that were invisible until they weren't.</p>
+      </div>
+      <div class="flip-hint">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" opacity=".5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+        Click any row to see the full engagement
+      </div>
+    </div>
+
+    <div class="results-stack">
+
+      <!-- Infrastructure Build + Launch -->
+      <div class="flip-wrap" onclick="toggleCard(this)">
+        <div class="flip-card">
+          <div class="flip-face front">
+            <div class="front-inner">
+              <div>
+                <div class="front-category">Infrastructure Build + Launch</div>
+                <div class="front-headline">Built a 1,000-mailbox outbound engine from zero — before an IPO window closed.</div>
+                <div class="front-context">Pre-IPO AI Agents SaaS &middot; Full system build &middot; CRM automation + handoff</div>
+              </div>
+              <div class="front-stats">
+                <div>
+                  <div class="front-stat-val">~1,000</div>
+                  <div class="front-stat-label">positive replies / month</div>
+                </div>
+                <div>
+                  <div class="front-stat-val">0</div>
+                  <div class="front-stat-label">block events at launch</div>
+                </div>
+              </div>
+              <div class="front-cta">
+                <span class="front-cta-label">See engagement</span>
+                <div class="front-cta-arrow">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flip-face back">
+            <div class="back-inner">
+              <div class="back-col-left">
+                <div class="back-col-label">// Situation</div>
+                <p class="back-situation">No outbound infrastructure in place. Leadership needed a complete sending system designed, built, and documented before go-to-market &mdash; with a team that could run it without the operator in the room.</p>
+                <div class="back-result-block">
+                  <div class="back-result-label">// Result</div>
+                  <div class="back-result-text">~1,000 qualified positive replies/month from a cold start. Zero block events at launch. Team handed off a running, documented system with automated deal creation in Pipedrive.</div>
+                </div>
+              </div>
+              <div class="back-col-mid">
+                <div class="back-col-label">// What we built</div>
+                <ul class="back-bullets">
+                  <li>1,000 Zapmail mailboxes across structured domain architecture, separated by motion, region, and rep assignment</li>
+                  <li>Full inbox fleet connected to Instantly with pacing rules, send limits, and warmup schedules calibrated at scale</li>
+                  <li>Positive reply detection, routing triggers, and automated deal creation directly in Pipedrive</li>
+                  <li>Documented system diagram &mdash; every domain, inbox, routing rule, and CRM handoff node</li>
+                  <li>Enforcement model: written send limits, escalation triggers, and rep onboarding checklist</li>
+                </ul>
+              </div>
+              <div class="back-col-right">
+                <div class="back-col-label">// Tools used</div>
+                <div class="tools-grid">
+                  <span class="tool-pill">Zapmail</span>
+                  <span class="tool-pill">Instantly</span>
+                  <span class="tool-pill">Pipedrive</span>
+                  <span class="tool-pill">Google Postmaster</span>
+                  <span class="tool-pill">Custom Domain Arch.</span>
+                </div>
+                <button class="back-close-btn" onclick="closeCard(event,this)">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Data-Driven Build + Integration -->
+      <div class="flip-wrap" onclick="toggleCard(this)">
+        <div class="flip-card">
+          <div class="flip-face front">
+            <div class="front-inner">
+              <div>
+                <div class="front-category">Data-Driven Build + Integration</div>
+                <div class="front-headline">Built outbound from scratch with proprietary educational data integrated directly into a custom CRM.</div>
+                <div class="front-context">EdTech &middot; Founder-led &middot; Data vendor management &middot; Custom CRM integration</div>
+              </div>
+              <div class="front-stats">
+                <div>
+                  <div class="front-stat-val">0&rarr;1</div>
+                  <div class="front-stat-label">complete outbound system</div>
+                </div>
+                <div>
+                  <div class="front-stat-val">100%</div>
+                  <div class="front-stat-label">founder-independent ops</div>
+                </div>
+              </div>
+              <div class="front-cta">
+                <span class="front-cta-label">See engagement</span>
+                <div class="front-cta-arrow">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flip-face back">
+            <div class="back-inner">
+              <div class="back-col-left">
+                <div class="back-col-label">// Situation</div>
+                <p class="back-situation">Founder needed outbound built from scratch, but the real complexity was data-first: targeting depended on proprietary educational datasets from external vendors that had to be structured and integrated before any sending could work at signal quality.</p>
+                <div class="back-result-block">
+                  <div class="back-result-label">// Result</div>
+                  <div class="back-result-text">A functioning system purpose-built for the EdTech vertical &mdash; data vendors managed, educational datasets flowing into a structured CRM, sending infrastructure scaled without founder involvement in daily operations.</div>
+                </div>
+              </div>
+              <div class="back-col-mid">
+                <div class="back-col-label">// What we built</div>
+                <ul class="back-bullets">
+                  <li>Full outbound sending infrastructure: domain setup, SPF/DKIM/DMARC, inbox warm-up, and sequencing logic</li>
+                  <li>Managed external educational data vendor relationships &mdash; defined requirements, owned ingestion quality standards</li>
+                  <li>Data pipeline: datasets normalized and mapped into custom CRM schema with deduplication and validation</li>
+                  <li>Outbound targeting driven by educational data signals, not generic firmographics</li>
+                  <li>CRM operating model within the existing custom CRM: deal stages, ownership rules, and documented handover protocol</li>
+                </ul>
+              </div>
+              <div class="back-col-right">
+                <div class="back-col-label">// Tools used</div>
+                <div class="tools-grid">
+                  <span class="tool-pill">Custom CRM (integrated)</span>
+                  <span class="tool-pill">Data Vendors</span>
+                  <span class="tool-pill">Custom Pipeline</span>
+                  <span class="tool-pill">Google Postmaster</span>
+                  <span class="tool-pill">Sequencing Platform</span>
+                </div>
+                <button class="back-close-btn" onclick="closeCard(event,this)">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Multi-Brand Migration + Optimization -->
+      <div class="flip-wrap" onclick="toggleCard(this)">
+        <div class="flip-card">
+          <div class="flip-face front">
+            <div class="front-inner">
+              <div>
+                <div class="front-category">Multi-Brand Migration + Optimization</div>
+                <div class="front-headline">Identified broken infrastructure at 1M emails/month. Migrated the stack. Reply rate doubled.</div>
+                <div class="front-context">Multi-brand B2B &middot; Global sending &middot; Silent infrastructure failure at scale</div>
+              </div>
+              <div class="front-stats">
+                <div>
+                  <div class="front-stat-val">2&times;</div>
+                  <div class="front-stat-label">reply rate post-migration</div>
+                </div>
+                <div>
+                  <div class="front-stat-val">1M/mo</div>
+                  <div class="front-stat-label">volume &middot; zero incidents</div>
+                </div>
+              </div>
+              <div class="front-cta">
+                <span class="front-cta-label">See engagement</span>
+                <div class="front-cta-arrow">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flip-face back">
+            <div class="back-inner">
+              <div class="back-col-left">
+                <div class="back-col-label">// Situation</div>
+                <p class="back-situation">Multi-brand operation sending 1M emails/month on silently degraded infrastructure. Shared domains across brands, no separation logic, reply rates declining &mdash; with no explanation. The sending was happening. The results weren't.</p>
+                <div class="back-result-block">
+                  <div class="back-result-label">// Result</div>
+                  <div class="back-result-text">Reply rate doubled. Positive reply rate doubled. Same volume, same copy, same data &mdash; infrastructure was the constraint. Migration completed without a single delivery incident.</div>
+                </div>
+              </div>
+              <div class="back-col-mid">
+                <div class="back-col-label">// What we found + fixed</div>
+                <ul class="back-bullets">
+                  <li>Shared sender identities across brands causing cross-brand reputation bleed at scale</li>
+                  <li>SPF/DKIM/DMARC mismatches across sending domains &mdash; auth inconsistencies compounding at 1M/month</li>
+                  <li>Sending platform creating deliverability friction &mdash; not optimized for this volume or architecture</li>
+                  <li>Migrated to Instantly with domain separation by brand, region, and sending motion</li>
+                  <li>Rebuilt auth records across all domains; post-migration monitoring cadence in place from day one</li>
+                </ul>
+              </div>
+              <div class="back-col-right">
+                <div class="back-col-label">// Tools used</div>
+                <div class="tools-grid">
+                  <span class="tool-pill">Instantly</span>
+                  <span class="tool-pill">Google Postmaster</span>
+                  <span class="tool-pill">DNS / Auth Rebuild</span>
+                  <span class="tool-pill">Seed Testing</span>
+                  <span class="tool-pill">Prior Platform (audited)</span>
+                </div>
+                <button class="back-close-btn" onclick="closeCard(event,this)">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- M&A Email Infrastructure Due Diligence -->
+      <div class="flip-wrap" onclick="toggleCard(this)">
+        <div class="flip-card">
+          <div class="flip-face front">
+            <div class="front-inner">
+              <div>
+                <div class="front-category">M&amp;A Email Infrastructure Due Diligence</div>
+                <div class="front-headline">Surfaced the email infrastructure liability before close &mdash; before it became the buyer's problem.</div>
+                <div class="front-context">M&amp;A firm &middot; Pre-close audit &middot; Deal team deliverable &middot; Liability register</div>
+              </div>
+              <div class="front-stats">
+                <div>
+                  <div class="front-stat-val">Pre-close</div>
+                  <div class="front-stat-label">risk identified + priced</div>
+                </div>
+                <div>
+                  <div class="front-stat-val">Full</div>
+                  <div class="front-stat-label">liability register + exec brief</div>
+                </div>
+              </div>
+              <div class="front-cta">
+                <span class="front-cta-label">See engagement</span>
+                <div class="front-cta-arrow">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flip-face back">
+            <div class="back-inner">
+              <div class="back-col-left">
+                <div class="back-col-label">// Situation</div>
+                <p class="back-situation">M&amp;A firm needed the target's email infrastructure assessed before close. Outbound was a core revenue driver for the target &mdash; but domain reputation, authentication health, and sending compliance are invisible in standard due diligence packages.</p>
+                <div class="back-result-block">
+                  <div class="back-result-label">// Result</div>
+                  <div class="back-result-text">Buyer entered close with a priced, documented picture of what they were inheriting. Infrastructure became a negotiation line item &mdash; not a post-close surprise with a 60&ndash;90 day remediation timeline attached.</div>
+                </div>
+              </div>
+              <div class="back-col-mid">
+                <div class="back-col-label">// What we surfaced</div>
+                <ul class="back-bullets">
+                  <li>Sender reputation already degraded on key domains &mdash; remediation cost and timeline quantified for the deal team</li>
+                  <li>Authentication misconfigurations creating compliance exposure across sending infrastructure</li>
+                  <li>Institutional knowledge concentrated in one person not staying post-close &mdash; no documentation existed</li>
+                  <li>Pipeline leakage already occurring: quantified % of outbound not reaching primary inbox, mapped to revenue impact</li>
+                  <li>Domain history with overlapping ownership &mdash; reputation risk from pre-acquisition sending patterns</li>
+                </ul>
+              </div>
+              <div class="back-col-right">
+                <div class="back-col-label">// Tools used</div>
+                <div class="tools-grid">
+                  <span class="tool-pill">Google Postmaster</span>
+                  <span class="tool-pill">Blacklist Monitor</span>
+                  <span class="tool-pill">DNS / Auth Audit</span>
+                  <span class="tool-pill">Seed Testing</span>
+                  <span class="tool-pill">Risk Register</span>
+                </div>
+                <button class="back-close-btn" onclick="closeCard(event,this)">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /results-stack -->
+
+    <div class="results-footer">
+      <p class="results-footer-note">All engagements are operator-delivered. <strong>No AI reports. No templated checklists.</strong> A direct read on the system &mdash; with a remediation plan the team can execute.</p>
+      <a href="#offers" class="results-footer-cta">See available services &rarr;</a>
+    </div>
+
+  </div>
+</section>
+
 <section class="principles-section" id="principles">
   <div class="container">
     <div class="principles-layout">
@@ -1470,6 +2144,19 @@
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// Results flip cards
+function toggleCard(el) {
+  document.querySelectorAll('.flip-wrap.flipped').forEach(c => {
+    if (c !== el) c.classList.remove('flipped');
+  });
+  el.classList.toggle('flipped');
+}
+
+function closeCard(e, btn) {
+  e.stopPropagation();
+  btn.closest('.flip-wrap').classList.remove('flipped');
+}
+
 // Close mobile nav on link click
 document.querySelectorAll('.nav-links a').forEach(a => {
   a.addEventListener('click', () => {
@@ -1478,4 +2165,4 @@ document.querySelectorAll('.nav-links a').forEach(a => {
 });
 </script>
 
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v67327c56f0bb4ef8b305cae61679db8f1769101564043" integrity="sha512-rdcWY47ByXd76cbCFzznIcEaCN71jqkWBBqlwhF1SY7KubdLKZiEGeP7AyieKZlGP9hbY/MhGrwXzJC/HulNyg==" data-cf-beacon='{"version":"2024.11.0","token":"15b516814e3e45c1bcc8fadc4dff0621","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v67327c56f0bb4ef8b305cae61679db8f1769101564043" integrity="sha512-rdcWY47ByXd76cbCFzznIcEaCN71jqkWBBqlwhF1SY7KubdLKZiEGeP7AyieKZlGP9hbY/MhGrwXzJC/HulNyg==" data-cf-beacon='{"version":"2024.11.0","token":"15b516814e3e45c1bcc8fadc4dff0621","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"15b516814e3e45c1bcc8fadc4dff0621","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
