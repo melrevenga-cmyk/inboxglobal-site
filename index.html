@@ -284,6 +284,10 @@
     background: var(--border);
   }
 
+  .problem-grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
   .problem-item {
     background: var(--bg);
     padding: 32px;
@@ -509,6 +513,99 @@
     color: #D946EF;
     background: rgba(217,70,239,0.07);
     border-color: rgba(217,70,239,0.28);
+  }
+
+  /* ─── M&A CALLOUT ─── */
+  .ma-callout-section {
+    padding: 80px 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .ma-callout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid rgba(217,70,239,0.18);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ma-callout::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #D946EF 0%, rgba(217,70,239,0.3) 100%);
+  }
+
+  .ma-callout-content {
+    background: var(--surface);
+    padding: 48px;
+  }
+
+  .ma-callout-heading {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+
+  .ma-callout-desc {
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--text-muted);
+    line-height: 1.75;
+    margin-bottom: 24px;
+  }
+
+  .ma-callout-price {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #D946EF;
+    letter-spacing: -0.02em;
+    margin-bottom: 28px;
+  }
+
+  .ma-callout-price span {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text-dim);
+    letter-spacing: 0;
+  }
+
+  .ma-callout-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .ma-callout-actions .btn-primary {
+    background: #D946EF;
+  }
+
+  .ma-callout-actions .btn-ghost {
+    border-color: rgba(217,70,239,0.3);
+  }
+
+  .ma-callout-actions .btn-ghost:hover {
+    color: #D946EF;
+    border-color: #D946EF;
+  }
+
+  .ma-callout-details {
+    background: var(--surface);
+    padding: 48px;
+  }
+
+  @media (max-width: 900px) {
+    .ma-callout { grid-template-columns: 1fr; }
   }
 
   /* ─── PRINCIPLES ─── */
@@ -938,6 +1035,25 @@
   }
 
   .cta-contact a:hover { color: #67E8F9; border-color: #67E8F9; }
+
+  .cta-ma-link {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-dim);
+    margin-top: 24px;
+  }
+
+  .cta-ma-link a {
+    color: #D946EF;
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(217,70,239,0.3);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .cta-ma-link a:hover { color: #E879F9; border-color: #E879F9; }
 
   /* ─── FOOTER ─── */
   footer {
@@ -1512,17 +1628,14 @@
 <section class="problem-strip">
   <div class="container">
     <div class="label" style="color: var(--red);">// What breaks first when you scale</div>
-    <div class="problem-grid">
+    <div class="problem-grid problem-grid-3">
       <div class="problem-item" data-num="01">
-        <p><strong>Deliverability treated as one-time setup.</strong> Not as an operating system that requires governance, enforcement, and ongoing monitoring.</p>
+        <p><strong>No one governs the system.</strong> Deliverability is treated as a one-time setup. Rules live in people's heads. When those people leave, the system degrades silently.</p>
       </div>
       <div class="problem-item" data-num="02">
-        <p><strong>Monitoring is inconsistent.</strong> Rules live in people's heads. When those people leave, the system degrades silently.</p>
+        <p><strong>Tool stacks change. Architecture doesn't.</strong> New tools inherit the same broken patterns at higher volume. Nobody audits how they connect.</p>
       </div>
       <div class="problem-item" data-num="03">
-        <p><strong>Tool stacks change.</strong> System architecture doesn't keep up. New tools inherit the same broken patterns at higher volume.</p>
-      </div>
-      <div class="problem-item" data-num="04">
         <p><strong>When blocks hit, teams scramble.</strong> You lose pipeline time, not just inbox placement. Recovery is expensive. Prevention is not.</p>
       </div>
     </div>
@@ -1537,7 +1650,7 @@
     <div class="offers-header">
       <div>
         <div class="label">// Entry points</div>
-        <h2 class="section-heading">Three ways<br>to start.</h2>
+        <h2 class="section-heading">Two ways<br>to start.</h2>
       </div>
       <p>All fixed-scope, fixed-price, and operator-delivered. No tool reports. No AI-generated summaries. Direct read on your system.</p>
     </div>
@@ -1582,10 +1695,10 @@
             <div class="offer-price">$4,500</div>
             <div class="offer-meta">Flat fee · 7&ndash;10 business days · USD</div>
             <p class="offer-desc">
-              Full system teardown and staged remediation plan with enforcement. Not just what's broken. How your risks connect,, what to fix first, and how to keep it stable as you scale.
+              Full system teardown and staged remediation plan with enforcement. Not just what's broken. How your risks connect, what to fix first, and how to keep it stable as you scale.
             </p>
             <div class="offer-actions">
-              <a href="https://buy.stripe.com/00wcN51JubKvbRH4mw3Je01" class="btn-primary">BUY NOW</a>
+              <a href="https://calendly.com/hello-inboxglobal/30min" class="btn-primary">BOOK A 15-MIN QUALIFIER</a>
               <a href="/audit" class="btn-ghost">See Deliverables</a>
             </div>
           </div>
@@ -1603,37 +1716,36 @@
           </div>
         </div>
       </div>
+  </div>
+</section>
 
-      <!-- M&A Due Diligence -->
-      <div class="offer-card offer-card-ma">
-        <div class="offer-card-inner">
-          <div>
-            <div class="offer-badge offer-badge-magenta">M&amp;A · Specialized</div>
-            <h3>Email Infrastructure<br>Due Diligence&#8482;</h3>
-            <div class="offer-price">$8,500</div>
-            <div class="offer-meta">Flat fee · Single entity · Multi-entity pricing available · 7&ndash;10 business days · USD</div>
-            <p class="offer-desc">A transaction-ready assessment of the email infrastructure you're acquiring. Know the liability before the deal closes, not after the system degrades your pipeline. Covers domain portfolio, authentication posture, reputation debt, CRM handoff integrity, and migration risk across likely post-close scenarios.</p>
-            <div class="offer-actions">
-              <a href="https://buy.stripe.com/6oU8wP1JubKvaND4mw3Je02" class="btn-primary">BUY NOW</a>
-              <a href="http://inboxglobal.io/ma-due-diligence" class="btn-ghost">See Full Scope</a>
-            </div>
-          </div>
-          <div>
-            <div class="offer-deliverables-label">// Deliverables</div>
-            <ul class="offer-deliverables">
-              <li>Domain portfolio review: full inventory including legacy, subdomain, and parked assets</li>
-              <li>Identity &amp; authentication posture assessed for migration readiness</li>
-              <li>Infrastructure liability register ranked by severity and remediation effort</li>
-              <li>Migration risk assessment: what breaks, in what sequence, under which conditions</li>
-              <li>CRM handoff &amp; suppression sync integrity reviewed for integration risk</li>
-              <li>Executive risk brief with red/yellow/green health rating for deal teams. Notion, web, or PDF</li>
-              <li>Integration sequencing plan framed against transaction timeline</li>
-              <li>Live review call with deal team, integration lead, or operating partner</li>
-            </ul>
-          </div>
+<hr class="section-divider">
+
+<!-- M&A CALLOUT -->
+<section class="ma-callout-section" id="ma">
+  <div class="container">
+    <div class="ma-callout">
+      <div class="ma-callout-content">
+        <div class="offer-badge offer-badge-magenta" style="margin-bottom:20px;">M&amp;A &middot; Specialized</div>
+        <h3 class="ma-callout-heading">Evaluating an acquisition?</h3>
+        <p class="ma-callout-desc">The target's email infrastructure doesn't show in the deck. Shared domains, auth failures, reputation debt — standard in due diligence, invisible until close. Our Email Infrastructure Due Diligence&#8482; gives your deal team a priced, documented picture of what you're inheriting before the wire clears.</p>
+        <div class="ma-callout-price">$8,500 <span>· Single entity · 7–10 business days</span></div>
+        <div class="ma-callout-actions">
+          <a href="https://calendly.com/hello-inboxglobal/30min" class="btn-primary">BOOK A SCOPING CALL</a>
+          <a href="http://inboxglobal.io/ma-due-diligence" class="btn-ghost">See Deliverables</a>
         </div>
       </div>
-
+      <div class="ma-callout-details">
+        <div class="offer-deliverables-label">// What your deal team gets</div>
+        <ul class="offer-deliverables">
+          <li>Domain portfolio review: full inventory including legacy, subdomain, and parked assets</li>
+          <li>Infrastructure liability register ranked by severity and remediation effort</li>
+          <li>Migration risk assessment: what breaks, in what sequence, under which conditions</li>
+          <li>Executive risk brief with red/yellow/green health rating for deal teams</li>
+          <li>Integration sequencing plan framed against transaction timeline</li>
+          <li>Live review call with deal team, integration lead, or operating partner</li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>
@@ -2116,18 +2228,14 @@
         <span class="cta-entry-name">PulseCheck™ · 5 days</span>
         <span class="cta-entry-action">BUY NOW</span>
       </a>
-      <a href="https://buy.stripe.com/00wcN51JubKvbRH4mw3Je01" class="cta-entry">
+      <a href="https://calendly.com/hello-inboxglobal/30min" class="cta-entry">
         <span class="cta-entry-price">$4,500</span>
         <span class="cta-entry-name">System Integrity Audit™ · 7–10 days</span>
-        <span class="cta-entry-action">BUY NOW</span>
-      </a>
-      <a href="https://buy.stripe.com/6oU8wP1JubKvaND4mw3Je02" class="cta-entry">
-        <span class="cta-entry-price">$8,500</span>
-        <span class="cta-entry-name">Due Diligence&#8482; · M&amp;A · 7–10 days</span>
-        <span class="cta-entry-action">BUY NOW</span>
+        <span class="cta-entry-action">BOOK A 15-MIN QUALIFIER</span>
       </a>
     </div>
-    <div class="cta-contact">Not sure which one? <a href="/cdn-cgi/l/email-protection#59313c3535361930373b36213e35363b3835773036">Email us</a> or book a 15-min qualifier.</div>
+    <div class="cta-ma-link">Evaluating an acquisition? <a href="#ma">See M&amp;A Due Diligence →</a></div>
+    <div class="cta-contact">Not sure which one? <a href="/cdn-cgi/l/email-protection#59313c3535361930373b36213e35363b3835773036">Email us</a> or <a href="https://calendly.com/hello-inboxglobal/30min">book a 15-min qualifier</a>.</div>
   </div>
 </section>
 
