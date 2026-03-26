@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Vesta BD Playbook — Central America</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0F1117;
+    --sidebar: #151821;
+    --card: #1C2030;
+    --card2: #212638;
+    --border: #2A3045;
+    --border2: #353D58;
+    --text: #E2E8F4;
+    --muted: #7A85A3;
+    --accent: #C8A96E;
+    --accent2: #E8C98E;
+    --green: #4ADE80;
+    --blue: #60A5FA;
+    --red: #F87171;
+    --yellow: #FCD34D;
+    --purple: #A78BFA;
+    --nav-w: 220px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; display: flex; min-height: 100vh; }
+
+  /* SIDEBAR */
+  .sidebar {
+    width: var(--nav-w); min-height: 100vh; background: var(--sidebar);
+    border-right: 1px solid var(--border); padding: 28px 0; display: flex;
+    flex-direction: column; position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto;
+  }
+  .sidebar-logo {
+    padding: 0 20px 24px; border-bottom: 1px solid var(--border); margin-bottom: 16px;
+  }
+  .sidebar-logo .company { font-family: 'Fraunces', serif; font-size: 15px; font-weight: 700; color: var(--accent); letter-spacing: 0.02em; }
+  .sidebar-logo .doc-title { font-size: 11px; color: var(--muted); margin-top: 3px; letter-spacing: 0.04em; text-transform: uppercase; }
+  .nav-section { padding: 0 12px 8px; }
+  .nav-label { font-size: 10px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; padding: 0 8px; margin-bottom: 4px; }
+  .nav-item {
+    display: flex; align-items: center; gap: 9px; padding: 8px 10px; border-radius: 6px;
+    cursor: pointer; color: var(--muted); font-size: 13px; font-weight: 500; transition: all .15s; border: none; background: none; width: 100%; text-align: left;
+  }
+  .nav-item:hover { background: var(--card); color: var(--text); }
+  .nav-item.active { background: var(--card); color: var(--accent); }
+  .nav-item .icon { font-size: 15px; width: 18px; text-align: center; }
+  .nav-divider { border: none; border-top: 1px solid var(--border); margin: 12px 12px; }
+  .nav-meta { padding: 12px 20px 0; }
+  .nav-meta p { font-size: 11px; color: var(--muted); line-height: 1.6; }
+
+  /* MAIN */
+  .main { margin-left: var(--nav-w); flex: 1; min-height: 100vh; }
+  .section { display: none; padding: 48px 56px; max-width: 920px; }
+  .section.active { display: block; }
+
+  /* PAGE HEADER */
+  .page-header { margin-bottom: 40px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
+  .page-header .eyebrow { font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; font-weight: 600; }
+  .page-header h1 { font-family: 'Fraunces', serif; font-size: 30px; font-weight: 700; color: var(--text); line-height: 1.2; margin-bottom: 10px; }
+  .page-header p { color: var(--muted); font-size: 14px; line-height: 1.7; max-width: 600px; }
+
+  /* BLOCKS */
+  h2 { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; color: var(--text); margin: 36px 0 14px; }
+  h3 { font-size: 13px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; margin: 28px 0 10px; }
+  p { color: var(--muted); line-height: 1.75; margin-bottom: 12px; }
+  strong { color: var(--text); font-weight: 600; }
+
+  /* CARDS GRID */
+  .card-grid { display: grid; gap: 14px; }
+  .card-grid.two { grid-template-columns: 1fr 1fr; }
+  .card-grid.three { grid-template-columns: 1fr 1fr 1fr; }
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+    padding: 20px; transition: border-color .15s;
+  }
+  .card:hover { border-color: var(--border2); }
+  .card .card-label { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+  .card .card-title { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+  .card .card-body { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* CALLOUT */
+  .callout {
+    background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--accent);
+    border-radius: 8px; padding: 16px 18px; margin: 20px 0; font-size: 13px; color: var(--muted); line-height: 1.7;
+  }
+  .callout strong { color: var(--accent); }
+  .callout.blue { border-left-color: var(--blue); }
+  .callout.blue strong { color: var(--blue); }
+  .callout.green { border-left-color: var(--green); }
+  .callout.green strong { color: var(--green); }
+
+  /* COMPARISON TABLE */
+  .compare-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
+  .compare-table th { background: var(--card2); color: var(--accent); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border2); }
+  .compare-table th:first-child { border-radius: 8px 0 0 0; }
+  .compare-table th:last-child { border-radius: 0 8px 0 0; }
+  .compare-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--muted); vertical-align: top; line-height: 1.6; }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table td.label { color: var(--text); font-weight: 600; font-size: 12px; white-space: nowrap; }
+  .compare-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* TAG / BADGE */
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; letter-spacing: 0.03em; }
+  .tag.green { background: rgba(74,222,128,0.12); color: var(--green); }
+  .tag.yellow { background: rgba(252,211,77,0.12); color: var(--yellow); }
+  .tag.blue { background: rgba(96,165,250,0.12); color: var(--blue); }
+  .tag.red { background: rgba(248,113,113,0.12); color: var(--red); }
+  .tag.purple { background: rgba(167,139,250,0.12); color: var(--purple); }
+  .tag.amber { background: rgba(200,169,110,0.15); color: var(--accent); }
+
+  /* SIGNAL LIST */
+  .signal-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin: 14px 0; }
+  .signal-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .signal-list li .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); margin-top: 7px; flex-shrink: 0; }
+  .signal-list li .dot.green { background: var(--green); }
+  .signal-list li .dot.red { background: var(--red); }
+  .signal-list li .dot.blue { background: var(--blue); }
+
+  /* STEP */
+  .steps { display: flex; flex-direction: column; gap: 0; margin: 16px 0; }
+  .step { display: flex; gap: 20px; padding-bottom: 28px; position: relative; }
+  .step:last-child { padding-bottom: 0; }
+  .step::before { content: ''; position: absolute; left: 16px; top: 36px; bottom: 0; width: 1px; background: var(--border); }
+  .step:last-child::before { display: none; }
+  .step-num { width: 32px; height: 32px; border-radius: 50%; background: var(--card); border: 1px solid var(--border2); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--accent); flex-shrink: 0; font-family: 'JetBrains Mono', monospace; }
+  .step-body { flex: 1; padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--text); margin-bottom: 6px; font-size: 14px; }
+  .step-body p { font-size: 13px; margin-bottom: 8px; }
+
+  /* CODE / FILTER BLOCK */
+  .filter-block {
+    background: var(--sidebar); border: 1px solid var(--border); border-radius: 8px;
+    padding: 14px 16px; font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    color: var(--text); margin: 10px 0; line-height: 1.8;
+  }
+  .filter-block .k { color: var(--muted); }
+  .filter-block .v { color: var(--accent2); }
+  .filter-block .c { color: var(--green); }
+
+
+  /* ICP filter blocks (same as RR but scoped) */
+  .filter-block-icp {
+    background: var(--sidebar); border: 1px solid var(--border); border-radius: 8px;
+    padding: 14px 16px; font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    color: var(--text); margin: 10px 0 18px; line-height: 1.9; white-space: pre;
+  }
+  .filter-block-icp .k { color: var(--muted); }
+  .filter-block-icp .v { color: var(--accent2); }
+  .filter-block-icp .c { color: var(--green); }
+  .mono-inline { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent2); }
+
+  /* TRACKER */
+  .tracker-controls { display: flex; gap: 10px; margin-bottom: 18px; align-items: center; flex-wrap: wrap; }
+  .tracker-controls select, .tracker-controls input {
+    background: var(--card); border: 1px solid var(--border); border-radius: 6px;
+    color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px;
+    padding: 7px 12px; outline: none;
+  }
+  .tracker-controls select:focus, .tracker-controls input:focus { border-color: var(--accent); }
+  .tracker-controls .add-btn {
+    margin-left: auto; background: var(--accent); color: #0F1117; border: none;
+    border-radius: 6px; padding: 8px 16px; font-size: 13px; font-weight: 600;
+    cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: background .15s;
+  }
+  .tracker-controls .add-btn:hover { background: var(--accent2); }
+  .tracker-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; }
+  .tracker { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 900px; }
+  .tracker thead th {
+    background: var(--card2); color: var(--muted); font-size: 11px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.06em; padding: 10px 12px; text-align: left;
+    white-space: nowrap; border-bottom: 1px solid var(--border2);
+  }
+  .tracker tbody tr { border-bottom: 1px solid var(--border); transition: background .1s; }
+  .tracker tbody tr:last-child { border-bottom: none; }
+  .tracker tbody tr:hover { background: rgba(255,255,255,0.02); }
+  .tracker td { padding: 10px 12px; color: var(--muted); vertical-align: middle; }
+  .tracker td.company-cell { color: var(--text); font-weight: 600; }
+  .tracker td.mono { font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+  .stage-select {
+    background: transparent; border: 1px solid var(--border); border-radius: 5px;
+    color: var(--text); font-size: 12px; padding: 4px 8px; font-family: 'Plus Jakarta Sans', sans-serif;
+    cursor: pointer; outline: none;
+  }
+  .stage-select:focus { border-color: var(--accent); }
+  .notes-input {
+    background: transparent; border: none; color: var(--muted); font-size: 12px;
+    font-family: 'Plus Jakarta Sans', sans-serif; width: 100%; outline: none;
+    border-bottom: 1px solid transparent; padding: 2px 0;
+  }
+  .notes-input:focus { border-bottom-color: var(--border2); }
+  .delete-btn { background: none; border: none; cursor: pointer; color: var(--border2); font-size: 16px; padding: 0 4px; transition: color .15s; }
+  .delete-btn:hover { color: var(--red); }
+  .tracker-stats { display: flex; gap: 16px; margin-bottom: 16px; }
+  .stat { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; flex: 1; }
+  .stat .stat-num { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 700; color: var(--text); }
+  .stat .stat-label { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  /* PERSONA BLOCK */
+  .persona { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 22px; margin-bottom: 14px; }
+  .persona-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .persona-icon { width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+  .persona-header h3 { margin: 0; font-size: 14px; font-family: 'Fraunces', serif; color: var(--text); }
+  .persona-header .persona-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .persona-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .persona-section h4 { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 8px; font-weight: 600; }
+  .persona-section ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .persona-section ul li { font-size: 12.5px; color: var(--muted); line-height: 1.5; padding-left: 12px; position: relative; }
+  .persona-section ul li::before { content: '–'; position: absolute; left: 0; color: var(--border2); }
+
+  /* WORKFLOW DIAGRAM */
+  .flow { display: flex; align-items: center; gap: 6px; margin: 20px 0; flex-wrap: wrap; }
+  .flow-node { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 8px 14px; font-size: 12px; font-weight: 600; color: var(--text); white-space: nowrap; }
+  .flow-node.highlight { border-color: var(--accent); color: var(--accent); }
+  .flow-arrow { color: var(--border2); font-size: 14px; }
+
+  /* PASSWORD GATE */
+  .gate {
+    position: fixed; inset: 0; background: var(--bg); z-index: 9999;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .gate-box {
+    width: 320px; text-align: center;
+  }
+  .gate-logo { font-family: 'Fraunces', serif; font-size: 13px; color: var(--accent); letter-spacing: 0.06em; margin-bottom: 32px; opacity: 0.7; }
+  .gate-title { font-family: 'Fraunces', serif; font-size: 22px; color: var(--text); margin-bottom: 6px; }
+  .gate-sub { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+  .gate-input {
+    width: 100%; background: var(--card); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text); font-family: 'JetBrains Mono', monospace;
+    font-size: 14px; padding: 12px 16px; outline: none; text-align: center;
+    letter-spacing: 0.12em; transition: border-color .15s; margin-bottom: 12px;
+  }
+  .gate-input:focus { border-color: var(--accent); }
+  .gate-input.error { border-color: var(--red); animation: shake .3s; }
+  .gate-btn {
+    width: 100%; background: var(--accent); color: #0F1117; border: none;
+    border-radius: 8px; padding: 12px; font-size: 13px; font-weight: 700;
+    font-family: 'Plus Jakarta Sans', sans-serif; cursor: pointer; transition: background .15s;
+  }
+  .gate-btn:hover { background: var(--accent2); }
+  .gate-error { font-size: 12px; color: var(--red); margin-top: 8px; height: 16px; }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+
+  /* INBOXGLOBAL CREDIT */
+  .ig-credit {
+    position: fixed; bottom: 16px; right: 20px;
+    font-size: 11px; color: var(--border2); letter-spacing: 0.04em;
+    z-index: 100; pointer-events: none;
+  }
+
+  @media (max-width: 768px) {
+    :root { --nav-w: 0px; }
+    .sidebar { display: none; }
+    .main { margin-left: 0; }
+    .section { padding: 24px 20px; }
+    .card-grid.two, .card-grid.three { grid-template-columns: 1fr; }
+    .persona-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="gate" id="gate">
+  <div class="gate-box">
+    <div class="gate-logo">by InboxGlobal</div>
+    <div class="gate-title">Vesta BD Playbook</div>
+    <div class="gate-sub">Central America · March 2026</div>
+    <input class="gate-input" id="gateInput" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')checkPass()" autofocus />
+    <button class="gate-btn" onclick="checkPass()">Access playbook</button>
+    <div class="gate-error" id="gateError"></div>
+  </div>
+</div>
+
+<div class="ig-credit">by InboxGlobal</div>
+
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <div class="company">Vesta Software Group</div>
+    <div class="doc-title">BD Playbook · Central America</div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Sections</div>
+    <button class="nav-item active" onclick="show('icp', this)">
+      <span class="icon">◎</span> ICP Profile
+    </button>
+    <button class="nav-item" onclick="show('rocketreach', this)">
+      <span class="icon">⚡</span> RocketReach Workflow
+    </button>
+    <button class="nav-item" onclick="show('tracker', this)">
+      <span class="icon">⊞</span> Outbound Tracker
+    </button>
+  </div>
+  <hr class="nav-divider">
+  <div class="nav-meta">
+    <p>Based on examples:<br>CuboPago (SV) · 3Tech (PA)</p>
+    <p style="margin-top:8px;">March 2026</p>
+  </div>
+</nav>
+
+<main class="main">
+
+  <!-- ═══════════════════ ICP ═══════════════════ -->
+  <section id="icp" class="section active">
+    <div class="page-header">
+      <div class="eyebrow">Section 1 of 3</div>
+      <h1>Ideal Customer Profile</h1>
+      <p>Who Vesta is looking for in Central America — and what makes them move. Based on the two examples and prior LatAm acquisitions.</p>
+    </div>
+
+    <div class="callout">
+      <strong>The two examples are different plays.</strong> 3Tech Panama = Tier 1 acquisition target. CuboPago = investment or partnership conversation, not yet acquisition-ready. Understanding which profile is which saves a lot of outreach cycles.
+    </div>
+
+    <h2>Company Profiles Side by Side</h2>
+    <table class="compare-table">
+      <thead><tr><th>Signal</th><th>CuboPago (El Salvador)</th><th>3Tech Panama</th></tr></thead>
+      <tbody>
+        <tr><td class="label">Type</td><td>Fintech POS / payments infra</td><td>IT services + proprietary vertical software</td></tr>
+        <tr><td class="label">Age</td><td>Growth-stage, multi-country</td><td>25+ years, established</td></tr>
+        <tr><td class="label">Own products</td><td>POS app, payment links, QR</td><td>STEPS (BPM), eCarCheck (ATTT), MyPay, Call Center</td></tr>
+        <tr><td class="label">Switching cost</td><td><span class="tag yellow">Medium</span></td><td><span class="tag green">Very high — regulatory homologation</span></td></tr>
+        <tr><td class="label">Owner posture</td><td>Growth mode. No exit thinking.</td><td>Succession-aware. Classic CSI target.</td></tr>
+        <tr><td class="label">Vesta fit</td><td><span class="tag blue">Invest / partner</span></td><td><span class="tag green">Acquisition — prioritize</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2>Acquisition Target Characteristics</h2>
+    <div class="card-grid two">
+      <div class="card">
+        <div class="card-label" style="color:var(--green)">✓ Strong signals</div>
+        <ul class="signal-list">
+          <li><span class="dot green"></span>Proprietary vertical software (not generic SaaS, not reseller)</li>
+          <li><span class="dot green"></span>Mission-critical: regulatory, payroll, compliance, workflow-embedded</li>
+          <li><span class="dot green"></span>Recurring revenue: maintenance contracts, licensing, support</li>
+          <li><span class="dot green"></span>10–30 years in market, surviving multiple economic cycles</li>
+          <li><span class="dot green"></span>5–150 employees, founder-owned, clean cap table</li>
+          <li><span class="dot green"></span>Government or enterprise clients</li>
+          <li><span class="dot green"></span>Microsoft / Cisco / Oracle / AWS partner for 10+ years</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-label" style="color:var(--red)">✗ Disqualifiers</div>
+        <ul class="signal-list">
+          <li><span class="dot red"></span>No proprietary IP — just services or consulting</li>
+          <li><span class="dot red"></span>VC-backed or prior PE involvement</li>
+          <li><span class="dot red"></span>Primary product is a tool they resell (VAR without own IP)</li>
+          <li><span class="dot red"></span>Under 10 employees (too person-dependent)</li>
+          <li><span class="dot red"></span>Growth-stage, still finding product-market fit</li>
+          <li><span class="dot red"></span>B2C focus</li>
+          <li><span class="dot red"></span>Founded after 2015</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>Decision Maker Psychographic</h2>
+    <p>This is the founder or controlling shareholder. Not a hired CEO. The person who built it over 15–25 years.</p>
+
+    <div class="persona">
+      <div class="persona-header">
+        <div class="persona-icon" style="background:rgba(200,169,110,0.12)">🏗</div>
+        <div>
+          <h3>The Founder-Operator</h3>
+          <div class="persona-sub">50s–60s · Technically fluent · Built first version themselves · Spanish-dominant</div>
+        </div>
+      </div>
+      <div class="persona-grid">
+        <div class="persona-section">
+          <h4>What they care about</h4>
+          <ul>
+            <li>Legacy over liquidity — wants the company to survive, not just to get paid</li>
+            <li>Employees they've worked with for 10–15 years</li>
+            <li>Client relationships they've built personally (especially gov/enterprise)</li>
+            <li>Staying relevant post-transaction — not being sidelined</li>
+          </ul>
+        </div>
+        <div class="persona-section">
+          <h4>Trigger moments</h4>
+          <ul>
+            <li>Approaching 60 with no succession plan</li>
+            <li>Key technical person just left — realized how fragile the knowledge base is</li>
+            <li>Larger competitor entered their vertical</li>
+            <li>A peer in their network just sold and it went well</li>
+            <li>Health or family event that changes priorities</li>
+          </ul>
+        </div>
+        <div class="persona-section">
+          <h4>Vesta's strongest cards</h4>
+          <ul>
+            <li>Buy-and-hold, never sold a company — exact opposite of PE</li>
+            <li>Founder stays, runs the business post-acquisition</li>
+            <li>12 acquisitions already in LatAm — social proof in their region</li>
+            <li>No pressure to grow for exit — patience to invest in the business</li>
+          </ul>
+        </div>
+        <div class="persona-section">
+          <h4>What shuts them down immediately</h4>
+          <ul>
+            <li>Generic "we acquire companies in your space" cold email</li>
+            <li>English-first contact when Spanish-dominant</li>
+            <li>Leading with multiples or valuation early</li>
+            <li>Anyone who feels like a flip buyer</li>
+            <li>Outreach that shows you didn't look at the product</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <h2>Geography Tier Map</h2>
+    <table class="compare-table">
+      <thead><tr><th>Country</th><th>Priority</th><th>Why</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td class="label">Panama</td><td><span class="tag green">Tier 1</span></td><td>Established software ecosystem, govt procurement active, Vesta has precedent</td><td>Small market — warm intros critical</td></tr>
+        <tr><td class="label">Costa Rica</td><td><span class="tag green">Tier 1</span></td><td>CAMTIC directory, mature tech sector, English-bilingual founders common</td><td>Most connected to US market</td></tr>
+        <tr><td class="label">Guatemala</td><td><span class="tag blue">Tier 2</span></td><td>AGEXPORT tech directory, growing vertical software base</td><td>Spanish-dominant, relationship-driven</td></tr>
+        <tr><td class="label">El Salvador</td><td><span class="tag blue">Tier 2</span></td><td>Smaller market, some fintech/payments density (see CuboPago)</td><td>Government procurement: COMPRASAL</td></tr>
+        <tr><td class="label">Honduras / Nicaragua</td><td><span class="tag yellow">Tier 3</span></td><td>Less developed software market, fewer established ISVs</td><td>Long-term sourcing, not immediate</td></tr>
+      </tbody>
+    </table>
+    <h2>Acquisition Signals</h2>
+    <p>These are the observable events that indicate a founder is approaching a transition moment — even if they haven't said it. Monitor these per target, not just at first research.</p>
+
+    <h3>High-priority signals</h3>
+    <div class="card-grid two">
+      <div class="card">
+        <div class="card-label" style="color:var(--accent)">Act fast</div>
+        <ul class="signal-list">
+          <li><span class="dot" style="background:var(--red)"></span><strong>Founder hires a GM or COO for the first time.</strong> They're creating distance from day-to-day. Transition thinking has started.</li>
+          <li><span class="dot" style="background:var(--red)"></span><strong>Key technical co-founder or CTO leaves.</strong> The institutional knowledge is gone. Fragility is now visible to the founder personally.</li>
+          <li><span class="dot" style="background:var(--red)"></span><strong>Competitor from outside the region enters their vertical.</strong> A well-funded entrant threatening their core market accelerates urgency.</li>
+          <li><span class="dot" style="background:var(--red)"></span><strong>Founder posts about "legacy," "next chapter," or milestone anniversaries.</strong> Transition is on their mind. Receptive window is open.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-label" style="color:var(--yellow)">Watch and warm</div>
+        <ul class="signal-list">
+          <li><span class="dot" style="background:var(--yellow)"></span><strong>Long-tenure employee promoted to Director or VP.</strong> Testing internal succession — the external option is also being considered.</li>
+          <li><span class="dot" style="background:var(--yellow)"></span><strong>First-ever sales or BD job posting.</strong> Trying to grow but hitting a ceiling. They need capital or a network they don't have.</li>
+          <li><span class="dot" style="background:var(--yellow)"></span><strong>Founder LinkedIn dormant for years, then reactivates.</strong> Posting about the business or their journey — often correlates with transition thinking.</li>
+          <li><span class="dot" style="background:var(--yellow)"></span><strong>Speaking at a local tech association event</strong> (CAMTIC, ANTTI, AGEXPORT). Seeking visibility. Open to conversations they wouldn't take cold.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Background signals — validate fit</h3>
+    <table class="compare-table">
+      <thead><tr><th>Signal</th><th>Where to find it</th><th>What it means</th></tr></thead>
+      <tbody>
+        <tr><td class="label">New government contract award</td><td>PanamaCompra, COMPRASAL, SICOP, Guatecompras</td><td>Still winning. Relevant. Not in decline.</td></tr>
+        <tr><td class="label">Microsoft / AWS partner listing is current year</td><td>Partner directories</td><td>Actively maintaining relationships. Not winding down.</td></tr>
+        <tr><td class="label">New product page or major site update</td><td>Wayback Machine diff on their domain</td><td>Still investing in the product. Not in maintenance mode.</td></tr>
+        <tr><td class="label">3+ developer roles posted simultaneously</td><td>LinkedIn Jobs, Indeed local</td><td>Scaling but probably undercapitalized. Capital need is an entry point.</td></tr>
+        <tr><td class="label">Founder age 55+, company 15+ years old</td><td>LinkedIn profile + company founding date</td><td>Statistically most likely succession window in the next 3-7 years.</td></tr>
+        <tr><td class="label">No "team" or "leadership" page on website</td><td>Their website</td><td>Founder-dependent, no visible succession structure. High urgency once a trigger hits.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>How to monitor without manual effort</h3>
+    <div class="card-grid three">
+      <div class="card">
+        <div class="card-label" style="color:var(--blue)">LinkedIn</div>
+        <div class="card-body">Follow the founder. Turn on post notifications for Tier 1 targets. Check company page quarterly for new job postings and employee title changes.</div>
+      </div>
+      <div class="card">
+        <div class="card-label" style="color:var(--blue)">Google Alerts</div>
+        <div class="card-body">Set alerts for the company name and founder name. Catches press mentions, contract awards, speaking engagements — in Spanish and English.</div>
+      </div>
+      <div class="card">
+        <div class="card-label" style="color:var(--blue)">Procurement DBs</div>
+        <div class="card-body">Check quarterly. A company winning new government contracts is healthy. Silence for 12+ months is worth flagging — especially for targets with heavy public sector exposure.</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Timing:</strong> The goal is to be in conversation before the trigger hits, not after. A founder who just lost their CTO is already under pressure — a cold outreach in that moment lands badly. A founder who gets a warm, specific first contact 6 months earlier will remember you when the moment comes.
+    </div>
+
+
+    <h2>How to Find Companies Like 3Tech</h2>
+    <p>Standard databases miss a large share of these targets. The best ones have thin English-language digital footprints and don't show up in Apollo or RocketReach searches. Use four sources in parallel, then enrich with RocketReach.</p>
+
+    <h3>Layer 1 — Partner directories</h3>
+    <p>Any software company in Central America that has been a Microsoft, Cisco, Oracle, or AWS partner for 10+ years is worth knowing. ISV status means they've built on the stack — not just reselling it.</p>
+    <table class="compare-table">
+      <thead><tr><th>Directory</th><th>What it tells you</th><th>How to search</th></tr></thead>
+      <tbody>
+        <tr><td class="label">Microsoft Partner Network</td><td>ISV status = built software on MS stack. Solution areas reveal vertical focus.</td><td><span class="mono-inline">appsource.microsoft.com</span> → Partners → filter by country</td></tr>
+        <tr><td class="label">AWS Partner Directory</td><td>ISV partners in CA building on AWS. Often have SaaS products.</td><td><span class="mono-inline">partners.amazonaws.com</span> → Software + country</td></tr>
+        <tr><td class="label">Oracle Partner Network</td><td>Strong signal for financial and ERP-adjacent vertical software in LatAm.</td><td><span class="mono-inline">partnernetwork.oracle.com</span> → filter region</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Layer 2 — Government procurement databases</h3>
+    <p>3Tech won their eCarCheck contract through the ATTT — that's a public procurement record. A company winning recurring government software contracts is almost always bootstrapped, mission-critical, and founder-owned. Search for software <em>vendors</em>, not products.</p>
+    <div class="filter-block-icp">
+<span class="k">Panama:</span>      <span class="v">panamacompra.gob.pa</span>   → search "software" → filter by vendor
+<span class="k">El Salvador:</span> <span class="v">comprasal.sv</span>
+<span class="k">Costa Rica:</span>  <span class="v">sicop.go.cr</span>
+<span class="k">Guatemala:</span>   <span class="v">guatecompras.gt</span>
+<span class="k">Honduras:</span>    <span class="v">honducompras.gob.hn</span>
+    </div>
+
+    <h3>Layer 3 — Local tech association directories</h3>
+    <p>Companies that have been members for 10+ years are established and founder-owned. Newer members are growth-stage startups. Also worth contacting association staff directly — they know who the established players are in each vertical.</p>
+    <div class="card-grid two">
+      <div class="card">
+        <div class="card-label" style="color:var(--blue)">Costa Rica / Guatemala</div>
+        <ul class="signal-list">
+          <li><span class="dot blue"></span><strong>CAMTIC</strong> — Cámara de Tecnologías de Información y Comunicación — <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent2)">camtic.org</span></li>
+          <li><span class="dot blue"></span><strong>AGEXPORT Tech Committee</strong> — software services directory — Guatemala</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-label" style="color:var(--blue)">Panama / El Salvador</div>
+        <ul class="signal-list">
+          <li><span class="dot blue"></span><strong>ANTTI</strong> — Asociación Nacional de Telecomunicaciones y TI — Panama</li>
+          <li><span class="dot blue"></span><strong>CONACYT / tech councils</strong> — El Salvador</li>
+          <li><span class="dot blue"></span><strong>APESOFT</strong> — has Central America chapter influence</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Layer 4 — Spanish-language Google search</h3>
+    <p>Most of the best targets don't appear in English-language databases. These searches surface companies with 20-year-old websites, local SEO, and zero international exposure — targets Vesta's competition hasn't found yet.</p>
+    <div class="filter-block-icp">
+"software para <span class="v">[sector]</span> en <span class="v">[país]</span>"      → e.g. "software para hospitales en Guatemala"
+"sistema de <span class="v">[proceso]</span> <span class="v">[país]</span>"           → e.g. "sistema de nómina Panama"
+"solución para <span class="v">[vertical]</span> centroamérica"  → fleet, judicial, healthcare, education
+<span class="k">// Also:</span> Google Images for sector-specific software screenshots
+<span class="k">// Surface companies that rank visually but never in text results</span>
+    </div>
+
+    <h3>Layer 5 — Apollo / RocketReach filters for this ICP</h3>
+    <p>Standard filters won't find 3Tech-type companies cleanly. These specific settings narrow the field significantly.</p>
+    <div class="filter-block-icp">
+<span class="k">Industry:</span>      <span class="v">Software + B2B Services + IT Services</span>  <span class="c">// include all three — targets cross-categorize</span>
+<span class="k">Employees:</span>     <span class="v">10–200</span>
+<span class="k">Founded:</span>       <span class="v">before 2012</span>                              <span class="c">// 12+ years in market</span>
+<span class="k">Geography:</span>     <span class="v">El Salvador, Panama, Guatemala, Costa Rica, Honduras</span>
+<span class="k">Keywords:</span>      <span class="v">"plataforma", "sistema", "desarrollo de software", "soluciones"</span>
+<span class="k">Title filter:</span>  <span class="v">Fundador, Co-Fundador, Director General, Gerente General, CEO</span>
+
+<span class="c">// Exclude:</span>
+<span class="k">✗</span> VC-backed companies
+<span class="k">✗</span> Primary descriptor is "consultoría" with no product page
+<span class="k">✗</span> Product page is just a list of vendor tools they resell
+    </div>
+
+    <h2>Outreach That Works in This Market</h2>
+    <p>Central America is a small market. The founder of 3Tech Panama probably knows 10 people who know you. Volume-based cold outreach doesn't work here — a bad first impression spreads fast.</p>
+
+    <div class="card-grid two">
+      <div class="card">
+        <div class="card-label" style="color:var(--green)">What works</div>
+        <ul class="signal-list">
+          <li><span class="dot green"></span><strong>Warm introductions.</strong> A referral from a shared contact — local law firm, Microsoft account manager, chamber of commerce officer — is worth 10 cold emails. The market is small enough that everyone knows everyone.</li>
+          <li><span class="dot green"></span><strong>Partner channel intros.</strong> Microsoft, Cisco, AWS, Oracle local account managers know all their ISV partners personally. The highest-quality first contact you can get.</li>
+          <li><span class="dot green"></span><strong>Recognize the work first.</strong> Reference a specific product, a client vertical they serve, or an award they won. Show you actually looked. Don't open with "we acquire software companies."</li>
+          <li><span class="dot green"></span><strong>Spanish-first contact.</strong> Even if they respond in English, writing first in Spanish signals respect. For a founder who's spent 25 years building in Panama, that matters.</li>
+          <li><span class="dot green"></span><strong>LinkedIn InMail (targeted).</strong> Less saturated than North American markets. A thoughtful InMail that shows you read their profile has a noticeably higher response rate here.</li>
+          <li><span class="dot green"></span><strong>No acquisition talk in message 1.</strong> Open with curiosity. "How do you see the next 5 years for STEPS?" — not "we'd love to explore an acquisition." Let them bring up succession when ready.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-label" style="color:var(--red)">What doesn't work</div>
+        <ul class="signal-list">
+          <li><span class="dot red"></span>Generic templates: "we're interested in acquiring companies in your space" — they've seen it.</li>
+          <li><span class="dot red"></span>English-only outreach when the founder's market and team are Spanish-speaking.</li>
+          <li><span class="dot red"></span>Leading with valuation or multiples before trust is established.</li>
+          <li><span class="dot red"></span>Volume-based cold email campaigns. A bad rep spreads fast in a small market.</li>
+          <li><span class="dot red"></span>Any signal that you plan to restructure, rebrand, or replace leadership.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>First message framework</h3>
+    <div class="callout green">
+      <strong>Line 1 — Specific observation.</strong> About their product, a client vertical they serve, or something they built. Not flattery — an informed observation that shows you actually looked.<br><br>
+      <strong>Line 2 — One sentence on Vesta.</strong> "Adquirimos empresas de software vertical en LatAm de forma permanente — nunca hemos vendido una empresa."<br><br>
+      <strong>The ask.</strong> Not "are you interested in selling." Instead: "¿Tendría sentido una conversación de 20 minutos? Sin agenda más allá de entender mejor el negocio."<br><br>
+      <strong>Length: under 100 words.</strong> Founders in this market don't read long emails from strangers.
+    </div>
+
+  </section>
+
+  <!-- ═══════════════════ ROCKETREACH ═══════════════════ -->
+  <section id="rocketreach" class="section">
+    <div class="page-header">
+      <div class="eyebrow">Section 2 of 3</div>
+      <h1>RocketReach Workflow</h1>
+      <p>A specific sourcing workflow for finding 3Tech-type targets. The problem with standard B2B databases in Central America: the best targets have low English-language digital footprint. This workflow layers RocketReach with sources it can't see.</p>
+    </div>
+
+    <h2>Where RocketReach Works vs. Where It Fails Here</h2>
+    <div class="card-grid two">
+      <div class="card">
+        <div class="card-label" style="color:var(--green)">RocketReach works well</div>
+        <ul class="signal-list">
+          <li><span class="dot green"></span>Finding founder/CEO contact info once you know the company</li>
+          <li><span class="dot green"></span>Bulk enrichment when you upload a company list from elsewhere</li>
+          <li><span class="dot green"></span>Chrome extension: enrich LinkedIn profiles in real-time</li>
+          <li><span class="dot green"></span>Job title filtering: Fundador, Director General, CEO</li>
+          <li><span class="dot green"></span>Saved search alerts when new matching profiles appear</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-label" style="color:var(--red)">RocketReach blind spots</div>
+        <ul class="signal-list">
+          <li><span class="dot red"></span>Misses companies with thin English web presence</li>
+          <li><span class="dot red"></span>Industry tagging is unreliable for CA IT services firms</li>
+          <li><span class="dot red"></span>Government software vendors often categorized as "consulting"</li>
+          <li><span class="dot red"></span>Can't surface companies from govt procurement databases</li>
+          <li><span class="dot red"></span>Missing founders who aren't on LinkedIn</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout blue">
+      <strong>Best approach:</strong> Use external sources (procurement DBs, partner directories, Spanish-language search) to build the target list first — then use RocketReach to enrich it with contact information. Don't rely on RocketReach's own search as the primary discovery layer.
+    </div>
+
+    <h2>Step-by-Step Workflow</h2>
+    <div class="flow">
+      <div class="flow-node">External Discovery</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-node">Company List</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-node highlight">RocketReach Bulk Enrich</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-node">Qualify &amp; Score</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-node">Outreach</div>
+    </div>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Build the target company list from outside RocketReach</div>
+          <p>Four parallel sources. Run all four, deduplicate, then move to enrichment.</p>
+          <div class="filter-block">
+<span class="k">// Government procurement databases</span>
+<span class="c">Panama:</span>     <span class="v">panamacompra.gob.pa</span>   → search "software" → filter by vendor
+<span class="c">El Salvador:</span> <span class="v">comprasal.sv</span>
+<span class="c">Costa Rica:</span>  <span class="v">sicop.go.cr</span>
+<span class="c">Guatemala:</span>   <span class="v">guatecompras.gt</span>
+
+<span class="k">// Partner directories (filter: country + Software/ISV type)</span>
+<span class="c">Microsoft:</span>   <span class="v">appsource.microsoft.com</span>  → Partners → filter by country
+<span class="c">AWS:</span>         <span class="v">partners.amazonaws.com</span>   → Software → Central America
+<span class="c">Oracle:</span>      <span class="v">partnernetwork.oracle.com</span>
+
+<span class="k">// Spanish-language Google search</span>
+"software para <span class="v">[sector]</span> en <span class="v">[país]</span>"
+"sistema de <span class="v">[proceso]</span> <span class="v">[país]</span>"
+"plataforma <span class="v">[vertical]</span> centroamérica"
+          </div>
+          <p style="margin-top:8px;">Export company names + domains to a spreadsheet. This is your enrichment input.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">RocketReach: Bulk Company Enrichment</div>
+          <p>Upload your company list (name + domain) for bulk contact enrichment. This is the highest-efficiency step in RocketReach.</p>
+          <div class="filter-block">
+<span class="k">// Bulk Prospecting → Upload List</span>
+Input:  <span class="v">company_name, domain</span>
+
+<span class="k">// Contact filters to apply during enrichment</span>
+Titles: <span class="v">Founder, Co-Founder, CEO, Director General,
+        Gerente General, President, Managing Director</span>
+Seniority: <span class="v">Owner, C-Suite</span>
+Email: <span class="v">verified only</span>
+
+<span class="k">// Output fields to export</span>
+<span class="v">name, title, email, phone, linkedin_url,
+company_name, company_size, company_founded</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">RocketReach Native Search (Supplement Only)</div>
+          <p>Use this to find targets RocketReach's index does have. Don't expect complete coverage — use it to fill gaps.</p>
+          <div class="filter-block">
+<span class="k">// People Search</span>
+Job Titles:  <span class="v">Founder OR "Co-Founder" OR "Director General" OR
+             "Gerente General" OR CEO</span>
+Seniority:   <span class="v">Owner, C-Suite</span>
+Location:    <span class="v">Panama, El Salvador, Guatemala, Costa Rica, Honduras</span>
+Industry:    <span class="v">Computer Software, Information Technology and Services</span>
+Company Size: <span class="v">11-200 employees</span>
+Keywords:    <span class="v">software OR sistema OR plataforma OR soluciones</span>
+
+<span class="k">// Company Search (run separately, then merge)</span>
+Industry:   <span class="v">Computer Software + IT Services</span>
+Size:       <span class="v">11-200</span>
+Founded:    <span class="v">before 2012</span>
+Location:   <span class="v">Panama, El Salvador, Guatemala, Costa Rica</span>
+          </div>
+          <p style="margin-top:8px;">Export results. Cross-check against your procurement/partner list. Anything new that passes the ICP checklist gets added.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title">Chrome Extension: Real-Time LinkedIn Enrichment</div>
+          <p>When you visit a founder's LinkedIn profile during research, run the extension to pull verified contact info without leaving the page. Also works on company LinkedIn pages to surface employee contacts.</p>
+          <div class="filter-block">
+<span class="k">// Best use cases for the extension</span>
+1. Visit founder's LinkedIn → <span class="v">extension pulls email + phone</span>
+2. Visit company page → <span class="v">extension shows key contacts</span>
+3. Research call prep → <span class="v">enrich everyone in the org you'll talk to</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <div class="step-title">Save Searches + Set Alerts</div>
+          <p>Once your filters are configured, save the search. RocketReach will notify you when new profiles match — useful for catching companies that update their LinkedIn presence after you ran the search.</p>
+          <div class="filter-block">
+<span class="k">// Recommended saved searches</span>
+"Panama_Software_Founders_10plus_years"
+"CostaRica_ISV_Founders"
+"Guatemala_Software_Founders"
+"ElSalvador_Software_Founders"
+
+<span class="k">// Alert cadence</span>
+<span class="v">Weekly</span> for active markets (Panama, Costa Rica)
+<span class="v">Monthly</span> for secondary markets (Guatemala, El Salvador)
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <div class="step-title">Qualify &amp; Score Before Any Outreach</div>
+          <p>Don't reach out to every enriched contact. Score each company against the ICP checklist first. Tier 1 = warm intro path. Tier 2–3 = direct LinkedIn InMail in Spanish.</p>
+          <div class="filter-block">
+<span class="k">// Quick qualification checklist per company</span>
+□ <span class="v">Proprietary software product (not just services)?</span>
+□ <span class="v">10+ years old?</span>
+□ <span class="v">Mission-critical use case (regulatory, payroll, fleet, etc.)?</span>
+□ <span class="v">Government or enterprise clients?</span>
+□ <span class="v">Founder still actively running it?</span>
+□ <span class="v">No VC or PE involvement?</span>
+<span class="k">// 5-6 checks = Tier 1. 3-4 = Tier 2. Below 3 = skip.</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <h2>First Message Framework</h2>
+    <p>For this ICP, volume-based cold email doesn't work. Central America is a small market — a bad first impression travels. Each message should be written, not templated.</p>
+    <div class="callout green">
+      <strong>Structure (under 100 words, in Spanish):</strong><br><br>
+      <strong>Line 1:</strong> Specific observation about their product or a client vertical they serve. Shows you actually looked. Not flattery.<br>
+      <strong>Line 2:</strong> One sentence about Vesta. "Adquirimos empresas de software vertical en LatAm de forma permanente — nunca hemos vendido una empresa."<br>
+      <strong>Ask:</strong> Not "are you thinking about selling." Instead: "¿Tendría sentido una conversación de 20 minutos? Sin agenda más allá de entender mejor el negocio."
+    </div>
+
+  </section>
+
+  <!-- ═══════════════════ TRACKER ═══════════════════ -->
+  <section id="tracker" class="section">
+    <div class="page-header">
+      <div class="eyebrow">Section 3 of 3</div>
+      <h1>Outbound Tracker</h1>
+      <p>Track acquisition targets from first research to active conversation. Edit inline. Filter by stage or country.</p>
+    </div>
+
+    <div class="tracker-stats" id="trackerStats"></div>
+
+    <div class="tracker-controls">
+      <select id="filterStage" onchange="renderTracker()">
+        <option value="">All stages</option>
+        <option>Researching</option>
+        <option>Not contacted</option>
+        <option>Messaged</option>
+        <option>Responded</option>
+        <option>Call scheduled</option>
+        <option>In discussion</option>
+        <option>Pass</option>
+      </select>
+      <select id="filterCountry" onchange="renderTracker()">
+        <option value="">All countries</option>
+        <option>Panama</option>
+        <option>El Salvador</option>
+        <option>Costa Rica</option>
+        <option>Guatemala</option>
+        <option>Honduras</option>
+      </select>
+      <select id="filterTier" onchange="renderTracker()">
+        <option value="">All tiers</option>
+        <option>Tier 1</option>
+        <option>Tier 2</option>
+        <option>Tier 3</option>
+      </select>
+      <button class="add-btn" onclick="addRow()">+ Add Company</button>
+    </div>
+
+    <div class="tracker-wrap">
+      <table class="tracker" id="trackerTable">
+        <thead>
+          <tr>
+            <th>Company</th>
+            <th>Country</th>
+            <th>Vertical</th>
+            <th>Tier</th>
+            <th>Contact</th>
+            <th>Source</th>
+            <th>Stage</th>
+            <th>Last Touch</th>
+            <th>Next Action</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="trackerBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<script>
+const PASSWORD = 'vesta2026';
+function checkPass() {
+  const val = document.getElementById('gateInput').value;
+  const input = document.getElementById('gateInput');
+  const err = document.getElementById('gateError');
+  if (val === PASSWORD) {
+    document.getElementById('gate').style.display = 'none';
+    renderTracker();
+  } else {
+    input.classList.add('error');
+    err.textContent = 'Incorrect password';
+    setTimeout(() => { input.classList.remove('error'); input.value=''; }, 500);
+  }
+}
+
+const STAGES = ['Researching','Not contacted','Messaged','Responded','Call scheduled','In discussion','Pass'];
+const STAGE_COLORS = {
+  'Researching': 'blue',
+  'Not contacted': '',
+  'Messaged': 'amber',
+  'Responded': 'yellow',
+  'Call scheduled': 'purple',
+  'In discussion': 'green',
+  'Pass': 'red',
+};
+const TIERS = ['Tier 1','Tier 2','Tier 3'];
+const TIER_COLORS = { 'Tier 1': 'green', 'Tier 2': 'blue', 'Tier 3': 'yellow' };
+
+let data = [
+  { id:1, company:'3Tech Panama', country:'Panama', vertical:'IT Services / BPM / Fleet / Payroll', tier:'Tier 1', contact:'Founder (LinkedIn)', source:'Example from Andrés', stage:'Researching', lastTouch:'2026-03-25', nextAction:'Find founder via LinkedIn · partner intro via Microsoft Panama', notes:'' },
+  { id:2, company:'CuboPago', country:'El Salvador', vertical:'Fintech / Payments', tier:'Tier 3', contact:'Founder (WhatsApp)', source:'Example from Andrés', stage:'Researching', lastTouch:'2026-03-25', nextAction:'Partnership/investment angle — not acquisition ready', notes:'' },
+  { id:3, company:'APESA Software', country:'Mexico', vertical:'Financial Markets Software', tier:'Tier 1', contact:'-', source:'Vesta prior acquisition', stage:'Pass', lastTouch:'-', nextAction:'Already acquired by Vesta', notes:'Reference case for ICP validation' },
+];
+let nextId = 4;
+
+function show(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  if (id === 'tracker') renderTracker();
+}
+
+function stageTag(stage) {
+  const c = STAGE_COLORS[stage] || '';
+  return `<span class="tag ${c}">${stage}</span>`;
+}
+function tierTag(tier) {
+  const c = TIER_COLORS[tier] || '';
+  return `<span class="tag ${c}">${tier}</span>`;
+}
+
+function renderTracker() {
+  const fs = document.getElementById('filterStage').value;
+  const fc = document.getElementById('filterCountry').value;
+  const ft = document.getElementById('filterTier').value;
+  const filtered = data.filter(r =>
+    (!fs || r.stage === fs) &&
+    (!fc || r.country === fc) &&
+    (!ft || r.tier === ft)
+  );
+
+  // Stats
+  const active = data.filter(r => !['Pass','Not contacted'].includes(r.stage)).length;
+  const responding = data.filter(r => ['Responded','Call scheduled','In discussion'].includes(r.stage)).length;
+  const t1 = data.filter(r => r.tier === 'Tier 1').length;
+  document.getElementById('trackerStats').innerHTML = `
+    <div class="stat"><div class="stat-num">${data.length}</div><div class="stat-label">Total companies</div></div>
+    <div class="stat"><div class="stat-num">${t1}</div><div class="stat-label">Tier 1 targets</div></div>
+    <div class="stat"><div class="stat-num">${active}</div><div class="stat-label">Active outreach</div></div>
+    <div class="stat"><div class="stat-num">${responding}</div><div class="stat-label">Responding / In convo</div></div>
+  `;
+
+  const tbody = document.getElementById('trackerBody');
+  tbody.innerHTML = filtered.map(r => `
+    <tr>
+      <td class="company-cell">
+        <input class="notes-input" style="font-weight:600;color:var(--text);font-size:13px;" value="${r.company}" onchange="updateField(${r.id},'company',this.value)" />
+      </td>
+      <td>
+        <select class="stage-select" onchange="updateField(${r.id},'country',this.value)">
+          ${['Panama','El Salvador','Costa Rica','Guatemala','Honduras','Nicaragua','Other'].map(c => `<option ${r.country===c?'selected':''}>${c}</option>`).join('')}
+        </select>
+      </td>
+      <td style="max-width:160px;"><input class="notes-input" value="${r.vertical}" onchange="updateField(${r.id},'vertical',this.value)" /></td>
+      <td>
+        <select class="stage-select" onchange="updateField(${r.id},'tier',this.value)">
+          ${TIERS.map(t => `<option ${r.tier===t?'selected':''}>${t}</option>`).join('')}
+        </select>
+      </td>
+      <td><input class="notes-input" value="${r.contact}" onchange="updateField(${r.id},'contact',this.value)" /></td>
+      <td><input class="notes-input" value="${r.source}" onchange="updateField(${r.id},'source',this.value)" /></td>
+      <td>
+        <select class="stage-select" onchange="updateField(${r.id},'stage',this.value)">
+          ${STAGES.map(s => `<option ${r.stage===s?'selected':''}>${s}</option>`).join('')}
+        </select>
+      </td>
+      <td class="mono"><input class="notes-input" style="font-family:'JetBrains Mono',monospace;font-size:11px;" value="${r.lastTouch}" onchange="updateField(${r.id},'lastTouch',this.value)" /></td>
+      <td style="max-width:200px;"><input class="notes-input" value="${r.nextAction}" onchange="updateField(${r.id},'nextAction',this.value)" /></td>
+      <td><button class="delete-btn" onclick="deleteRow(${r.id})">×</button></td>
+    </tr>
+  `).join('');
+}
+
+function updateField(id, field, value) {
+  const row = data.find(r => r.id === id);
+  if (row) { row[field] = value; renderTracker(); }
+}
+
+function deleteRow(id) {
+  data = data.filter(r => r.id !== id);
+  renderTracker();
+}
+
+function addRow() {
+  data.push({ id: nextId++, company:'New company', country:'Panama', vertical:'', tier:'Tier 2', contact:'', source:'', stage:'Researching', lastTouch: new Date().toISOString().slice(0,10), nextAction:'', notes:'' });
+  renderTracker();
+}
+
+// Init tracker on load
+
+</script>
+</body>
+</html>
