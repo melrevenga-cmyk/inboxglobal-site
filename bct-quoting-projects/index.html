@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BCT Construction LLC — Estimating Services Pricing</title>
+<style>
+  :root {
+    --ink: #14181c;
+    --ink-soft: #3a424a;
+    --paper: #f3f0e9;
+    --paper-line: #e3ddd0;
+    --steel: #1c2b3a;
+    --steel-line: #2f4258;
+    --safety: #e8531f;
+    --safety-soft: #f0a07e;
+    --concrete: #8a8478;
+    --rule: rgba(20,24,28,0.14);
+    --green: #2f7d54;
+    --mono: 'SFMono-Regular', ui-monospace, 'Roboto Mono', Menlo, Consolas, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background: var(--paper); color: var(--ink); line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .grid-bg {
+    background-image:
+      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 32px; }
+
+  /* HERO */
+  .hero { background: var(--steel); color: var(--paper); padding: 80px 0 68px; position: relative; overflow: hidden; }
+  .hero .eyebrow { font-size: 12px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--safety-soft); font-weight: 700; margin-bottom: 26px; }
+  .hero h1 { font-size: clamp(38px, 6.5vw, 66px); font-weight: 800; line-height: 1.0; letter-spacing: -0.02em; max-width: 20ch; }
+  .hero h1 .accent { color: var(--safety); }
+  .hero .sub { margin-top: 26px; max-width: 60ch; font-size: 17px; color: rgba(243,240,233,0.74); line-height: 1.6; }
+  .hero .meta { margin-top: 40px; display: flex; flex-wrap: wrap; border-top: 1px solid var(--steel-line); }
+  .hero .meta div { padding: 16px 34px 16px 0; margin-right: 34px; border-right: 1px solid var(--steel-line); }
+  .hero .meta div:last-child { border-right: none; }
+  .hero .meta .k { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--concrete); margin-bottom: 6px; }
+  .hero .meta .v { font-size: 15px; font-weight: 600; }
+  .stamp { position: absolute; top: 38px; right: 32px; border: 2px solid var(--safety); color: var(--safety); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 700; padding: 8px 14px; transform: rotate(4deg); text-align: center; line-height: 1.5; }
+
+  section { padding: 64px 0; }
+  .section-head { display: flex; align-items: baseline; gap: 20px; margin-bottom: 8px; }
+  .section-num { font-size: 13px; font-weight: 800; color: var(--safety); letter-spacing: 0.1em; font-variant-numeric: tabular-nums; }
+  .section-head h2 { font-size: clamp(25px, 3.3vw, 34px); font-weight: 800; letter-spacing: -0.015em; }
+  .section-lead { margin: 18px 0 44px; max-width: 64ch; font-size: 17px; color: var(--ink-soft); }
+
+  /* CONTEXT STRIP */
+  .context { background: #fff; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .context .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; margin-top: 30px; }
+  .context p { color: var(--ink-soft); font-size: 16px; margin-bottom: 14px; }
+  .context strong { color: var(--ink); font-weight: 700; }
+
+  /* SYSTEM BUILD CARD */
+  .build { background: var(--paper); }
+  .build-card { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; border: 1px solid var(--rule); padding: 40px; background: #fff; }
+  .build-card .left h3 { font-size: 24px; font-weight: 800; margin-bottom: 14px; }
+  .build-card .left p { color: var(--ink-soft); font-size: 15.5px; max-width: 56ch; margin-bottom: 16px; }
+  .incl { list-style: none; display: grid; gap: 8px; }
+  .incl li { font-size: 14.5px; padding-left: 22px; position: relative; color: var(--ink); }
+  .incl li::before { content: ""; position: absolute; left: 0; top: 8px; width: 10px; height: 2px; background: var(--safety); }
+  .price-tag { text-align: right; min-width: 180px; }
+  .price-tag .amount { font-size: 54px; font-weight: 800; letter-spacing: -0.03em; line-height: 1; }
+  .price-tag .unit { font-size: 13px; color: var(--ink-soft); margin-top: 8px; letter-spacing: 0.04em; }
+  .price-tag .std { font-size: 13px; color: var(--concrete); margin-top: 10px; }
+  .price-tag .std s { text-decoration-color: var(--safety); }
+
+  /* INCLUDED / MAINTENANCE NOTE */
+  .maint { margin-top: 22px; border: 1px solid var(--rule); border-left: 3px solid var(--green); background: #fff; padding: 20px 24px; }
+  .maint h4 { font-size: 14px; font-weight: 800; letter-spacing: 0.02em; margin-bottom: 8px; color: var(--green); text-transform: uppercase; }
+  .maint p { font-size: 15px; color: var(--ink-soft); margin: 0; }
+  .maint p strong { color: var(--ink); }
+
+  /* PER-QUOTE TIERS */
+  .quotes { background: #fff; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .qcols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .qtier { border: 1px solid var(--rule); padding: 32px; background: var(--paper); display: flex; flex-direction: column; }
+  .qtier .ql { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--safety); font-weight: 700; margin-bottom: 10px; }
+  .qtier h3 { font-size: 21px; font-weight: 800; margin-bottom: 4px; }
+  .qtier .qp { font-size: 42px; font-weight: 800; letter-spacing: -0.02em; margin: 8px 0 2px; }
+  .qtier .qp small { font-size: 15px; font-weight: 600; color: var(--ink-soft); }
+  .qtier .qd { font-size: 14.5px; color: var(--ink-soft); margin: 12px 0 18px; }
+  .qtier ul { list-style: none; margin-top: auto; }
+  .qtier li { font-size: 13.5px; padding: 7px 0 7px 20px; position: relative; border-top: 1px dashed var(--paper-line); color: var(--ink); }
+  .qtier li:first-child { border-top: none; }
+  .qtier li::before { content: "→"; position: absolute; left: 0; color: var(--safety); font-weight: 700; }
+  .cap-note { margin-top: 24px; font-family: var(--mono); font-size: 13px; color: var(--ink-soft); background: var(--paper); border: 1px dashed var(--line, #d4cdbd); padding: 14px 18px; }
+
+  /* RETAINER */
+  .retainer { background: var(--steel); color: var(--paper); }
+  .retainer .section-head h2 { color: var(--paper); }
+  .retainer .section-lead { color: rgba(243,240,233,0.66); }
+  .ret-card { border: 2px solid var(--safety); background: rgba(255,255,255,0.02); padding: 36px; display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; position: relative; }
+  .ret-card::before { content: "Kicks in above 4 quotes / month"; position: absolute; top: -12px; left: 28px; background: var(--safety); color: #fff; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; padding: 5px 12px; }
+  .ret-card .rl h3 { font-size: 24px; font-weight: 800; margin-bottom: 12px; }
+  .ret-card .rl p { color: rgba(243,240,233,0.72); font-size: 15.5px; max-width: 52ch; margin-bottom: 10px; }
+  .ret-card .rl .eff { font-family: var(--mono); font-size: 13px; color: var(--safety-soft); margin-top: 12px; }
+  .ret-price { text-align: right; min-width: 190px; }
+  .ret-price .amount { font-size: 50px; font-weight: 800; letter-spacing: -0.03em; line-height: 1; }
+  .ret-price .unit { font-size: 13px; color: rgba(243,240,233,0.6); margin-top: 8px; }
+  .ret-price .bundle { display: inline-block; margin-top: 14px; background: var(--safety); color: #fff; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; padding: 6px 12px; }
+
+  /* SUMMARY TABLE */
+  .summary { background: var(--paper); }
+  .sum-table { border: 1px solid var(--rule); background: #fff; }
+  .sum-row { display: grid; grid-template-columns: 1.5fr 1.2fr auto; gap: 20px; padding: 18px 26px; border-top: 1px solid var(--rule); align-items: baseline; }
+  .sum-row:first-child { border-top: none; }
+  .sum-row .r-name { font-weight: 700; font-size: 16px; }
+  .sum-row .r-desc { font-size: 13.5px; color: var(--ink-soft); }
+  .sum-row .r-amt { font-size: 19px; font-weight: 800; text-align: right; letter-spacing: -0.01em; white-space: nowrap; }
+  .sum-row .r-amt small { display: block; font-size: 12px; font-weight: 600; color: var(--concrete); }
+  .sum-row.head { background: var(--ink); }
+  .sum-row.head span { color: var(--paper); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 700; }
+
+  /* CLOSE */
+  .close { background: var(--ink); color: var(--paper); }
+  .close h2 { font-size: clamp(26px, 3.6vw, 40px); font-weight: 800; letter-spacing: -0.015em; max-width: 24ch; }
+  .close p { margin-top: 18px; max-width: 60ch; color: rgba(243,240,233,0.7); font-size: 16.5px; }
+  .signoff { margin-top: 44px; padding-top: 26px; border-top: 1px solid rgba(243,240,233,0.18); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+  .signoff .who .name { font-size: 18px; font-weight: 700; }
+  .signoff .who .role { font-size: 13px; color: var(--concrete); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 4px; }
+  .signoff .ff-note { font-size: 13px; color: var(--safety-soft); max-width: 34ch; border: 1px solid rgba(232,83,31,0.4); padding: 12px 16px; }
+
+  footer { background: var(--ink); color: var(--concrete); font-size: 12px; letter-spacing: 0.08em; padding: 24px 0 40px; text-transform: uppercase; }
+  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+
+  @media (max-width: 760px) {
+    .wrap { padding: 0 22px; }
+    .context .cols { grid-template-columns: 1fr; gap: 22px; }
+    .build-card, .ret-card { grid-template-columns: 1fr; gap: 26px; }
+    .price-tag, .ret-price { text-align: left; }
+    .qcols { grid-template-columns: 1fr; }
+    .sum-row { grid-template-columns: 1fr auto; }
+    .sum-row .r-desc { display: none; }
+    .hero .meta div { border-right: none; }
+    .stamp { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero grid-bg">
+  <div class="stamp">Trial Rate<br>Through 2026</div>
+  <div class="wrap">
+    <div class="eyebrow">BCT Construction LLC · Estimating Services</div>
+    <h1>Quoting built to <span class="accent">win work and protect margin.</span></h1>
+    <p class="sub">A custom estimating system plus hands-on quoting support — priced as a friends-and-family trial through the rest of 2026, so we can both see how the volume and the workflow settle before locking anything in for next year.</p>
+    <div class="meta">
+      <div><div class="k">Prepared for</div><div class="v">Guillermo Herrera · BCT</div></div>
+      <div><div class="k">Prepared by</div><div class="v">Melissa Yilaly · InboxGlobal</div></div>
+      <div><div class="k">Term</div><div class="v">Trial · through Dec 2026</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- CONTEXT -->
+<section class="context">
+  <div class="wrap">
+    <div class="section-head"><span class="section-num">00</span><h2>Why this matters</h2></div>
+    <div class="cols">
+      <div>
+        <p><strong>Estimating is where bids are won and margin is protected.</strong> Quote too high and BCT loses the job; quote too low and a won job quietly loses money. Estimating error is the single biggest cause of margin erosion in construction — one bad estimate can wipe out the profit from several good jobs.</p>
+      </div>
+      <div>
+        <p><strong>This service removes that risk two ways:</strong> a custom system that itemizes every material, rental, and labor line for BCT's concrete work, and hands-on quoting so bids go out fast, accurate, and defensible — without BCT carrying the cost of a full-time estimator (which runs $65K–$120K/year).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 01 SYSTEM BUILD -->
+<section class="build">
+  <div class="wrap">
+    <div class="section-head"><span class="section-num">01</span><h2>The estimating system</h2></div>
+    <p class="section-lead">A one-time build: BCT's own quoting engine, tailored to concrete-division work — materials, equipment, and labor kept separate, with labor driven automatically off the quantities entered, plus a local Chicago–Naperville supplier directory.</p>
+    <div class="build-card">
+      <div class="left">
+        <h3>Custom Rate Database &amp; Quote Builder</h3>
+        <p>Built, delivered, and set up in Google Sheets so BCT can run it directly — the tool behind every quote below.</p>
+        <ul class="incl">
+          <li>Full concrete rate database (materials, equipment, labor)</li>
+          <li>Productivity-driven labor — scales off the materials entered</li>
+          <li>Itemized quote builder with separate subtotals + O&amp;P</li>
+          <li>Local supplier directory for every material &amp; rental</li>
+        </ul>
+      </div>
+      <div class="price-tag">
+        <div class="amount">$1,250</div>
+        <div class="unit">one-time build</div>
+        <div class="std">Market: <s>$2,000–$6,000+</s></div>
+      </div>
+    </div>
+    <div class="maint">
+      <h4>Ongoing improvements — included</h4>
+      <p><strong>Minor updates and tweaks are on the house</strong> (roughly up to 2 hours a month) — rate refreshes, small fixes, formatting. Larger changes — new modules, new trades, or a structural rebuild of the system — are quoted separately so it's always clear what's a tweak and what's a new project.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 02 PER QUOTE -->
+<section class="quotes">
+  <div class="wrap">
+    <div class="section-head"><span class="section-num">02</span><h2>Per-quote support</h2></div>
+    <p class="section-lead">Send the plans and requirements; a complete, itemized quote comes back — materials, equipment, and labor broken out, ready to bid. Priced by complexity, up to four quotes a month.</p>
+    <div class="qcols">
+      <div class="qtier">
+        <div class="ql">Standard</div>
+        <h3>Typical concrete job</h3>
+        <div class="qp">$220<small> / quote</small></div>
+        <div class="qd">A driveway, slab, or single-structure foundation — straightforward scope, standard line items.</div>
+        <ul>
+          <li>Full material takeoff &amp; pricing</li>
+          <li>Equipment &amp; labor breakdown</li>
+          <li>Bid-ready itemized quote</li>
+        </ul>
+      </div>
+      <div class="qtier">
+        <div class="ql">Complex</div>
+        <h3>Multi-level / below-grade</h3>
+        <div class="qp">$350<small> / quote</small></div>
+        <div class="qd">Multi-floor, below-grade, parking structure, or heavy line-item count — more scope, more coordination.</div>
+        <ul>
+          <li>Everything in Standard</li>
+          <li>Multi-level / below-grade elements</li>
+          <li>Supplier comparisons where it pays off</li>
+        </ul>
+      </div>
+    </div>
+    <div class="cap-note">CAP: Per-quote pricing applies up to <b>4 quotes / month</b>. Beyond that, the retainer below takes over — because at that volume it's effectively a standing estimating function, and the retainer is the better deal.</div>
+  </div>
+</section>
+
+<!-- 03 RETAINER -->
+<section class="retainer">
+  <div class="wrap">
+    <div class="section-head"><span class="section-num">03</span><h2>High-volume retainer</h2></div>
+    <p class="section-lead">When quoting picks up to roughly two a week, a flat monthly rate replaces per-quote billing — predictable for BCT, and a real discount per quote versus paying one at a time.</p>
+    <div class="ret-card">
+      <div class="rl">
+        <h3>Monthly Estimating Retainer</h3>
+        <p>Up to 8 quotes a month at a flat rate. Additional quotes beyond the eight are billed at a reduced $175 each.</p>
+        <div class="eff">Effective ~$187/quote at 8 — versus $220 standard. Compare to a full-time estimator at $65K–$120K/yr.</div>
+      </div>
+      <div class="ret-price">
+        <div class="amount">$1,500</div>
+        <div class="unit">/ month</div>
+        <div class="bundle">Up to 8 quotes</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 SUMMARY -->
+<section class="summary">
+  <div class="wrap">
+    <div class="section-head"><span class="section-num">04</span><h2>At a glance</h2></div>
+    <p class="section-lead">Build the system once, then quote per-job — moving to the retainer only if volume makes it the better deal. All figures are the friends-and-family trial rate through December 2026.</p>
+    <div class="sum-table">
+      <div class="sum-row head">
+        <span>Item</span><span>What it covers</span><span style="text-align:right;">Rate</span>
+      </div>
+      <div class="sum-row">
+        <div class="r-name">System build</div>
+        <div class="r-desc">Custom rate database &amp; quote builder + ~2 hrs/mo tweaks</div>
+        <div class="r-amt">$1,250<small>one-time</small></div>
+      </div>
+      <div class="sum-row">
+        <div class="r-name">Standard quote</div>
+        <div class="r-desc">Typical single-structure concrete job</div>
+        <div class="r-amt">$220<small>per quote</small></div>
+      </div>
+      <div class="sum-row">
+        <div class="r-name">Complex quote</div>
+        <div class="r-desc">Multi-level / below-grade / parking</div>
+        <div class="r-amt">$350<small>per quote</small></div>
+      </div>
+      <div class="sum-row">
+        <div class="r-name">High-volume retainer</div>
+        <div class="r-desc">Above 4/mo · up to 8 quotes · extras $175 each</div>
+        <div class="r-amt">$1,500<small>per month</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSE -->
+<section class="close">
+  <div class="wrap">
+    <h2>A trial run for the rest of 2026 — so we get it right before next year.</h2>
+    <p>These rates hold through December 2026 as a trial and adjustment period. It gives us both time to see the real volume, tune the system to BCT's actual crews and costs, and confirm what's working before we settle on pricing for 2027. Every quote you produce with the system stays reviewable and approvable by BCT — the final bid number is always your call.</p>
+    <div class="signoff">
+      <div class="who">
+        <div class="name">Melissa Yilaly</div>
+        <div class="role">Founder · InboxGlobal LLC · inboxglobal.io</div>
+      </div>
+      <div class="ff-note">Friends-and-family trial rate, through December 2026 — reviewed together before 2027.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>BCT Construction LLC — Estimating Services</span>
+    <span>Prepared by InboxGlobal LLC · inboxglobal.io</span>
+  </div>
+</footer>
+
+</body>
+</html>
